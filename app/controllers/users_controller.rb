@@ -3,10 +3,6 @@ class UsersController < ApplicationController
     render "/react"
   end
 
-  def show
-    # render "/react"
-  end
-
   def login
     client_id = ENV['DISCORD_CLIENT_ID']
     redirect_uri = request.original_url + "/callback"
@@ -19,12 +15,11 @@ class UsersController < ApplicationController
   end
 
   def callback
-    if params[:state] == cookies.encrypted[:auth_state] {
+    if params[:state] == cookies.encrypted[:auth_state]
       puts "Obtained code!"
-    }
-    else {
+    else
       puts "Login failed due to mismatched states"
-    }
+    end
     redirect_to "/"
   end
 end
