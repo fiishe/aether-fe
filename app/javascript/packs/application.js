@@ -13,10 +13,8 @@ import { render } from 'react-dom'
 import App from '../react/app'
 import RedBox from 'redbox-react'
 
-console.log("yoyo~");
 
 document.addEventListener('DOMContentLoaded', () => {
-  console.log("domcontentloaded yo!");
   let reactElement = document.getElementById('app')
 
   if (reactElement) {

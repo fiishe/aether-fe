@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 const LinkButton = (props) => {
   return(
-    <div>
+    <div class="link-button">
       <Link to={props.to}>
         <p className={props.classes}>
           {props.text}

@@ -8,7 +8,11 @@ const NavBar = (props) => {
         aeiouaeiouaeiou
       </div>
       <div className="nav-section">
-        <LinkButton to="/" text="aeiou??" />
+        <div className="link-button">
+          <a href="/login">
+            <p>Login</p>
+          </a>
+        </div>
       </div>
     </div>
   )
