@@ -15,8 +15,12 @@ class Page extends Component {
 
   render() {
     return(
-      <NavBar>
-      {this.yield()}
+      <div>
+        <NavBar />
+        {this.yield()}
+      </div>
     )
   }
 }
+
+export default Page

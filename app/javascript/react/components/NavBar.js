@@ -4,10 +4,10 @@ import LinkButton from './LinkButton';
 const NavBar = (props) => {
   return(
     <div id="navbar">
-      <div class="nav-section">
+      <div className="nav-section">
         aeiouaeiouaeiou
       </div>
-      <div class="nav-section">
+      <div className="nav-section">
         <LinkButton to="/" text="aeiou??" />
       </div>
     </div>
