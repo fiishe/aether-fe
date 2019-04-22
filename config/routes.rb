@@ -3,5 +3,13 @@ Rails.application.routes.draw do
 
   root "users#index"
 
+  get 'login', to: 'users#login'
+  get 'login/callback', to: 'users#callback'
   resources :users, only: [:index, :show]
+
+  namespace 'api' do
+    namespace 'v1' do
+
+    end
+  end
 end

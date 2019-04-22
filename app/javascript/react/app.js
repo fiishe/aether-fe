@@ -5,6 +5,7 @@ import Page from './pages/Page'
 const App = props => {
   return(
     <Router history={browserHistory}>
+
       <Route path='/' component={Page}/>
     </Router>
   )
