@@ -1,7 +1,7 @@
 require 'net/http'
 
 class UsersController < ApplicationController
-  DISCORD_API_ENDPOINT = "https://discordapp.com/api/v6"
+  DISCORD_API_ENDPOINT = "https://discordapp.com/api"
 
   def index
     render "/react"
@@ -19,40 +19,70 @@ class UsersController < ApplicationController
   end
 
   def callback
-    if params[:state] == cookies.encrypted[:auth_state]
-      token_response = exchange_code(params[:code], root_url)
-      expected_keys = ["access_token", "scope", "token_type", "expires_in", "refresh_token"]
-
-      if token_response.keys == expected_keys
-        # Do stuff here with the response
-      else
-        puts "Login failed due to failed code exchange"
-      end
-    else
-      puts "Login failed due to mismatched states"
+    if params[:state] != cookies.encrypted[:auth_state]
+      raise "Login failed due to bad state variable"
     end
+    token_response = discord_exchange_code(params[:code])
+    user_data = discord_get_user(token_response['access_token'])
+
+    entry = {
+      snowflake: user_data['id'],
+      username: user_data['username'],
+      discriminator: user_data['discriminator'],
+      access_token: token_response['access_token'],
+      refresh_token: token_response['refresh_token']
+    }
+
+    user = User.find_by(snowflake: user_data['id'])
+    if user
+      user.update(entry)
+    else
+      user = User.create(entry)
+    end
+
+    session[:user_id] = user.id
+    puts "New session with id #{user.id}"
+
     redirect_to "/"
   end
 
   private
-  def exchange_code(code, redirect_uri)
+  def discord_exchange_code(code)
     data = {
       client_id: ENV['DISCORD_CLIENT_ID'],
       client_secret: ENV['DISCORD_CLIENT_SECRET'],
       grant_type: 'authorization_code',
       code: code,
-      redirect_uri: redirect_uri + "login/callback"
+      redirect_uri: root_url + "login/callback"
     }
     header = { 'Content-Type' => 'application/x-www-form-urlencoded' }
 
-    request_exchange = Thread.new {
+    fetch = Thread.new {
       res = Net::HTTP.post(
-        URI("https://discordapp.com/api/v6/oauth2/token"),
+        URI("#{DISCORD_API_ENDPOINT}/oauth2/token"),
         URI.encode_www_form(data),
         header
       )
       JSON.parse(res.body)
     }
-    return request_exchange.value
+    return fetch.value
+  end
+
+  def discord_get_user(access_token)
+    uri = URI("#{DISCORD_API_ENDPOINT}/users/@me")
+    req = Net::HTTP::Get.new(uri)
+    req['Authorization'] = "Bearer #{access_token}"
+
+    fetch = Thread.new {
+      res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') { |http|
+        http.request(req)
+      }
+      JSON.parse(res.body)
+    }
+    return fetch.value
+  end
+
+  def update_user(id)
+    
   end
 end
