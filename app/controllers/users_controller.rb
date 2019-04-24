@@ -1,4 +1,5 @@
 require 'net/http'
+require 'date'
 
 class UsersController < ApplicationController
   DISCORD_API_ENDPOINT = "https://discordapp.com/api"
@@ -30,6 +31,7 @@ class UsersController < ApplicationController
       username: user_data['username'],
       discriminator: user_data['discriminator'],
       access_token: token_response['access_token'],
+      access_token_issued: DateTime.now,
       refresh_token: token_response['refresh_token']
     }
 
@@ -41,6 +43,8 @@ class UsersController < ApplicationController
     end
 
     session[:user_id] = user.id
+    session[:expires_at] = DateTime.now + 7.days
+      # user access token for dAPi also expires after 7days
     puts "New session with id #{user.id}"
 
     redirect_to "/"
@@ -80,9 +84,5 @@ class UsersController < ApplicationController
       JSON.parse(res.body)
     }
     return fetch.value
-  end
-
-  def update_user(id)
-    
   end
 end

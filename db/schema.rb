@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_04_24_014906) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "access_token"
+    t.datetime "access_token_issued"
     t.string "refresh_token"
     t.string "avatar_url"
   end
