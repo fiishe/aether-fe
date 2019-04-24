@@ -39,6 +39,7 @@ class UsersController < ApplicationController
     if user
       user.update(entry)
     else
+      binding.pry
       user = User.create(entry)
     end
 
