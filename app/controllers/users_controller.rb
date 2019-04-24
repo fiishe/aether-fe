@@ -20,8 +20,14 @@ class UsersController < ApplicationController
 
   def callback
     if params[:state] == cookies.encrypted[:auth_state]
-      puts "Obtained code!"
-      exchange_code(params[:code], "http://localhost:3000")
+      token_response = exchange_code(params[:code], root_url)
+      expected_keys = ["access_token", "scope", "token_type", "expires_in", "refresh_token"]
+
+      if token_response.keys == expected_keys
+        # Do stuff here with the response
+      else
+        puts "Login failed due to failed code exchange"
+      end
     else
       puts "Login failed due to mismatched states"
     end
@@ -29,22 +35,24 @@ class UsersController < ApplicationController
   end
 
   private
-  def exchange_code(code, redirect_to)
+  def exchange_code(code, redirect_uri)
     data = {
       client_id: ENV['DISCORD_CLIENT_ID'],
       client_secret: ENV['DISCORD_CLIENT_SECRET'],
       grant_type: 'authorization_code',
       code: code,
-      redirect_uri: redirect_to
+      redirect_uri: redirect_uri + "login/callback"
     }
-    req = Thread.new {
+    header = { 'Content-Type' => 'application/x-www-form-urlencoded' }
+
+    request_exchange = Thread.new {
       res = Net::HTTP.post(
         URI("https://discordapp.com/api/v6/oauth2/token"),
         URI.encode_www_form(data),
-        'Content-Type' => 'application/x-www-form-urlencoded'
+        header
       )
-      binding.pry
+      JSON.parse(res.body)
     }
-    req.join
+    return request_exchange.value
   end
 end
