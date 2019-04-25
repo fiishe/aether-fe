@@ -3,9 +3,9 @@ import { Link } from 'react-router';
 
 const LinkButton = (props) => {
   return(
-    <div class="link-button">
+    <div>
       <Link to={props.to}>
-        <p className={props.classes}>
+        <p className="link-button">
           {props.text}
         </p>
       </Link>

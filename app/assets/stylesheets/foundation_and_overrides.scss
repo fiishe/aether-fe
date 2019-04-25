@@ -80,15 +80,15 @@ $include-html-global-classes: $include-html-classes;
 // $include-xl-html-grid-classes: false;
 
 $row-width: rem-calc(1000);
-// $total-columns: 12;
-$column-gutter: rem-calc(30);
+$total-columns: 12;
+$column-gutter: rem-calc(36);
 
 // c. Global
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // We use these to define default font stacks
 // $font-family-sans-serif: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-// $font-family-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+$font-family-serif: "Crimson Text", Georgia, Cambria, "Times New Roman", Times, serif;
 // $font-family-monospace: Consolas, "Liberation Mono", Courier, monospace;
 
 // We use these to define default font weights
@@ -116,8 +116,8 @@ $column-gutter: rem-calc(30);
 // $black       : #000000;
 
 // We use these as default colors throughout
-// $primary-color: #008CBA;
-// $secondary-color: #e7e7e7;
+$primary-color: $blue-1;
+$secondary-color: $blue-2;
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
 // $warning-color: #f08a24;
@@ -210,7 +210,7 @@ $column-gutter: rem-calc(30);
 // $include-html-type-classes: $include-html-classes;
 
 // We use these to control header font styles
-// $header-font-family: $body-font-family;
+$header-font-family: $font-family-serif;
 // $header-font-weight: $font-weight-normal;
 // $header-font-style: normal;
 // $header-font-color: $jet;
@@ -989,9 +989,9 @@ $column-gutter: rem-calc(30);
 // $include-html-panel-classes: $include-html-classes;
 
 // We use these to control the background and border styles
-// $panel-bg: scale-color($white, $lightness: -5%);
-// $panel-border-style: solid;
-// $panel-border-size: 1px;
+$panel-bg: $gray-2;
+$panel-border-style: solid;
+$panel-border-size: 1px;
 // $callout-panel-bg: scale-color($primary-color, $lightness: 94%);
 
 // We use this % to control how much we darken things on hover

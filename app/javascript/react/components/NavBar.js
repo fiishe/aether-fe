@@ -1,19 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router';
 import LinkButton from './LinkButton';
 
 const NavBar = (props) => {
   return(
-    <div id="navbar">
-      <div className="nav-section">
-        aeiouaeiouaeiou
-      </div>
-      <div className="nav-section">
-        <div className="link-button">
-          <a href="/login">
-            <p>Login</p>
-          </a>
+    <div>
+      <nav>
+        <div className="nav-section">
+          <h2 id="site-title">
+            <Link to="/">AetherFE</Link>
+          </h2>
         </div>
-      </div>
+        <div className="nav-section-right">
+          <LinkButton to="/login" text="Login" />
+        </div>
+      </nav>
     </div>
   )
 }

@@ -10,8 +10,15 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       get 'users/me', to: 'users#me'
+      resources 'users', only: [:show]
+      
       get '*path', to: 'errors#not_found'
     end
+  end
+
+  if Rails.env.development?
+    get 'dev/pry', to: 'dev#pry'
+    get 'dev/login/:id', to: 'dev#login'
   end
 
   get '*path', to: 'users#index'

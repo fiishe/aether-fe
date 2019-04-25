@@ -6,12 +6,22 @@
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "vendor/modernizr" %>
     <%= favicon_link_tag 'favicon.ico' %>
   </head>
 
   <body>
+    <%- if Rails.env.development? -%>
+      <div id="dev-links">
+        <%= link_to "pry", "/dev/pry" %>
+        <%= link_to "user 1", "/dev/login/1" %>
+        <%= link_to "user 2", "/dev/login/2" %>
+        <%= link_to "user 3", "/dev/login/3" %>
+      </div>
+    <%- end -%>
+
     <%= yield %>
 
     <%= javascript_include_tag 'application' %>
