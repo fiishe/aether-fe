@@ -35,8 +35,13 @@ class UserShow extends Page {
     }
     else {
       return(
-        <div>
-          {this.state.userData.nick || this.state.userData.username}
+        <div className="row panel">
+          <div className="small-5 medium-4 columns av-container">
+            <img src={this.state.userData.avatar_url} />
+          </div>
+          <div className="small-7 medium-8 columns">
+            <h3>{this.state.userData.nick || this.state.userData.username}</h3>
+          </div>
         </div>
       )
     }

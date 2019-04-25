@@ -8,6 +8,7 @@ const App = props => {
   return(
     <Router history={browserHistory}>
       <Route exact path='/' component={Page} />
+      <Route path='/login' component={() => {window.location = '/login'}} />
       <Route path='/users/:id' component={UserShow} />
       <Route path='*' component={NotFound} />
     </Router>
