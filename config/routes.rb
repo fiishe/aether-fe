@@ -14,5 +14,10 @@ Rails.application.routes.draw do
     end
   end
 
+  if Rails.env.development?
+    get 'dev/pry', to: 'dev#pry'
+    get 'dev/login/:id', to: 'dev#login'
+  end
+
   get '*path', to: 'users#index'
 end

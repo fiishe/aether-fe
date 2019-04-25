@@ -13,6 +13,15 @@
   </head>
 
   <body>
+    <%- if Rails.env.development? -%>
+      <div id="dev-links">
+        <%= link_to "pry", "/dev/pry" %>
+        <%= link_to "user 1", "/dev/login/1" %>
+        <%= link_to "user 2", "/dev/login/2" %>
+        <%= link_to "user 3", "/dev/login/3" %>
+      </div>
+    <%- end -%>
+
     <%= yield %>
 
     <%= javascript_include_tag 'application' %>

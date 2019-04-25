@@ -36,6 +36,11 @@ nav {
   background-color: $blue-2;
 }
 
+.panel a {
+  color: blue;
+  text-decoration: underline;
+}
+
 .av-container {
   max-width: 256px;
   max-height: 256px;
@@ -47,4 +52,13 @@ nav {
   max-width: 100%;
   max-height: 100%;
   border-radius: 50%;
+}
+
+#dev-links a {
+  background-color: white;
+  color: blue;
+  text-decoration: underline;
+  display: inline-block;
+  padding: 2px 6px;
+  margin: 2px 4px;
 }

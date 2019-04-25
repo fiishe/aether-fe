@@ -5,7 +5,8 @@ class UserShow extends Page {
   constructor(props) {
     super(props)
     this.state = {
-      userData: {}
+      userData: {},
+      error: false
     }
   }
 
@@ -14,23 +15,30 @@ class UserShow extends Page {
       .then(res => {
         if(res.ok) {return res}
         else {
-          let errorMessage = `${response.status} (${response.statusText})`
+          let errorMessage = `${res.status} (${res.statusText})`
           throw(new Error(errorMessage))
         }
       })
       .then(res => res.json())
       .then(json => {
-        console.log(json);
         if (json.message) { this.setState({userData: null}) }
         else { this.setState({userData: json}) }
       })
-      .catch(e => console.error(`Error while fetching user data: ${e.message}`))
+      .catch(e => {
+        console.error(`Error while fetching user data: ${e.message}`)
+        this.setState({error: true})
+      })
   }
 
   yield() {
     if (!this.state.userData) {
       return(
-        <div>You are not <a href="/login">logged in</a>.</div>
+        <div className="row panel">You are not <a href="/login">logged in</a>.</div>
+      )
+    }
+    else if (this.state.error) {
+      return(
+        <div className="row panel">Something went wrong while retrieving data.</div>
       )
     }
     else {
