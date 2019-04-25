@@ -3,6 +3,7 @@ require 'date'
 
 class UsersController < ApplicationController
   DISCORD_API_ENDPOINT = "https://discordapp.com/api"
+  DISCORD_CDN_ENDPOINT = "https://cdn.discordapp.com"
 
   def index
     render "/react"
@@ -32,7 +33,8 @@ class UsersController < ApplicationController
       discriminator: user_data['discriminator'],
       access_token: token_response['access_token'],
       access_token_issued: DateTime.now,
-      refresh_token: token_response['refresh_token']
+      refresh_token: token_response['refresh_token'],
+      avatar_url: "#{DISCORD_CDN_ENDPOINT}/avatars/#{user_data['id']}/#{user_data['avatar']}.png"
     }
 
     user = User.find_by(snowflake: user_data['id'])
