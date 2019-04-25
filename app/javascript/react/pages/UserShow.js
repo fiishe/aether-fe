@@ -11,7 +11,7 @@ class UserShow extends Page {
   }
 
   componentDidMount() {
-    fetch(`/api/v1/users/me`)
+    fetch(`/api/v1/users/${this.props.params.id}`)
       .then(res => {
         if(res.ok) {return res}
         else {
