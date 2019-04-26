@@ -9,9 +9,11 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     namespace 'v1' do
+      resources 'campaigns', only: [:index, :show]
+
       get 'users/me', to: 'users#me'
       resources 'users', only: [:show]
-      
+
       get '*path', to: 'errors#not_found'
     end
   end
