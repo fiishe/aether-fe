@@ -1,0 +1,59 @@
+@import '_colors';
+$flash-success: #22c167;
+$flash-error: #e01f35;
+
+.flash-doc { // rendered initially in erb
+  display: none;
+}
+
+#flash-container {
+  position: absolute;
+}
+
+.flash {  // rendered via react
+  background-color: $flash-success;
+  color: white;
+  border-radius: 6px;
+
+  padding: 8px 10px;
+  margin: 10px;
+  min-width: 300px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flash:hover {
+  color: scale_color($flash-success, $lightness: +50%);
+}
+
+.flash p {
+  margin: 0px;
+}
+
+.flash i {
+  margin: 0px;
+}
+
+.flash-clicked {
+  animation-name: fade-out;
+  animation-duration: 0.8s;
+    // if you change animation-duration,
+    // also change the setTimeout in app/javascript/react/components/Flash.js
+  animation-fill-mode: forwards;
+}
+
+.flash-end {
+  display: none;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

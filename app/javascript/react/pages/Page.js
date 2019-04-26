@@ -20,7 +20,13 @@ class Page extends Component {
         </Flash>
       )
     })
-    return dispFlashes
+    return(
+      <div id="flash-anchor">
+        <div id="flash-container">
+          {dispFlashes}
+        </div>
+      </div>
+    )
   }
 
   yield() {
