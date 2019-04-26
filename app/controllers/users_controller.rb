@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   DISCORD_CDN_ENDPOINT = "https://cdn.discordapp.com"
 
   def index
+    flash[:notice] = "Flashy flashy"
     render "/react"
   end
 
