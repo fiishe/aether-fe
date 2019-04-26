@@ -51,7 +51,7 @@ $flash-error: #e01f35;
   animation-name: thanos;
   animation-duration: 0.8s;
     // if you change animation-duration,
-    // also change the setTimeout in app/javascript/react/containers/FlashContainer.js
+    // also change the setTimeout in app/javascript/react/components/Flash.js
   animation-fill-mode: forwards;
 }
 
