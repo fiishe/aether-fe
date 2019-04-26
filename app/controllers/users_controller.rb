@@ -6,6 +6,9 @@ class UsersController < ApplicationController
   DISCORD_CDN_ENDPOINT = "https://cdn.discordapp.com"
 
   def index
+    flash[:success] = "Successfully signed in."
+    flash[:e] = "eriojkf"
+    flash[:f] = "fuijrjjrj"
     render "/react"
   end
 

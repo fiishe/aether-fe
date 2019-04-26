@@ -4,19 +4,27 @@ class Flash extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      cls: props.className
+      cls: this.props.className
     }
-    this.handleClick = this.handleClick.bind(this)
+    this.kill = this.kill.bind(this)
   }
 
-  handleClick() {
-    this.setState({cls: this.props.className + " flash-clicked"})
-    setTimeout(() => { this.setState({cls: "flash-end"}) }, 800) //ms
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      cls: nextProps.className
+    })
+  }
+
+  kill() {
+    this.setState({
+      cls: this.state.cls + " flash-fading"
+    })
+    setTimeout(this.props.remove, 800)
   }
 
   render() {
     return(
-      <div className={this.state.cls} onClick={this.handleClick}>
+      <div className={this.state.cls} onClick={this.kill}>
         <p>{this.props.children}</p>
         <i className="fas fa-times"></i>
       </div>
