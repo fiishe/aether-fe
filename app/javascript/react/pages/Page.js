@@ -66,7 +66,6 @@ class Page extends Component {
       <div id="flash-anchor">
         <div id="flash-container">
           {flashes}
-          <div onClick={() => {this.addFlash("success", "helloooo")}}>hhh</div>
         </div>
       </div>
     )

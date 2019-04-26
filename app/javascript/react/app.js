@@ -3,6 +3,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Page from './pages/Page'
 import UserShow from './pages/UserShow'
 import NotFound from './pages/NotFound'
+import Form from './containers/Form'
 
 const App = props => {
   return(
