@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     namespace 'v1' do
-      resources 'campaigns', only: [:index, :show]
+      resources 'campaigns', only: [:index, :show, :create]
 
       get 'users/me', to: 'users#me'
       resources 'users', only: [:show]
@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   if Rails.env.development?
     get 'dev/pry', to: 'dev#pry'
     get 'dev/login/:id', to: 'dev#login'
+    get 'dev/logout', to: 'dev#logout'
   end
 
   get '*path', to: 'users#index'

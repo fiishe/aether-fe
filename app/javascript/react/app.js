@@ -1,16 +1,17 @@
 import React from 'react'
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import Page from './pages/Page'
+import Home from './pages/Home'
 import UserShow from './pages/UserShow'
 import NotFound from './pages/NotFound'
-import Form from './containers/Form'
+import NewCampaignForm from './forms/NewCampaignForm'
 
 const App = props => {
   return(
     <Router history={browserHistory}>
-      <Route exact path='/' component={Page} />
+      <Route exact path='/' component={Home} />
       <Route path='/login' component={() => {window.location = '/login'}} />
       <Route path='/users/:id' component={UserShow} />
+      <Route path='/campaigns/new' component={NewCampaignForm} />
       <Route path='*' component={NotFound} />
     </Router>
   )

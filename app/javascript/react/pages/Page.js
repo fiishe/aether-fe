@@ -54,13 +54,16 @@ class Page extends Component {
   }
 
   renderFlash() {
-    let flashes = this.state.flashData.map((obj, index) => {
-      return(
-        <Flash className={obj.cls} key={index} remove={() => {this.removeFlash(index)}}>
-          {obj.text}
-        </Flash>
-      )
-    })
+    let flashes
+    if(this.state.flashData) {
+      flashes = this.state.flashData.map((obj, index) => {
+        return(
+          <Flash className={obj.cls} key={index} remove={() => {this.removeFlash(index)}}>
+            {obj.text}
+          </Flash>
+        )
+      })
+    }
 
     return(
       <div id="flash-anchor">
