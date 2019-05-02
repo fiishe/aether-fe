@@ -41,7 +41,7 @@ class NewCampaignForm extends Form {
 
   render() {
     return(
-      <div className="panel row">
+      <div>
         <h2>New Campaign</h2>
         {this.renderForm()}
       </div>

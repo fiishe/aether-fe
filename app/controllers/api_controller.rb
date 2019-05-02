@@ -3,7 +3,6 @@ class ApiController < ApplicationController
 
   private
   def require_login
-    binding.pry
     if !current_user
       render json: {
         status: "fail",

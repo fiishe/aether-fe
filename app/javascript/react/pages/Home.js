@@ -1,10 +1,14 @@
 import React from 'react';
 import Page from './Page';
+import NewCampaignButton from '../components/NewCampaignButton'
 
 class Home extends Page {
   yield() {
     return(
-      <div>Welcome to Home</div>
+      <div className="row panel">
+        <NewCampaignButton />
+        <CampaignContainer />
+      </div>
     )
   }
 }
