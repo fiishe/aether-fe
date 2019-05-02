@@ -11,6 +11,7 @@ class UserShow extends Page {
   }
 
   componentDidMount() {
+    this.mountFlashes()
     fetch(`/api/v1/users/${this.props.params.id}`)
       .then(res => {
         if(res.ok) {return res}
@@ -21,7 +22,7 @@ class UserShow extends Page {
       })
       .then(res => res.json())
       .then(json => {
-        if (json.message) { this.setState({userData: null}) }
+        if (json.status == "fail") { this.setState({userData: null}) }
         else { this.setState({userData: json}) }
       })
       .catch(e => {

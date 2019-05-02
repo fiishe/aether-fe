@@ -12,18 +12,23 @@ class Page extends Component {
     this.state = {
       flashData: []
     }
+    this.mountFlashes = this.mountFlashes.bind(this)
     this.addFlash = this.addFlash.bind(this)
     this.removeFlash = this.removeFlash.bind(this)
-    this.renderFlash = this.renderFlash.bind(this)
+    this.renderFlashes = this.renderFlashes.bind(this)
   }
 
   componentDidMount() {
-    // retrieve flashes from document (rails flash method)
+    this.mountFlashes()
+  }
+
+  mountFlashes() {
     let flashList = document.getElementsByClassName('flash-doc') //returns a NodeList
     let flashArr = Array.from(flashList) //to Array
 
     let displayFlashData = flashArr.map((elem, index) => {
       let cls = elem.className.replace("flash-doc", "flash")
+      flashList[index].parentNode.removeChild(flashList[index]) // prevent re-rendering on navigation
       return(
         {
           cls: cls,
@@ -53,7 +58,7 @@ class Page extends Component {
     })
   }
 
-  renderFlash() {
+  renderFlashes() {
     let flashes
     if(this.state.flashData) {
       flashes = this.state.flashData.map((obj, index) => {
@@ -84,7 +89,7 @@ class Page extends Component {
     return(
       <div>
         <NavBar />
-        {this.renderFlash()}
+        {this.renderFlashes()}
         {this.yield()}
       </div>
     )

@@ -7,7 +7,6 @@ class Home extends Page {
     return(
       <div className="row panel">
         <NewCampaignButton />
-        <CampaignContainer />
       </div>
     )
   }
