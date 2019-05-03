@@ -6,6 +6,7 @@ FactoryBot.define do
     username { "userguy" }
     sequence(:discriminator) {|n| "%04d" % [n]}
     nick { "The Guy" }
+    avatar_url { "http://example.com/img.jpg" }
     access_token { SecureRandom.urlsafe_base64 }
   end
 
