@@ -3,11 +3,18 @@ class ApiController < ApplicationController
 
   private
   def require_login
-    if !current_user
+    return unless logged_in
+  end
+
+  def logged_in
+    if current_user.nil?
       render json: {
         status: "fail",
         data: { "message": "User must be logged in to perform this action." }
       }
+      return false
+    else
+      return true
     end
   end
 end

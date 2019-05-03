@@ -2,7 +2,14 @@ class Api::V1::CampaignsController < ApiController
   before_action :require_login, only: [:create]
 
   def index
-    render json: Campaign.limit(20)
+    user = get_user(params['user_id'])
+
+    if user.nil?
+      render json: Campaign.limit(20)
+    else
+      binding.pry
+      render json: user.campaigns
+    end
   end
 
   def show
@@ -19,7 +26,10 @@ class Api::V1::CampaignsController < ApiController
     else
       render json: {
         status: "fail",
-        data: @campaign.errors.full_messages
+        data: {
+          message: "Form validation failed",
+          errors: @campaign.errors.full_messages
+        }
       }
     end
   end

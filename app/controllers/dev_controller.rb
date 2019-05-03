@@ -1,3 +1,5 @@
+require 'date'
+
 class DevController < ApplicationController
   before_action :require_dev_environment
 
@@ -9,6 +11,7 @@ class DevController < ApplicationController
 
   def login
     session[:user_id] = params['id']
+    session[:expires_at] = DateTime.now + 7.days
     flash_confirmation("log in with id #{params['id']}")
     redirect_to "/users/me"
   end
