@@ -28,6 +28,8 @@ default: &default
     - .jpeg
     - .jpg
 
+  extract_css: true
+
 development:
   <<: *default
   compile: true

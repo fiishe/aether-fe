@@ -32,33 +32,26 @@ module.exports = function(config) {
       // generate sourcemaps
       devtool: 'eval-source-map',
       module: {
-        loaders: [
+        rules: [
           // use babel-loader to transpile the test and src folders
           {
             test: /\.jsx?$/,
             exclude: /node_modules/,
-            loader: 'babel-loader'
-          },
-          {
-            test: /\.json$/,
-            include: [
-              /node_modules/,
-              path.resolve(__dirname, '..')
-            ],
-            loader: 'json-loader'
+            use: [
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: ['@babel/preset-env', '@babel/preset-react']
+                }
+              }
+            ]
           }
         ]
       },
       resolve: {
         modules: ['app/javascript', 'node_modules']
       },
-      // externals: {
-      //   'cheerio': 'window',
-      //   'react/addons': true,
-      //   'react/lib/ExecutionEnvironment': true,
-      //   'react/lib/ReactContext': 'window',
-      //   'react-addons-test-utils': true
-      // }
+      mode: 'development'
     },
 
     webpackMiddleware: {

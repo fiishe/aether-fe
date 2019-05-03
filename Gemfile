@@ -67,6 +67,6 @@ gem 'shoulda-matchers', group: [:development, :test], require: false
 gem 'devise', '~> 4.6'
 gem 'foundation-rails', '~> 5.0'
 gem 'warden'
-gem 'webpacker', '~> 3.3'
+gem 'webpacker', '~> 4.0'
 gem 'rb-readline'
 gem 'active_model_serializers'
