@@ -8,4 +8,8 @@ FactoryBot.define do
     nick { "The Guy" }
     access_token { SecureRandom.urlsafe_base64 }
   end
+
+  factory :campaign do
+    
+  end
 end

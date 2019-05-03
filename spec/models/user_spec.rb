@@ -28,4 +28,8 @@ RSpec.describe User, type: :model do
       expect(subject).to_not be_valid
     end
   end
+
+  describe "associations: " do
+    it { should have_many(:campaigns).through(:campaign_memberships) }
+  end
 end
