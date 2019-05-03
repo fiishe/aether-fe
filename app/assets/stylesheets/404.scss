@@ -21,7 +21,12 @@
   100% { color: rgb(255, 0, 0) }
 }
 
-#error-code {
+#error-container {
+  background-color: black;
+  text-align: center;
+}
+
+#error-container h1 {
   display: inline-block;
   margin: 100px;
   animation: rotate 3.5s linear infinite, rainbow 3s linear infinite;

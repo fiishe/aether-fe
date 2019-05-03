@@ -1,0 +1,3 @@
+class CampaignShowSerializer < CampaignIndexSerializer
+  
+end

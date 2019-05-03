@@ -10,6 +10,7 @@ $flash-error: #e01f35;
 #flash-container {
   position: absolute;
   left: 16px;
+  z-index: 50;
 }
 
 .flash {  // rendered via react
@@ -19,7 +20,7 @@ $flash-error: #e01f35;
 
   padding: 8px 10px;
   margin: 10px;
-  min-width: 300px;
+  min-width: 200px;
 
   display: flex;
   flex-direction: row;

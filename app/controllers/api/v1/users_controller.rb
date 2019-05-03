@@ -1,13 +1,15 @@
 class Api::V1::UsersController < ApiController
   def show
-    render json: User.find(params['id']), serializer: UserShowSerializer
+    if params['id'] == 'me'
+      show_me()
+    else
+      render json: User.find(params['id']), serializer: UserShowSerializer
+    end
   end
 
-  def me
-    if current_user
-      render json: current_user, serializer: UserShowSerializer
-    else
-      render_error(401)
-    end
+  private
+  def show_me
+    return unless logged_in
+    render json: current_user, serializer: UserShowSerializer
   end
 end
