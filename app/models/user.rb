@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  has_many :campaigns, foreign_key: :owner_id
   has_many :campaign_memberships
   has_many :campaigns, through: :campaign_memberships
 

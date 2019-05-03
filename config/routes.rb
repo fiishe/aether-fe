@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     end
   end
 
-  if Rails.env.development?
+  if Rails.env.development? || Rails.env.test?
     get 'dev/pry', to: 'dev#pry'
     get 'dev/login/:id', to: 'dev#login'
     get 'dev/logout', to: 'dev#logout'

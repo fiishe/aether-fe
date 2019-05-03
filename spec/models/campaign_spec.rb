@@ -1,5 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Campaign, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  # create a record so shoulda can test uniqueness validation
+  subject { FactoryBot.create(:campaign) }
+
+  it { should validate_length_of(:name).is_at_least(2) }
+  it { should validate_length_of(:name).is_at_most(32) }
+  it { should validate_uniqueness_of(:name) }
+
+  describe "associations: " do
+    it { should have_many(:users).through(:campaign_memberships) }
+  end
 end
