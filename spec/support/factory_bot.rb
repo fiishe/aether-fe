@@ -10,6 +10,6 @@ FactoryBot.define do
   end
 
   factory :campaign do
-    
+    name { "The Hobbit" }
   end
 end
