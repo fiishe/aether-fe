@@ -25,7 +25,7 @@ class DevController < ApplicationController
   private
 
   def require_dev_environment
-    if !(Rails.env.development?)
+    if !(Rails.env.development? || Rails.env.test?)
       redirect_to "/"
     end
   end

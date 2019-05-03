@@ -15,7 +15,7 @@
   </head>
 
   <body>
-    <%- if Rails.env.development? -%>
+    <%- if Rails.env.development? || Rails.env.test? -%>
       <div id="dev-links">
         <%= link_to "pry", "/dev/pry" %>
         <%= link_to "user 1", "/dev/login/1" %>
