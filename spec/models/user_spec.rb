@@ -1,33 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { FactoryBot.create(:user) }
-
   describe "A User created by FactoryBot (spec/support/factory_bot.rb)" do
-    it "is valid with valid attributes" do
-      expect(subject).to be_valid
-    end
-
-    it "is invalid with a discriminator of the wrong length" do
-      subject.discriminator = "123"
-      expect(subject).to_not be_valid
-    end
-
-    it "is valid with no nickname" do
-      subject.nick = nil
-      expect(subject).to be_valid
-    end
-
-    it "is invalid with a nick that is too short" do
-      subject.nick = "a"
-      expect(subject).to_not be_valid
-    end
-
-    it "is invalid with a nick that is too long" do
-      subject.nick = "0123456789abcdefggggg oof oof oof oof oof"
-      expect(subject).to_not be_valid
+    it "is valid" do
+      user = FactoryBot.create(:user)
+      expect(user).to be_valid
     end
   end
+
+  it { should validate_length_of(:discriminator).is_equal_to(4) }
+
+  it { should validate_length_of(:nick).is_at_least(2).allow_nil }
+  it { should validate_length_of(:nick).is_at_most(16).allow_nil }
 
   describe "associations: " do
     it { should have_many(:campaigns).through(:campaign_memberships) }
