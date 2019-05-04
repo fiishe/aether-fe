@@ -6,8 +6,10 @@
   "name": "aetherfe",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "3.5",
-    "babel-preset-react": "~6.24.1",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "@rails/webpacker": "4",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^13.2.0",
@@ -15,7 +17,8 @@
     "react": "~15.4.2",
     "react-dom": "~15.4.2",
     "react-router": "3",
-    "redbox-react": "1.6.0"
+    "redbox-react": "1.6.0",
+    "webpack-cli": "^3.3.1"
   },
   "devDependencies": {
     "enzyme": "^3.0.0",
@@ -24,19 +27,19 @@
     "fetch-ponyfill": "^6.0.2",
     "jasmine-ajax": "3.2.0",
     "jasmine-core": "~2.4.1",
-    "jasmine-enzyme": "~3.4.0",
+    "jasmine-enzyme": "~7.0.2",
     "karma": "~0.13.22",
     "karma-coverage": "0.5.5",
     "karma-jasmine": "~0.3.8",
     "karma-phantomjs-launcher": "~1.0.4",
     "karma-sourcemap-loader": "0.3.7",
     "karma-spec-reporter": "0.0.26",
-    "karma-webpack": "2.0.1",
+    "karma-webpack": "~3.0.5",
     "phantomjs-prebuilt": "~2.1.14",
-    "react-addons-test-utils": "^15.6.2",
+    "react-addons-test-utils": "^15.4.0",
     "react-test-renderer": "15.4.2",
-    "webpack-cli": "^2.0.10",
-    "webpack-dev-server": "^2.11.1"
+    "webpack": "^4.0.0",
+    "webpack-dev-server": ">=3.1.11"
   },
   "scripts": {
     "start": "./bin/webpack-dev-server",
