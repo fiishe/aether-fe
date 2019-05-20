@@ -1,59 +1,12 @@
 import React from 'react'
 import Page from './Page'
+import UserShowContainer from '../containers/UserShowContainer'
 
 class UserShow extends Page {
-  constructor(props) {
-    super(props)
-    this.state = {
-      userData: {},
-      error: false
-    }
-  }
-
-  componentDidMount() {
-    this.mountFlashes()
-    fetch(`/api/v1/users/${this.props.params.id}`)
-      .then(res => {
-        if(res.ok) {return res}
-        else {
-          let errorMessage = `${res.status} (${res.statusText})`
-          throw(new Error(errorMessage))
-        }
-      })
-      .then(res => res.json())
-      .then(json => {
-        if (json.status == "fail") { this.setState({userData: null}) }
-        else { this.setState({userData: json}) }
-      })
-      .catch(e => {
-        console.error(`Error while fetching user data: ${e.message}`)
-        this.setState({error: true})
-      })
-  }
-
   yield() {
-    if (!this.state.userData) {
-      return(
-        <div className="row panel">You are not <a href="/login">logged in</a>.</div>
-      )
-    }
-    else if (this.state.error) {
-      return(
-        <div className="row panel">Something went wrong while retrieving data.</div>
-      )
-    }
-    else {
-      return(
-        <div className="row panel">
-          <div className="small-5 medium-4 columns av-container">
-            <img src={this.state.userData.avatar_url} />
-          </div>
-          <div className="small-7 medium-8 columns">
-            <h3>{this.state.userData.nick || this.state.userData.username}</h3>
-          </div>
-        </div>
-      )
-    }
+    return(
+      <UserShowContainer id={this.props.params.id} />
+    )
   }
 }
 
