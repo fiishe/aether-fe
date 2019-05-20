@@ -14,7 +14,7 @@ describe('Home', () => {
     expect(1).toEqual(1)
   })
 
-  it('should fail', () => {
+  it('should pass', () => {
     console.log(wrapper.debug());
     expect((wrapper).find('#site-title')).toExist()
   })
