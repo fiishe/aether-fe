@@ -5,8 +5,25 @@ class UsersController < ApplicationController
   DISCORD_API_ENDPOINT = "https://discordapp.com/api"
   DISCORD_CDN_ENDPOINT = "https://cdn.discordapp.com"
 
-  def index
+  def landing
+    if !current_user.nil?
+      redirect_to "/home"
+      return
+    end
     render "/react"
+  end
+
+  def home
+    if current_user.nil?
+      redirect_to "/"
+      return
+    end
+    @avatar_url = current_user.avatar_url
+    render "/react"
+  end
+
+  def not_found
+    render "/not_found"
   end
 
   def login
@@ -49,7 +66,8 @@ class UsersController < ApplicationController
       # user access token for dAPi also expires after 7days
     puts "New session with id #{user.id}"
 
-    redirect_to "/"
+    flash[:success] = "Successfully logged in as #{user.nick || user.username}"
+    redirect_to "/home"
   end
 
   private

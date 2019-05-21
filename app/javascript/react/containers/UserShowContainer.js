@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
+import UserShow from '../components/UserShow';
 
 class UserShowContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
       userData: {},
-      error: false
+      render: "loading"
     }
+    this.startEditing = this.startEditing.bind(this)
   }
 
   componentDidMount() {
@@ -20,37 +22,48 @@ class UserShowContainer extends Component {
       })
       .then(res => res.json())
       .then(json => {
-        if (json.status == "fail") { this.setState({userData: null}) }
-        else { this.setState({userData: json}) }
+        if (json.status == "fail") {
+          window.location = "/"
+          this.setState({render: "not-logged-in"})
+        }
+        else { this.setState({render: "loaded", userData: json}) }
       })
       .catch(e => {
         console.error(`Error while fetching user data: ${e.message}`)
-        this.setState({error: true})
+        this.setState({render: "error"})
       })
   }
 
+  startEditing() {
+    this.setState({render: "edit-form"})
+  }
+
   render() {
-    if (!this.state.userData) {
-      return(
-        <div className="row panel">You are not <a href="/login">logged in</a>.</div>
-      )
-    }
-    else if (this.state.error) {
-      return(
-        <div className="row panel">Something went wrong while retrieving data.</div>
-      )
-    }
-    else {
-      return(
-        <div className="row panel">
-          <div className="small-5 medium-4 columns av-container">
-            <img src={this.state.userData.avatar_url} />
-          </div>
-          <div className="small-7 medium-8 columns">
-            <h3>{this.state.userData.nick || this.state.userData.username}</h3>
-          </div>
-        </div>
-      )
+    switch(this.state.render) {
+      case "loading":
+        return(
+          <UserShow loading={true} />
+        )
+        break
+      case "loaded":
+        let user = this.state.userData
+        return(
+          <UserShow user={this.state.userData} onClickEdit={this.startEditing} />
+        )
+        break
+      case "edit-form":
+        return(
+          <div className="row panel">Editing</div>
+        )
+      case "not-logged-in":
+        return(
+          <div className="row panel">You are not <a href="/login">logged in</a>.</div>
+        )
+        break
+      default:
+        return(
+          <div className="row panel">Something went wrong while retrieving data. Try reloading.</div>
+        )
     }
   }
 }

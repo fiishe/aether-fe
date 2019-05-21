@@ -10,10 +10,11 @@ class DevController < ApplicationController
   end
 
   def login
+    user = User.find(params['id'])
     session[:user_id] = params['id']
     session[:expires_at] = DateTime.now + 7.days
-    flash_confirmation("log in with id #{params['id']}")
-    redirect_to "/users/me"
+    flash_confirmation("log in as #{user.nick || user.username}")
+    redirect_to "/home"
   end
 
   def logout
