@@ -2,25 +2,33 @@
 
 body {
   background-color: $blue-1;
-  font-family: 'Crimson Text', serif;
+  font-family: 'Quattrocento Sans', sans-serif;
 }
 
-nav {
-  padding: 12px;
-  background-color: $blue-3;
+.bar {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 10px;
 }
 
-.nav-section {
+.v-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bar-section {
   display: inline-block;
 }
 
-.nav-section-right {
-  @extend .nav-section ;
-  margin-left: auto;
+nav {
+  @extend .bar ;
+  padding: 12px;
+  background-color: $blue-3;
+}
+
+nav.no-bg {
+  background-color: rgba(0, 0, 0, 0)
 }
 
 .link-button {
@@ -28,7 +36,7 @@ nav {
   padding: 10px;
   margin: 0px;
   border-radius: 8px;
-  color: white;
+  color: $gray-2;
   text-align: center;
 }
 
@@ -42,8 +50,8 @@ nav {
 }
 
 .av-container {
-  max-width: 256px;
-  max-height: 256px;
+  max-width: 128px;
+  max-height: 128px;
   overflow: hidden;
   padding: 0px;
 }
@@ -52,4 +60,40 @@ nav {
   max-width: 100%;
   max-height: 100%;
   border-radius: 50%;
+}
+
+.av-container .placeholder {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+}
+
+#top-av {
+  width: 48px;
+  height: 48px;
+  background-color: #2C2F33;
+  border-radius: 50%;
+  border: 2px $red-1 solid;
+}
+
+.placeholder {
+  color: $gray-3 !important;
+  background-color: $gray-3 !important;
+  border-radius: 6px;
+}
+
+#nav-icons {
+  width: 100%;
+  color: $gray-2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#nav-icons div {
+  width: 25%;
+}
+
+button.button {
+  border-radius: 6px;
 }

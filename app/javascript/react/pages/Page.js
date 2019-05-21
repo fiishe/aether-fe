@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TopBar from '../components/TopBar';
 import NavBar from '../components/NavBar';
 import Flash from '../components/Flash';
 
@@ -88,6 +89,7 @@ class Page extends Component {
   render() {
     return(
       <div>
+        <TopBar />
         <NavBar />
         {this.renderFlashes()}
         {this.yield()}

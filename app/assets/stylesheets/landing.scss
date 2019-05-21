@@ -1,0 +1,21 @@
+@import '_colors';
+
+.landing h1 {
+  color: $blue-3;
+  text-align: center;
+  margin-top: 24px;
+}
+
+.landing p {
+  color: $gray-2;
+  text-align: center;
+}
+
+#login-button {
+  background-color: #7289DA;
+  border-radius: 6px;
+}
+
+#login-button p {
+  color: white;
+}
