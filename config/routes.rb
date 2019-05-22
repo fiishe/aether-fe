@@ -6,7 +6,6 @@ Rails.application.routes.draw do
 
   get 'login', to: 'users#login'
   get 'login/callback', to: 'users#callback'
-  # get 'login/refresh', to: 'users#refresh_callback'
   resources :users, only: [:index]
 
   namespace 'api' do
@@ -26,5 +25,5 @@ Rails.application.routes.draw do
     get 'dev/logout', to: 'dev#logout'
   end
 
-  get '*path', to: 'users#not_found'
+  get '*path', to: 'users#home'
 end

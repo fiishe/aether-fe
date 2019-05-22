@@ -62,11 +62,12 @@ class UsersController < ApplicationController
       user.update(entry)
     else
       user = User.create(entry)
+      puts "NEW USER REGISTERED: #{user}"
     end
 
     session[:user_id] = user.id
     session[:expires_at] = DateTime.now + 7.days
-      # user access token for dAPi also expires after 7days
+      # user access token for dAPI also expires after 7days
     puts "New session with id #{user.id}"
 
     flash[:success] = "Successfully logged in as #{user.nick || user.username}"

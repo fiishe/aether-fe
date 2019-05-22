@@ -60,19 +60,38 @@ class Form extends Component {
 
   renderFields() {
     let fields = this.fields().map((field, i) => {
-      return(
-        <div className={`form-field-${field.type}`} key={i}>
-          <label>
-            {field.label}
-            <input
-              className={`form-input-${field.type}`}
-              type={field.type}
-              value={this.state.values[i] || ''}
-              onChange={(event) => this.handleChange(event, i)}
-            />
-          </label>
-        </div>
-      )
+      if (field.type == "textarea") {
+        return(
+          <div className={'form-field-textarea'} key={i}>
+            <label>
+              {field.label}
+              <textarea
+                className={'form-field-textarea'}
+                maxLength={field.maxLength}
+                placeholder={field.placeholder}
+                required={false}
+                onChange={event => this.handleChange(event, i)}
+              />
+            </label>
+          </div>
+        )
+      }
+      else {
+        return(
+          <div className={`form-field-${field.type}`} key={i}>
+            <label>
+              {field.label}
+              <input
+                className={`form-input-${field.type}`}
+                placeholder={field.placeholder}
+                type={field.type}
+                value={this.state.values[i] || ''}
+                onChange={event => this.handleChange(event, i)}
+              />
+            </label>
+          </div>
+        )
+      }
     })
     return fields
   }
