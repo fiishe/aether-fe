@@ -2,14 +2,13 @@ require 'net/http'
 require 'date'
 
 class UsersController < ApplicationController
+  before_action :set_avatar_url
+
   DISCORD_API_ENDPOINT = "https://discordapp.com/api"
   DISCORD_CDN_ENDPOINT = "https://cdn.discordapp.com"
+  REQUESTED_SCOPE = "identify"
 
   def landing
-    if !current_user.nil?
-      redirect_to "/home"
-      return
-    end
     render "/react"
   end
 
@@ -18,7 +17,6 @@ class UsersController < ApplicationController
       redirect_to "/"
       return
     end
-    @avatar_url = current_user.avatar_url
     render "/react"
   end
 
@@ -27,12 +25,17 @@ class UsersController < ApplicationController
   end
 
   def login
+    if current_user
+      redirect_to "/home"
+      return
+    end
+
     client_id = ENV['DISCORD_CLIENT_ID']
     redirect_uri = root_url + "login/callback"
     state = SecureRandom.urlsafe_base64
     cookies.encrypted[:auth_state] = { value: state, expires: 1.minute }
 
-    redirect_to "#{DISCORD_API_ENDPOINT}/oauth2/authorize?client_id=#{client_id}&redirect_uri=#{redirect_uri}&response_type=code&scope=identify&state=#{state}"
+    redirect_to "#{DISCORD_API_ENDPOINT}/oauth2/authorize?client_id=#{client_id}&redirect_uri=#{redirect_uri}&response_type=code&scope=#{REQUESTED_SCOPE}&state=#{state}"
     # Discord prompts user to authorize AetherFE to access their account,
     # then redirects to callback (below).
   end
@@ -104,5 +107,11 @@ class UsersController < ApplicationController
       JSON.parse(res.body)
     }
     return fetch.value
+  end
+
+  def set_avatar_url
+    if current_user
+      @avatar_url = current_user.avatar_url
+    end
   end
 end
