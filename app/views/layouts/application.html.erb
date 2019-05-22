@@ -16,7 +16,7 @@
   </head>
 
   <body>
-    <%- @show_dev_links = true %>
+    <%- @show_dev_links = false %>
     <%- if @show_dev_links && (Rails.env.development? || Rails.env.test?) -%>
       <div id="dev-links">
         <%= link_to "pry", "/dev/pry" %>
