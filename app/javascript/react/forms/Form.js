@@ -65,11 +65,13 @@ class Form extends Component {
           <div className={'form-field-textarea'} key={i}>
             <label>
               {field.label}
+              <p>{field.tip}</p>
               <textarea
                 className={'form-field-textarea'}
                 maxLength={field.maxLength}
                 placeholder={field.placeholder}
                 required={false}
+                value={this.state.values[i] || ''}
                 onChange={event => this.handleChange(event, i)}
               />
             </label>
@@ -81,6 +83,7 @@ class Form extends Component {
           <div className={`form-field-${field.type}`} key={i}>
             <label>
               {field.label}
+              <p>{field.tip}</p>
               <input
                 className={`form-input-${field.type}`}
                 placeholder={field.placeholder}
@@ -100,7 +103,9 @@ class Form extends Component {
     return(
       <form onSubmit={this.handleSubmit}>
         {this.renderFields()}
-        <input className="form-submit" type="submit" value="Submit" />
+        <div className="form-submit-container">
+          <input className="form-submit" type="submit" value="Submit" />
+        </div>
       </form>
     )
   }

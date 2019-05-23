@@ -1,0 +1,31 @@
+@import '_colors';
+
+form {
+  max-width: 500px;
+}
+
+.panel.form-panel {
+  max-width: 500px;
+}
+
+.form-submit-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-submit {
+  background-color: $button-blue;
+  color: white;
+  font-family: 'Quattrocento Sans', sans-serif;
+  padding: 10px;
+  float: right;
+}
+
+label p, .panel label p {
+  font-size: 0.8em;
+  display: inline-block;
+  margin-bottom: 0px;
+  float: right;
+  text-align: right;
+  color: gray;
+}
