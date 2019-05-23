@@ -1,15 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router';
 import getMeta from '../helpers/getMeta';
+import icon from 'images/icon.png';
 
 const TopBar = (props) => {
   return(
     <div>
       <nav>
         <div className="bar-section">
-          <h2 id="site-title">
-            <Link to="/home">AetherFE</Link>
-          </h2>
+          <div id="title-container">
+            <Link to="/home">
+              <img src={icon} />
+              <h2>AetherFE</h2>
+            </Link>
+          </div>
         </div>
         <div className="bar-section right">
           <Link to="/users/me">
