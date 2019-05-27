@@ -38,7 +38,7 @@ class UserEditForm extends Form {
       })
   }
 
-  fields() {
+  getFields() {
     return [
       {
         name: "nick",
@@ -59,6 +59,15 @@ class UserEditForm extends Form {
     ]
   }
 
+  getValidations() {
+    return [
+      {
+        message: "Nickname must be longer than 2 characters",
+        check: () => { return (this.state.values['nick'].length >= 2) }
+      }
+    ]
+  }
+
   getPlaceholder(fieldName) {
     try {
       return this.state.placeholders[fieldName]
@@ -66,6 +75,16 @@ class UserEditForm extends Form {
     catch {
       return ""
     }
+  }
+
+  submit(event) {
+    this.fetchTo('/api/v1/users/me', 'PATCH')
+    .then(res => {
+      console.log(res);
+    })
+    .catch(e => {
+      console.log(`Failed to update user info: ${e.message}`);
+    })
   }
 
   render() {
