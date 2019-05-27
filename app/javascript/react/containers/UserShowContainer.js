@@ -12,7 +12,7 @@ class UserShowContainer extends Component {
   }
 
   componentDidMount() {
-    fetch(`/api/v1/users/${this.props.id}`)
+    fetch(`/api/v1/users/${this.props.userId}`)
       .then(res => {
         if(res.ok) {return res}
         else {

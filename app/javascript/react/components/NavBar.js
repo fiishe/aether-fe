@@ -5,7 +5,7 @@ const NavBar = (props) => {
   return(
     <div>
       <nav className="no-bg">
-        <div id="nav-icons">
+        <div className="nav-icons">
           <LinkButton to="/">
             <i className="fas fa-home"></i>
           </LinkButton>

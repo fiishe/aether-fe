@@ -1,21 +1,25 @@
 import React from 'react'
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import TopBar from './containers/TopBar'
+import NavBar from './components/NavBar'
 import Home from './pages/Home'
-import UserShow from './pages/UserShow'
-import UserEdit from './pages/UserEdit'
+import UserRouter from './routers/UserRouter'
 import NotFound from './pages/NotFound'
 import NewCampaignForm from './forms/NewCampaignForm'
 
 const App = props => {
   return(
-    <Router history={browserHistory}>
-      <Route exact path="/" component={Home} />
-      <Route path="/home" component={Home} />
-      <Route path='/login' component={() => {window.location = '/login'; return(<div />)}} />
-      <Route path='/users/:id' component={UserShow} />
-      <Route path='/users/me/edit' component={UserEdit} />
-      <Route path='*' component={NotFound} />
-    </Router>
+    <BrowserRouter>
+      <div>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/home' component={Home} />
+          <Route path='/login' component={() => {window.location = '/login'; return(<div />)}} />
+          <Route path='/users' component={UserRouter} />
+          <Route path='*' component={NotFound} />
+        </Switch>
+      </div>
+    </BrowserRouter>
   )
 }
 

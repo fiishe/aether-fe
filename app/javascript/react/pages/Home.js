@@ -6,7 +6,7 @@ class Home extends Page {
   yield() {
     return(
       <div>
-        <UserShowContainer id={'me'} />
+        <UserShowContainer userId="me" />
       </div>
     )
   }

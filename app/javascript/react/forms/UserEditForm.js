@@ -9,6 +9,7 @@ class UserEditForm extends Form {
     this.state['avatar_url'] = ''
     this.state['render'] = 'loading'
     this.getPlaceholder = this.getPlaceholder.bind(this)
+    this.submitText = 'Save'
   }
 
   componentDidMount() {

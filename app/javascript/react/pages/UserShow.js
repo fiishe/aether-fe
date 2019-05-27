@@ -4,8 +4,9 @@ import UserShowContainer from '../containers/UserShowContainer'
 
 class UserShow extends Page {
   yield() {
+    let userId = this.props.match.params.id
     return(
-      <UserShowContainer id={this.props.params.id} />
+      <UserShowContainer userId={userId} />
     )
   }
 }

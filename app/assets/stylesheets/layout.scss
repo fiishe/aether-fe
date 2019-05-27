@@ -5,21 +5,6 @@ body {
   font-family: 'Quattrocento Sans', sans-serif;
 }
 
-#title-container a {
-  @extend .bar ;
-}
-
-#title-container img {
-  max-width: 48px;
-  max-height: 48px;
-  margin-left: -8px;
-}
-
-#title-container h2 {
-  display: inline-block;
-  margin: 0px;
-}
-
 .bar {
   display: flex;
   flex-direction: row;
@@ -34,16 +19,6 @@ body {
 
 .bar-section {
   display: inline-block;
-}
-
-nav {
-  @extend .bar ;
-  padding: 12px;
-  background-color: $blue-3;
-}
-
-nav.no-bg {
-  background-color: rgba(0, 0, 0, 0)
 }
 
 .link-button {
@@ -62,51 +37,6 @@ nav.no-bg {
 .panel a {
   color: blue;
   text-decoration: underline;
-}
-
-.av-container {
-  max-width: 128px;
-  max-height: 128px;
-  overflow: hidden;
-  padding: 0px;
-}
-
-.av-container img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 50%;
-}
-
-.av-container .placeholder {
-  width: 128px;
-  height: 128px;
-  border-radius: 50%;
-}
-
-#top-av {
-  width: 48px;
-  height: 48px;
-  background-color: #2C2F33;
-  border-radius: 50%;
-  border: 3px $red-1 solid;
-}
-
-.placeholder {
-  color: $gray-3 !important;
-  background-color: $gray-3 !important;
-  border-radius: 6px;
-}
-
-#nav-icons {
-  width: 100%;
-  color: $gray-2;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-#nav-icons div {
-  width: 25%;
 }
 
 button.button {
