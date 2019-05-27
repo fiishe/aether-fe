@@ -12,7 +12,7 @@ class NotFound extends Page {
         </div>
         <br />
         <p>The page you were looking for could not be found.</p>
-        <a href="/">Home</a>
+        <a href="/home">Home</a>
       </div>
     )
   }

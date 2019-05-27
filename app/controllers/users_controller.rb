@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   REQUESTED_SCOPE = "identify"
 
   def landing
-    render "/react"
+    render "/landing"
   end
 
   def home

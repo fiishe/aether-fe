@@ -6,7 +6,7 @@ const NavBar = (props) => {
     <div>
       <nav className="no-bg">
         <div id="nav-icons">
-          <LinkButton to="/home">
+          <LinkButton to="/">
             <i className="fas fa-home"></i>
           </LinkButton>
           <LinkButton to="/users/3">
