@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_04_005609) do
+ActiveRecord::Schema.define(version: 2019_05_20_231231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2019_05_04_005609) do
 
   create_table "characters", force: :cascade do |t|
     t.string "name", null: false
+    t.string "class", null: false
     t.integer "level", default: 1, null: false
     t.boolean "promoted", default: false, null: false
     t.integer "user_id", null: false
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 2019_05_04_005609) do
     t.datetime "access_token_issued"
     t.string "refresh_token"
     t.string "avatar_url"
+    t.string "bio"
   end
 
 end
