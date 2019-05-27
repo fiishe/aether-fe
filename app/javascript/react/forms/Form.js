@@ -104,7 +104,7 @@ class Form extends Component {
       <form onSubmit={this.handleSubmit}>
         {this.renderFields()}
         <div className="form-submit-container">
-          <input className="form-submit" type="submit" value="Submit" />
+          <input className="form-submit" type="submit" value={this.submitText || "Submit"} />
         </div>
       </form>
     )

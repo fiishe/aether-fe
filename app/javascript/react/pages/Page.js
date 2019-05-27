@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TopBar from '../components/TopBar';
+import TopBar from '../containers/TopBar';
 import NavBar from '../components/NavBar';
 import Flash from '../components/Flash';
 
@@ -72,8 +72,8 @@ class Page extends Component {
     }
 
     return(
-      <div id="flash-anchor">
-        <div id="flash-container">
+      <div className="flash-anchor">
+        <div className="flash-container">
           {flashes}
         </div>
       </div>

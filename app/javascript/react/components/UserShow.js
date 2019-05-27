@@ -5,7 +5,7 @@ const UserShow = props => {
   let elems
   if (props.loading) {
     elems = {
-      avatar: <div className="placeholder av-placeholder"></div>,
+      avatar: <div className="placeholder av-placeholder" />,
       username: <h3 className="placeholder">Loading</h3>,
       bio: <p className="placeholder">Loading<br />Loading</p>
     }

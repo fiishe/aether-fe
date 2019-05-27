@@ -9,6 +9,10 @@ class UsersController < ApplicationController
   REQUESTED_SCOPE = "identify"
 
   def landing
+    if !current_user.nil?
+      render "/react"
+      return
+    end
     render "/landing"
   end
 

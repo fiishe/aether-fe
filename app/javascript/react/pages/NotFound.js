@@ -1,13 +1,13 @@
 import React from 'react';
 import Page from './Page';
-import TopBar from '../components/TopBar';
+import TopBar from '../containers/TopBar';
 import LinkButton from '../components/LinkButton';
 
 class NotFound extends Page {
   yield() {
     return(
       <div className="panel row">
-        <div id="error-container">
+        <div className="error-container">
           <h1>404 yo!</h1>
         </div>
         <br />
