@@ -4,6 +4,18 @@ form {
   max-width: 500px;
 }
 
+ul.form-errors {
+  border: 1px red solid;
+  color: red;
+}
+
+.form-errors li {
+  color: red;
+  padding: 12px;
+  margin-left: 24px;
+  font-size: 0.94em;
+}
+
 .panel.form-panel {
   max-width: 500px;
 }

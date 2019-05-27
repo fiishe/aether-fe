@@ -7,7 +7,7 @@ class NotFound extends Page {
   yield() {
     return(
       <div className="panel row">
-        <div className="error-container">
+        <div id="error-container">
           <h1>404 yo!</h1>
         </div>
         <br />
