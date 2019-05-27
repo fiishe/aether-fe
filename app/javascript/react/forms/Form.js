@@ -7,6 +7,8 @@ class Form extends Component {
     this.fields = this.getFields()
     this.validations = this.getValidations()
 
+    this.submitText = "Submit"
+
     let initialValues = {}
     this.fields.forEach(field => {
       initialValues[field.name] = field.value || ''
@@ -105,7 +107,10 @@ class Form extends Component {
 
   renderFields() {
     let fields = this.fields.map((field, i) => {
-      if (field.type == "textarea") {
+      if (field.customJSX) {
+        return field.customJSX
+      }
+      else if (field.type == "textarea") {
         return(
           <div className={'form-field-textarea'} key={i}>
             <label>

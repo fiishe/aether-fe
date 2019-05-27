@@ -1,14 +1,14 @@
 import React from 'react';
 import Form from './Form';
+import { withRouter } from 'react-router-dom';
 import UserShow from '../components/UserShow';
 
 class UserEditForm extends Form {
   constructor(props) {
     super(props)
-    this.state['placeholders'] = {}
     this.state['avatar_url'] = ''
     this.state['render'] = 'loading'
-    this.getPlaceholder = this.getPlaceholder.bind(this)
+
     this.submitText = 'Save'
   }
 
@@ -23,11 +23,9 @@ class UserEditForm extends Form {
       })
       .then(res => res.json())
       .then(json => {
+        this.fields[0].placeholder = json.nick || json.username
+        this.fields[1].placeholder = json.bio
         this.setState({
-          placeholders: {
-            nick: json.nick || json.username,
-            bio: json.bio
-          },
           avatar_url: json.avatar_url,
           render: "loaded"
         })
@@ -45,16 +43,14 @@ class UserEditForm extends Form {
         label: "Nickname",
         tip: "2-16 characters",
         type: "text",
-        maxLength: 16,
-        placeholder: this.getPlaceholder('nick')
+        maxLength: 16
       },
       {
         name: "bio",
         label: "Bio",
         tip: "max 140 characters",
         type: "textarea",
-        maxLength: 140,
-        placeholder: this.getPlaceholder('bio')
+        maxLength: 140
       }
     ]
   }
@@ -68,23 +64,29 @@ class UserEditForm extends Form {
     ]
   }
 
-  getPlaceholder(fieldName) {
-    try {
-      return this.state.placeholders[fieldName]
-    }
-    catch {
-      return ""
-    }
-  }
-
-  submit(event) {
+  submit() {
     this.fetchTo('/api/v1/users/me', 'PATCH')
     .then(res => {
       console.log(res);
+      this.props.history.push("/users/me")
     })
     .catch(e => {
       console.log(`Failed to update user info: ${e.message}`);
     })
+  }
+
+  renderForm() {
+    return(
+      <div>
+        {this.renderErrors()}
+        <form onSubmit={this.handleSubmit}>
+          {this.renderFields()}
+          <div className="form-submit-container">
+            <input className="form-submit" type="submit" value={this.submitText || "Submit"} />
+          </div>
+        </form>
+      </div>
+    )
   }
 
   render() {
@@ -108,4 +110,5 @@ class UserEditForm extends Form {
   }
 }
 
-export default UserEditForm
+export default withRouter(UserEditForm)
+// withRouter adds history as a prop so we can redirect by pushing to history
