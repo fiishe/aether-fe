@@ -5,10 +5,13 @@ class Api::V1::CampaignsController < ApiController
     user = get_user(params['user_id'])
 
     if user.nil?
-      render json: Campaign.limit(20)
+      render json: {
+        status: "fail",
+        data: { message: "Could not find user with given ID" },
+        code: 404
+      }
     else
-      binding.pry
-      render json: user.campaigns
+      render json: user.campaigns, each_serializer: CampaignIndexSerializer
     end
   end
 
