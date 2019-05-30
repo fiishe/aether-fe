@@ -1,7 +1,3 @@
 class CampaignIndexSerializer < ActiveModel::Serializer
-  attributes :id, :name, :owner
-
-  def owner
-    object.user
-  end
+  attributes :id, :name
 end

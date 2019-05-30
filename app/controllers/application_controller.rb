@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   private
-
+  
   def get_user(id)
     if id == "me"
       return current_user
