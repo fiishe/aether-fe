@@ -55,6 +55,10 @@ $lb-border-radius: 8px;
   text-align: center;
 }
 
+.link-button.default a p {
+  color: white;
+}
+
 .link-button a p:hover, .panel .link-button a p:hover {
   background-color: $blue-2;
 }
