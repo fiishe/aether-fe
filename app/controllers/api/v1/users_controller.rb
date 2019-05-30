@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApiController
     else
       render json: {
         status: "fail",
-        data: { errors: @review.errors.full_messages }
+        data: { errors: @user.errors.full_messages }
       }
     end
   end

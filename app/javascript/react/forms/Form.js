@@ -64,7 +64,13 @@ class Form extends Component {
   }
 
   payload() {
-    return JSON.stringify(this.state.values)
+    let payload = JSON.parse(JSON.stringify(this.state.values))
+    for (var key in payload) {
+      if (!payload[key]) {
+        delete payload[key]
+      }
+    }
+    return JSON.stringify(payload)
   }
 
   validate() {
@@ -210,9 +216,14 @@ class Form extends Component {
   }
 
   addError(e) {
-    let newErrors = this.state.errors.splice(0)
-    newErrors.push(e)
-    this.setState({ errors: newErrors })
+    let newErrorArr = this.state.errors.splice(0)
+    newErrorArr.push(e)
+    this.setState({ errors: newErrorArr })
+  }
+
+  addErrors(errors) {
+    let newErrorArr = this.state.errors.concat(errors)
+    this.setState({ errors: newErrorArr })
   }
 
   clearErrors() {
