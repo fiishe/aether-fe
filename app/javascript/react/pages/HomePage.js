@@ -2,7 +2,7 @@ import React from 'react';
 import Page from './Page';
 import UserShowContainer from '../containers/UserShowContainer';
 
-class Home extends Page {
+class HomePage extends Page {
   yield() {
     return(
       <div>
@@ -12,4 +12,4 @@ class Home extends Page {
   }
 }
 
-export default Home
+export default HomePage
