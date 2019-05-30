@@ -23,11 +23,14 @@ class UserEditForm extends Form {
       })
       .then(res => res.json())
       .then(json => {
-        this.fields[0].placeholder = json.nick || json.username
-        this.fields[1].placeholder = json.bio
+        this.fields[0].placeholder = json.username
         this.setState({
           avatar_url: json.avatar_url,
-          render: "loaded"
+          render: "loaded",
+          values: {
+            nick: json.nick || "",
+            bio: json.bio || ""
+          }
         })
       })
       .catch(e => {
@@ -60,6 +63,7 @@ class UserEditForm extends Form {
       {
         message: "Nickname must be longer than 2 characters",
         check: () => {
+          console.log(this.state.values);
           let len = this.state.values['nick'].length
           return (len == 0 || len >= 2)
         }
@@ -74,7 +78,7 @@ class UserEditForm extends Form {
         this.addErrors(res.data.errors)
       }
       else {
-        this.props.history.push("/users/me")
+        this.props.history.push("/")
       }
     })
     .catch(e => {
@@ -94,7 +98,7 @@ class UserEditForm extends Form {
           <div className="small-12 medium-4 columns av-container">
             <img src={this.state.avatar_url} />
           </div>
-          <div className="small-12 medium-8 columns">
+          <div className="small-12 medium-8 columns top-space">
             {this.renderForm()}
           </div>
         </div>

@@ -1,3 +1,3 @@
 class UserShowSerializer < ActiveModel::Serializer
-  attributes :id, :username, :nick, :avatar_url, :bio
+  attributes :id, :username, :discriminator, :nick, :avatar_url, :bio
 end

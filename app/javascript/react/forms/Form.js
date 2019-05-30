@@ -11,7 +11,7 @@ class Form extends Component {
 
     let initialValues = {}
     this.fields.forEach(field => {
-      initialValues[field.name] = field.value || ''
+      initialValues[field.name] = field.value || ""
     })
 
     this.state = {
@@ -38,14 +38,12 @@ class Form extends Component {
       {
         name: "firstname",
         label: "First Name",
-        type: "text",
-        value: ""
+        type: "text"
       },
       {
         name: "lastname",
         label: "Last Name",
-        type: "text",
-        value: ""
+        type: "text"
       }
     ]
   }
@@ -66,16 +64,12 @@ class Form extends Component {
   payload() {
     let payload = JSON.parse(JSON.stringify(this.state.values))
     for (var key in payload) {
-      if (!payload[key]) {
-        delete payload[key]
-      }
+      if (payload[key] == "") { payload[key] = null }
     }
     return JSON.stringify(payload)
   }
 
   validate() {
-    if (this.isEmpty()) { return false }
-
     let isValid = true
     this.validations.forEach(validation => {
       if (validation.check && !validation.check()) {

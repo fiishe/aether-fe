@@ -10,3 +10,9 @@
 .right {
   margin-left: auto;
 }
+
+$default-margin: 12px;
+
+.top-space {
+  margin-top: $default-margin
+}
