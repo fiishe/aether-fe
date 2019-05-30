@@ -42,3 +42,26 @@ body {
 button.button {
   border-radius: 6px;
 }
+
+$av-radius: 128px;
+
+.av-container {
+  max-width: $av-radius;
+  max-height: $av-radius;
+  overflow: hidden;
+  padding: 0px;
+  margin-bottom: 16px;
+}
+
+.av-container img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+  margin-left: auto;
+}
+
+.av-container .placeholder {
+  width: $av-radius;
+  height: $av-radius;
+  border-radius: 50%;
+}

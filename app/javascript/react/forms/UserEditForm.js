@@ -59,7 +59,10 @@ class UserEditForm extends Form {
     return [
       {
         message: "Nickname must be longer than 2 characters",
-        check: () => { return (this.state.values['nick'].length >= 2) }
+        check: () => {
+          let len = this.state.values['nick'].length
+          return (len == 0 || len >= 2)
+        }
       }
     ]
   }
@@ -67,26 +70,16 @@ class UserEditForm extends Form {
   submit() {
     this.fetchTo('/api/v1/users/me', 'PATCH')
     .then(res => {
-      console.log(res);
-      this.props.history.push("/users/me")
+      if (res.status == "fail") {
+        this.addErrors(res.data.errors)
+      }
+      else {
+        this.props.history.push("/users/me")
+      }
     })
     .catch(e => {
       console.log(`Failed to update user info: ${e.message}`);
     })
-  }
-
-  renderForm() {
-    return(
-      <div>
-        {this.renderErrors()}
-        <form onSubmit={this.handleSubmit}>
-          {this.renderFields()}
-          <div className="form-submit-container">
-            <input className="form-submit" type="submit" value={this.submitText || "Submit"} />
-          </div>
-        </form>
-      </div>
-    )
   }
 
   render() {
@@ -98,10 +91,10 @@ class UserEditForm extends Form {
     else {
       return(
         <div className="row panel">
-          <div className="small-5 medium-4 columns av-container">
+          <div className="small-12 medium-4 columns av-container">
             <img src={this.state.avatar_url} />
           </div>
-          <div className="small-7 medium-8 columns">
+          <div className="small-12 medium-8 columns">
             {this.renderForm()}
           </div>
         </div>
