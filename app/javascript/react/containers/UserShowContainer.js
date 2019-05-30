@@ -22,10 +22,7 @@ class UserShowContainer extends Component {
       })
       .then(res => res.json())
       .then(json => {
-        if (json.status == "fail") {
-          window.location = "/"
-          this.setState({render: "not-logged-in"})
-        }
+        if (json.status == "fail") { throw(new Error(json.data.message)) }
         else { this.setState({render: "loaded", userData: json}) }
       })
       .catch(e => {
@@ -45,11 +42,6 @@ class UserShowContainer extends Component {
         let user = this.state.userData
         return(
           <UserShow user={this.state.userData} />
-        )
-        break
-      case "not-logged-in":
-        return(
-          <div className="row panel">You are not <a href="/login">logged in</a>.</div>
         )
         break
       default:
