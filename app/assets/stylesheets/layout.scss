@@ -35,16 +35,27 @@ body {
   margin-right: 0;
 }
 
-.link-button {
+$lb-border-radius: 8px;
+
+.link-button.default, .panel .link-button.default {
+  background-color: $button-blue;
+  border-radius: $lb-border-radius;
+}
+
+.link-button a, .panel .link-button a {
+  text-decoration: none !important;
+}
+
+.link-button a p, .panel .link-button a p {
   max-width: 200px;
-  padding: 10px;
+  padding: 8px 16px;
   margin: 0px;
-  border-radius: 8px;
+  border-radius: $lb-border-radius;
   color: $gray-2;
   text-align: center;
 }
 
-.link-button:hover {
+.link-button a p:hover, .panel .link-button a p:hover {
   background-color: $blue-2;
 }
 
@@ -53,7 +64,7 @@ body {
   text-decoration: underline;
 }
 
-button.button {
+button {
   border-radius: 6px;
 }
 
@@ -64,6 +75,11 @@ hr {
   border-top: 1px solid gray;
   margin: 1em 0;
   padding: 0;
+}
+
+hr.space {
+  border: 1px solid transparent;
+  margin-top: 0;
 }
 
 $av-radius: 64px;

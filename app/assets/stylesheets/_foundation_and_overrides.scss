@@ -481,8 +481,8 @@ $button-bg-color: $button-blue;
 // $info-button-border-color: $info-button-bg-hover;
 
 // We use this to set the default radius used throughout the core.
-$button-radius: $global-radius;
-// $button-round: $global-rounded;
+// $button-radius: $global-radius;
+$button-round: 6px;
 
 // We use this to set default opacity and cursor for disabled buttons.
 // $button-disabled-opacity: .7;

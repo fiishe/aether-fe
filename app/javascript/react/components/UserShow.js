@@ -9,7 +9,8 @@ const UserShow = props => {
       avatar: <div className="placeholder av-placeholder" />,
       username: <h3 className="placeholder">Loading</h3>,
       discord: <h4 className="placeholder">Loading</h4>,
-      bio: <p className="placeholder">Loading<br />Loading</p>
+      bio: <p className="placeholder">Loading<br />Loading</p>,
+      editButton: null
     }
   }
   else {
@@ -17,7 +18,8 @@ const UserShow = props => {
       avatar: <img src={user.avatar_url} />,
       username: <h3 className="bold">{user.nick || user.username}</h3>,
       discord: <h4 className="discord-tag">{user.username}#{user.discriminator}</h4>,
-      bio: <p>{user.bio}</p>
+      bio: <p>{user.bio}</p>,
+      editButton: <LinkButton to="/users/me/edit" defaultStyle>Edit</LinkButton>
     }
   }
 
@@ -30,6 +32,9 @@ const UserShow = props => {
         <div className="bar-section name-container">
           {elems.username}
           {elems.discord}
+        </div>
+        <div className="bar-section right">
+          {elems.editButton}
         </div>
       </div>
       <hr />
