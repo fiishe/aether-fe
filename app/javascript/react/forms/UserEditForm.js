@@ -6,7 +6,7 @@ import UserShow from '../components/UserShow';
 class UserEditForm extends Form {
   constructor(props) {
     super(props)
-    this.state['avatar_url'] = ''
+    this.state['user'] = {}
     this.state['render'] = 'loading'
 
     this.submitText = 'Save'
@@ -25,7 +25,7 @@ class UserEditForm extends Form {
       .then(json => {
         this.fields[0].placeholder = json.username
         this.setState({
-          avatar_url: json.avatar_url,
+          user: json,
           render: "loaded",
           values: {
             nick: json.nick || "",
@@ -86,6 +86,10 @@ class UserEditForm extends Form {
     })
   }
 
+  renderForm() {
+
+  }
+
   render() {
     if (this.state.render == 'loading') {
       return(
@@ -93,14 +97,27 @@ class UserEditForm extends Form {
       )
     }
     else {
+      let fields = this.renderFields()
+      let user = this.state.user
       return(
-        <div className="row panel">
-          <div className="small-12 medium-4 columns av-container">
-            <img src={this.state.avatar_url} />
-          </div>
-          <div className="small-12 medium-8 columns top-space">
-            {this.renderForm()}
-          </div>
+        <div className="panel">
+          {this.renderErrors()}
+          <form onSubmit={this.handleSubmit}>
+            <div className="bar">
+              <div className="bar-section av-container">
+                <img src={user.avatar_url} />
+              </div>
+              <div className="bar-section right">
+                {fields[0]}
+              </div>
+            </div>
+            <div>
+              {fields[1]}
+            </div>
+            <div className="form-submit-container">
+              <input className="form-submit" type="submit" value={this.submitText || "Submit"} />
+            </div>
+          </form>
         </div>
       )
     }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import UserShow from '../components/UserShow';
+import UserEditForm from '../forms/UserEditForm';
 
 class UserShowContainer extends Component {
   constructor(props) {
@@ -8,7 +9,6 @@ class UserShowContainer extends Component {
       userData: {},
       render: "loading"
     }
-    this.startEditing = this.startEditing.bind(this)
   }
 
   componentDidMount() {
@@ -34,10 +34,6 @@ class UserShowContainer extends Component {
       })
   }
 
-  startEditing() {
-    this.setState({render: "edit-form"})
-  }
-
   render() {
     switch(this.state.render) {
       case "loading":
@@ -48,13 +44,9 @@ class UserShowContainer extends Component {
       case "loaded":
         let user = this.state.userData
         return(
-          <UserShow user={this.state.userData} onClickEdit={this.startEditing} />
+          <UserShow user={this.state.userData} />
         )
         break
-      case "edit-form":
-        return(
-          <div className="row panel">Editing</div>
-        )
       case "not-logged-in":
         return(
           <div className="row panel">You are not <a href="/login">logged in</a>.</div>
