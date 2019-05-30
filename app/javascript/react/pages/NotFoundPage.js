@@ -3,7 +3,7 @@ import Page from './Page';
 import TopBar from '../containers/TopBar';
 import LinkButton from '../components/LinkButton';
 
-class NotFound extends Page {
+class NotFoundPage extends Page {
   yield() {
     return(
       <div className="panel row">
@@ -27,4 +27,4 @@ class NotFound extends Page {
   }
 }
 
-export default NotFound
+export default NotFoundPage

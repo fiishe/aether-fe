@@ -2,7 +2,7 @@ import React from 'react'
 import Page from './Page'
 import UserEditForm from '../forms/UserEditForm'
 
-class UserEdit extends Page {
+class UserEditPage extends Page {
   yield() {
     return(
       <UserEditForm />
@@ -10,4 +10,4 @@ class UserEdit extends Page {
   }
 }
 
-export default UserEdit
+export default UserEditPage

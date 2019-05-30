@@ -2,7 +2,7 @@ import React from 'react'
 import Page from './Page'
 import UserShowContainer from '../containers/UserShowContainer'
 
-class UserShow extends Page {
+class UserShowPage extends Page {
   yield() {
     let userId = this.props.match.params.id
     return(
@@ -11,4 +11,4 @@ class UserShow extends Page {
   }
 }
 
-export default UserShow
+export default UserShowPage
