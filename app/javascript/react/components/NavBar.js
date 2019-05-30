@@ -4,7 +4,7 @@ import LinkButton from './LinkButton';
 const NavBar = (props) => {
   return(
     <div>
-      <nav className="no-bg">
+      <nav>
         <div className="nav-icons">
           <LinkButton to="/">
             <i className="fas fa-home"></i>
