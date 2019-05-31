@@ -11,7 +11,10 @@ class Api::V1::UsersController < ApiController
     @user = current_user
     @user.update(user_params)
     if @user.save
-      render json: @user, serializer: UserShowSerializer
+      render json: {
+        status: "success",
+        data: { user: UserShowSerializer.new(@user).as_json }
+      }
     else
       render json: {
         status: "fail",

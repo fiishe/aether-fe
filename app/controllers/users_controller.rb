@@ -63,6 +63,9 @@ class UsersController < ApplicationController
 
     user = User.find_by(snowflake: user_data['id'])
     if user
+      if user.access_token == entry.access_token
+        entry = entry.except(:access_token_issued)
+      end
       user.update(entry)
     else
       user = User.create(entry)
@@ -79,6 +82,7 @@ class UsersController < ApplicationController
   end
 
   private
+  
   def discord_exchange_code(code)
     data = {
       client_id: ENV['DISCORD_CLIENT_ID'],
@@ -102,12 +106,12 @@ class UsersController < ApplicationController
 
   def discord_get_user(access_token)
     uri = URI("#{DISCORD_API_ENDPOINT}/users/@me")
-    req = Net::HTTP::Get.new(uri)
-    req['Authorization'] = "Bearer #{access_token}"
+    request = Net::HTTP::Get.new(uri)
+    request['Authorization'] = "Bearer #{access_token}"
 
     fetch = Thread.new {
       res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: uri.scheme == 'https') { |http|
-        http.request(req)
+        http.request(request)
       }
       JSON.parse(res.body)
     }
