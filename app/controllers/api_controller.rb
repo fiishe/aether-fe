@@ -10,7 +10,8 @@ class ApiController < ApplicationController
     if current_user.nil?
       render json: {
         status: "fail",
-        data: { "message": "User must be logged in to perform this action." }
+        data: { "message": "User must be logged in to perform this action." },
+        code: 401
       }
       return false
     else

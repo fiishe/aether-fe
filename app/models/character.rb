@@ -9,4 +9,10 @@ class Character < ApplicationRecord
     greater_than_or_equal_to: 1,
     less_than_or_equal_to: 20
   }
+
+  validates :max_hp, :strength, :magic, :skill, :speed, :luck, :defense, :resistance, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 99
+  }
 end

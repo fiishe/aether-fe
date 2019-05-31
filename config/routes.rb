@@ -10,9 +10,13 @@ Rails.application.routes.draw do
 
   namespace 'api' do
     namespace 'v1' do
-      resources 'campaigns', only: [:show, :create]
+      resources 'characters', only: [:show]
+      resources 'campaigns', only: [:show, :create] do
+        resources 'characters', only: [:index, :show]
+      end
       resources 'users', only: [:show, :update] do
         resources 'campaigns', only: [:index]
+        resources 'characters', only: [:index, :show]
       end
 
       get '*path', to: 'errors#not_found'

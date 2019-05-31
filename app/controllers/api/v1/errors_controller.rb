@@ -2,7 +2,7 @@ class Api::V1::ErrorsController < ApiController
   def not_found
     render json: {
       status: "fail",
-      data: { "message": "404 Not Found" },
+      data: { message: "No endpoint exists at this route" },
       code: 404
     }
   end

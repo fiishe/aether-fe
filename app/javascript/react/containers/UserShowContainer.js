@@ -41,7 +41,7 @@ class UserShowContainer extends Component {
       case "loaded":
         let user = this.state.userData
         return(
-          <UserShow user={this.state.userData} />
+          <UserShow user={this.state.userData} userId={this.props.userId} />
         )
         break
       default:
