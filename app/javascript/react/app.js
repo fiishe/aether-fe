@@ -11,6 +11,10 @@ const App = props => {
   return(
     <BrowserRouter>
       <div>
+        <div>
+          <TopBar />
+          <NavBar />
+        </div>
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/home' component={HomePage} />
