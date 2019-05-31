@@ -9,7 +9,7 @@ const UserShow = props => {
       avatar: <div className="placeholder av-placeholder" />,
       username: <h3 className="placeholder">Loading</h3>,
       discord: <h4 className="placeholder">Loading</h4>,
-      bio: <p className="placeholder">Loading<br />Loading</p>,
+      bio: <p className="placeholder">Loading</p>,
       editButton: null
     }
   }

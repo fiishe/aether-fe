@@ -89,8 +89,6 @@ class Page extends Component {
   render() {
     return(
       <div>
-        <TopBar />
-        <NavBar />
         {this.renderFlashes()}
         {this.yield()}
       </div>
