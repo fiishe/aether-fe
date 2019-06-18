@@ -107,3 +107,8 @@ $av-radius: 64px;
   height: $av-radius;
   border-radius: 50%;
 }
+
+.red-bg, .panel.red-bg {
+  background-color: $red-1;
+  border-color: $red-2;
+}
