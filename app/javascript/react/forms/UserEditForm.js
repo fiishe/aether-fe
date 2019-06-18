@@ -63,7 +63,6 @@ class UserEditForm extends Form {
       {
         message: "Nickname must be longer than 2 characters",
         check: () => {
-          console.log(this.state.values);
           let len = this.state.values['nick'].length
           return (len == 0 || len >= 2)
         }
@@ -82,7 +81,7 @@ class UserEditForm extends Form {
       }
     })
     .catch(e => {
-      console.log(`Failed to update user info: ${e.message}`);
+      console.error(e)
     })
   }
 

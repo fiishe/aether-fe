@@ -63,13 +63,15 @@ class UsersController < ApplicationController
 
     user = User.find_by(snowflake: user_data['id'])
     if user
-      if user.access_token == entry.access_token
+      binding.pry
+      if user.access_token == entry[:access_token]
         entry = entry.except(:access_token_issued)
       end
       user.update(entry)
+      server_log "User logged in with ID #{user.snowflake}"
     else
       user = User.create(entry)
-      puts "NEW USER REGISTERED: #{user}"
+      server_log "New user registered with ID #{user.snowflake}"
     end
 
     session[:user_id] = user.id
@@ -82,7 +84,7 @@ class UsersController < ApplicationController
   end
 
   private
-  
+
   def discord_exchange_code(code)
     data = {
       client_id: ENV['DISCORD_CLIENT_ID'],
