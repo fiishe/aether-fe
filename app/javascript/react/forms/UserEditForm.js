@@ -99,7 +99,7 @@ class UserEditForm extends Form {
       let fields = this.renderFields()
       let user = this.state.user
       return(
-        <div className="panel">
+        <div className="row panel">
           {this.renderErrors()}
           <form onSubmit={this.handleSubmit}>
             <div className="bar">

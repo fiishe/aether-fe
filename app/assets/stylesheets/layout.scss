@@ -47,7 +47,6 @@ $lb-border-radius: 8px;
 }
 
 .link-button a p, .panel .link-button a p {
-  max-width: 200px;
   padding: 8px 16px;
   margin: 0px;
   border-radius: $lb-border-radius;
@@ -70,6 +69,10 @@ $lb-border-radius: 8px;
 
 button {
   border-radius: 6px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 hr {
