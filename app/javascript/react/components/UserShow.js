@@ -29,7 +29,7 @@ const UserShow = props => {
   }
 
   return(
-    <div className="panel">
+    <div className="row panel">
       <div className="bar">
         <div className="bar-section av-container">
           {elems.avatar}
@@ -43,7 +43,7 @@ const UserShow = props => {
         </div>
       </div>
       <hr />
-      <div className="row">
+      <div>
         {elems.bio}
       </div>
     </div>

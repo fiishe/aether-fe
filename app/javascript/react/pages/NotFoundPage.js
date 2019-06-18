@@ -1,6 +1,5 @@
 import React from 'react';
 import Page from './Page';
-import TopBar from '../containers/TopBar';
 import LinkButton from '../components/LinkButton';
 
 class NotFoundPage extends Page {
@@ -20,7 +19,6 @@ class NotFoundPage extends Page {
   render() {
     return(
       <div>
-        <TopBar />
         {this.yield()}
       </div>
     )

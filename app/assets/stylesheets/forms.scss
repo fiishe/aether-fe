@@ -32,6 +32,11 @@ ul.form-errors {
   max-width: 200px;
 }
 
+.form-submit:hover {
+  background-color: scale-color($button-blue, $lightness: -14%);
+  cursor: pointer
+}
+
 label p, .panel label p {
   font-size: 0.8em;
   display: inline-block;
