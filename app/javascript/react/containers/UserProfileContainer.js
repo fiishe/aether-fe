@@ -1,8 +1,8 @@
 import React from 'react';
 import FetchingComponent from '../components/FetchingComponent'
-import UserShow from '../components/UserShow';
+import UserProfile from '../components/UserProfile';
 
-class UserShowContainer extends FetchingComponent {
+class UserProfileContainer extends FetchingComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -17,11 +17,11 @@ class UserShowContainer extends FetchingComponent {
 
   yields() {
     return {
-      loading: <UserShow loading />,
-      loaded: <UserShow user={this.state.userData} userId={this.props.userId} />,
+      loading: <UserProfile loading />,
+      loaded: <UserProfile user={this.state.userData} userId={this.props.userId} />,
       error: <div className="row panel">Something went wrong while retrieving data. Try reloading.</div>
     }
   }
 }
 
-export default UserShowContainer
+export default UserProfileContainer

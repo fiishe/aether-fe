@@ -1,5 +1,11 @@
+@import '_colors';
+
 .bold {
   font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .center {
@@ -15,4 +21,21 @@ $default-margin: 12px;
 
 .top-space {
   margin-top: $default-margin
+}
+
+.red-bg, .panel.red-bg {
+  color: $gray-2;
+  background-color: $red-1;
+  border-color: $red-2;
+}
+.light-text, .red-bg .light-text {
+  color: $gray-2
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.display-none {
+  display: none;
 }

@@ -1,0 +1,107 @@
+@import '_colors';
+
+$av-radius: 64px;
+
+.av-container {
+  max-width: $av-radius;
+  max-height: $av-radius;
+  overflow: hidden;
+  padding: 0px;
+  margin-right: 16px;
+}
+
+.av-container img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+}
+
+.av-container .placeholder {
+  width: $av-radius;
+  height: $av-radius;
+  border-radius: 50%;
+}
+
+.char-tile {
+  padding: 8px;
+  background-color: $gray-2;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.char-tile h6 { margin-bottom: 2px; }
+.char-tile p {
+  color: gray;
+  font-size: 0.8em;
+  margin: 0;
+}
+.char-tile div {
+  margin-left: 8px;
+}
+
+.char-tile:hover {
+  background-color: scale-color($gray-2, $lightness: +45%);
+  box-shadow: 0 0 6px 6px scale-color($red-1, $lightness: +14%);
+  cursor: pointer;
+}
+
+.flash-doc { // rendered initially in erb
+  display: none;
+}
+
+.flash-container {
+  position: absolute;
+  left: 16px;
+  z-index: 50;
+}
+
+.flash {  // rendered via react
+  background-color: #5854b7;
+  color: white;
+  border-radius: 6px;
+
+  padding: 8px 10px;
+  margin: 10px;
+  min-width: 200px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flash.flash-success { background-color: #22c167 }
+
+.flash.flash-error { background-color: #e01f35 }
+
+.flash:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.flash p, .flash i {
+  margin: 0px;
+}
+
+.flash i:hover {
+  cursor: pointer;
+}
+
+.flash-fading {
+  animation-name: thanos;
+  animation-duration: 0.8s;
+    // if you change animation-duration,
+    // also change the setTimeout in app/javascript/react/components/Flash.js
+  animation-fill-mode: forwards;
+}
+
+.flash-end {
+  display: none;
+}
+
+@keyframes thanos {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

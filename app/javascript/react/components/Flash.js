@@ -9,6 +9,10 @@ class Flash extends Component {
     this.kill = this.kill.bind(this)
   }
 
+  componentDidMount() {
+    setTimeout(this.kill, 3000)
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState({
       cls: nextProps.className

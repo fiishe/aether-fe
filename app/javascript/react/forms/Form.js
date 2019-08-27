@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import getMeta from '../helpers/getMeta';
+import { getMeta } from '../helpers';
 
 class Form extends Component {
   constructor(props) {
@@ -28,8 +28,6 @@ class Form extends Component {
     this.renderErrors = this.renderErrors.bind(this)
     this.renderForm = this.renderForm.bind(this)
     this.fetchTo = this.fetchTo.bind(this)
-    this.addError = this.addError.bind(this)
-    this.clearErrors = this.clearErrors.bind(this)
     this.isEmpty = this.isEmpty.bind(this)
   }
 
@@ -71,12 +69,14 @@ class Form extends Component {
 
   validate() {
     let isValid = true
+    let errorList = []
     this.validations.forEach(validation => {
       if (validation.check && !validation.check()) {
-        this.addError(validation.message)
+        errorList.push(validation.message)
         isValid = false
       }
     })
+    this.setState({ errors: errorList })
     return isValid
   }
 
@@ -85,14 +85,18 @@ class Form extends Component {
     newVals[key] = event.target.value
 
     this.setState({ values: newVals })
+    this.onFormChange()
+  }
+
+  onFormChange() {
+    // overwrite this method to do something when a field changes
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    if (this.validate()) {
-      this.clearErrors()
-    }
-    else { return }
+
+    let isValid = this.validate()
+    if (!isValid) { return }
 
     this.submit()
   }
@@ -151,8 +155,9 @@ class Form extends Component {
   }
 
   renderErrors() {
-    if (this.state.errors.length > 0) {
-      let errors = this.state.errors.map((error, i) => {
+    let errorList = this.state.errors
+    if (errorList.length > 0) {
+      let errors = errorList.map((error, i) => {
         return(
           <li key={i}>{error}</li>
         )
@@ -207,21 +212,6 @@ class Form extends Component {
         reject(error)
       })
     })
-  }
-
-  addError(e) {
-    let newErrorArr = this.state.errors.splice(0)
-    newErrorArr.push(e)
-    this.setState({ errors: newErrorArr })
-  }
-
-  addErrors(errors) {
-    let newErrorArr = this.state.errors.concat(errors)
-    this.setState({ errors: newErrorArr })
-  }
-
-  clearErrors() {
-    this.setState({ errors: [] })
   }
 
   isEmpty() {
