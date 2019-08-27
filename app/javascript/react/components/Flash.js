@@ -24,6 +24,8 @@ class Flash extends Component {
       cls: this.state.cls + " flash-fading"
     })
     setTimeout(this.props.remove, 800)
+      // if you change the timeout duration, also change the animation-duration
+      // of .flash-fading in /assets/stylesheets/blocks.scss
   }
 
   render() {
