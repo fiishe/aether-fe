@@ -1,13 +1,13 @@
 import React from 'react';
 import Page from './Page';
-import UserShowContainer from '../containers/UserShowContainer';
+import UserProfileContainer from '../containers/UserProfileContainer';
 import UserCharactersContainer from '../containers/UserCharactersContainer';
 
 class HomePage extends Page {
   yield() {
     return(
       <div>
-        <UserShowContainer userId="me" />
+        <UserProfileContainer userId="me" />
         <UserCharactersContainer userId="me" />
       </div>
     )

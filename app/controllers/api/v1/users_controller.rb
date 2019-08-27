@@ -8,6 +8,10 @@ class Api::V1::UsersController < ApiController
   end
 
   def update
+    if !params[:nick].nil?
+      params[:nick].strip!
+    end
+
     @user = current_user
     @user.update(user_params)
     if @user.save

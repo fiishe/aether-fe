@@ -1,7 +1,7 @@
 import React from 'react'
 import LinkButton from './LinkButton'
 
-const UserShow = props => {
+const UserProfile = props => {
   let user = props.user
   let elems
   if (props.loading) {
@@ -50,4 +50,4 @@ const UserShow = props => {
   )
 }
 
-export default UserShow
+export default UserProfile

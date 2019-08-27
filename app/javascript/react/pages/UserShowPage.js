@@ -1,12 +1,16 @@
 import React from 'react'
 import Page from './Page'
-import UserShowContainer from '../containers/UserShowContainer'
+import UserProfileContainer from '../containers/UserProfileContainer'
+import UserCharactersContainer from '../containers/UserCharactersContainer'
 
 class UserShowPage extends Page {
   yield() {
     let userId = this.props.match.params.id
     return(
-      <UserShowContainer userId={userId} />
+      <div>
+        <UserProfileContainer userId={userId} />
+        <UserCharactersContainer userId={userId} />
+      </div>
     )
   }
 }

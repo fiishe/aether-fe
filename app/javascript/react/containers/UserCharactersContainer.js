@@ -1,26 +1,40 @@
 import React from 'react';
 import FetchingComponent from '../components/FetchingComponent'
+import CharacterTile from '../components/CharacterTile'
 
 class UserCharactersContainer extends FetchingComponent {
   constructor(props) {
     super(props)
     this.state = {
-      userData: {}
+      characters: []
     }
     this.endpoint = `/api/v1/users/${props.userId}/characters`
   }
 
   fetchCompleted(json) {
-    this.setState({ userData: json })
+    this.setState({ characters: json })
   }
 
   yields() {
+    let charTiles
+    if (this.renderState == "loaded") {
+      charTiles = this.state.characters.map((charObj, i) => {
+        let isLastTile = (i == this.state.characters.length - 1)
+        return(<CharacterTile character={charObj} key={i} isLast={isLastTile} />)
+      })
+      if (charTiles.length == 0) {
+        charTiles = <p>(none)</p>
+      }
+    }
+
     return {
-      loading: <div>Loading...</div>,
+      loading: <div className="row panel red-bg loading-text">Loading...</div>,
       loaded:
         <div className="row panel red-bg">
-          <h5>Characters</h5>
-          {JSON.stringify(this.state.userData)}
+          <h5 className="light-text">Characters</h5>
+          <div>
+            {charTiles}
+          </div>
         </div>,
       error: <div className="row panel">Something went wrong while retrieving data. Try reloading.</div>
     }

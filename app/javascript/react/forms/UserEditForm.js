@@ -1,11 +1,13 @@
 import React from 'react';
 import Form from './Form';
 import { withRouter } from 'react-router-dom';
-import UserShow from '../components/UserShow';
+import UserProfile from '../components/UserProfile';
+import { stripString } from '../helpers'
 
 class UserEditForm extends Form {
   constructor(props) {
     super(props)
+    this.goBack = this.goBack.bind(this)
     this.state['user'] = {}
     this.state['render'] = 'loading'
 
@@ -61,9 +63,9 @@ class UserEditForm extends Form {
   getValidations() {
     return [
       {
-        message: "Nickname must be longer than 2 characters",
+        message: "Nickname is too short (minimum is 2 characters)",
         check: () => {
-          let len = this.state.values['nick'].length
+          let len = stripString(this.state.values['nick']).length
           return (len == 0 || len >= 2)
         }
       }
@@ -85,40 +87,49 @@ class UserEditForm extends Form {
     })
   }
 
-  renderForm() {
+  goBack() {
+    this.props.history.goBack()
+  }
 
+  renderForm() {
+    let fields = this.renderFields()
+    let user = this.state.user
+    return (
+      <div className="row panel">
+        {this.renderErrors()}
+        <form onSubmit={this.handleSubmit}>
+          <div className="bar">
+            <div className="bar-section av-container">
+              <img src={user.avatar_url} />
+            </div>
+            <div className="bar-section">
+              <h3 className="bold">{user.nick || user.username}</h3>
+              <h4 className="discord-tag">{user.username}#{user.discriminator}</h4>
+            </div>
+            <div className="bar-section right">
+              {fields[0]}
+            </div>
+          </div>
+          <div>
+            {fields[1]}
+          </div>
+          <div className="form-submit-container right">
+            <input className="form-submit" type="submit" value={this.submitText || "Submit"} />
+            <button className="button secondary small right inline" onClick={this.goBack}>Cancel</button>
+          </div>
+        </form>
+      </div>
+    )
   }
 
   render() {
     if (this.state.render == 'loading') {
       return(
-        <UserShow loading={true} />
+        <UserProfile loading={true} />
       )
     }
     else {
-      let fields = this.renderFields()
-      let user = this.state.user
-      return(
-        <div className="row panel">
-          {this.renderErrors()}
-          <form onSubmit={this.handleSubmit}>
-            <div className="bar">
-              <div className="bar-section av-container">
-                <img src={user.avatar_url} />
-              </div>
-              <div className="bar-section right">
-                {fields[0]}
-              </div>
-            </div>
-            <div>
-              {fields[1]}
-            </div>
-            <div className="form-submit-container">
-              <input className="form-submit" type="submit" value={this.submitText || "Submit"} />
-            </div>
-          </form>
-        </div>
-      )
+      return this.renderForm()
     }
   }
 }
