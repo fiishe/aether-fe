@@ -83,6 +83,12 @@ class UsersController < ApplicationController
     redirect_to "/home"
   end
 
+  def logout
+    reset_session
+    flash[:success] = "Successfully logged out"
+    redirect_to "/"
+  end
+
   private
 
   def discord_exchange_code(code)
