@@ -159,50 +159,6 @@ nav.top {
   width: 25%;
 }
 
-$av-radius: 64px;
-
-.av-container {
-  max-width: $av-radius;
-  max-height: $av-radius;
-  overflow: hidden;
-  padding: 0px;
-  margin-right: 16px;
-}
-
-.av-container img {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 50%;
-}
-
-.av-container .placeholder {
-  width: $av-radius;
-  height: $av-radius;
-  border-radius: 50%;
-}
-
-.char-tile {
-  padding: 8px;
-  background-color: $gray-2;
-  border-radius: 10px;
-  margin-bottom: 10px;
-}
-.char-tile h6 { margin-bottom: 2px; }
-.char-tile p {
-  color: gray;
-  font-size: 0.8em;
-  margin: 0;
-}
-.char-tile div {
-  margin-left: 8px;
-}
-
-.char-tile:hover {
-  background-color: scale-color($gray-2, $lightness: +45%);
-  box-shadow: 0 0 6px 6px scale-color($red-1, $lightness: +14%);
-  cursor: pointer;
-}
-
 .flash-container {
   position: absolute;
   left: 16px;

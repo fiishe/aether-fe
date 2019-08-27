@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { defaultFetch } from '../helpers'
 
 class FetchingComponent extends Component {
   constructor(props) {
@@ -9,21 +10,10 @@ class FetchingComponent extends Component {
   componentDidMount() {
     if (!this.endpoint) { throw(new Error('target API endpoint was not set')) }
 
-    fetch(this.endpoint)
-      .then(res => {
-        if(res.ok) {return res}
-        else {
-          let errorMessage = `${res.status} (${res.statusText})`
-          throw(new Error(errorMessage))
-        }
-      })
-      .then(res => res.json())
-      .then(json => {
-        if (json.status == "fail") { throw(new Error(json.data.message)) }
-        else {
-          this.renderState = "loaded"
-          this.fetchCompleted(json)
-        }
+    defaultFetch(this.endpoint)
+      .then(payload => {
+        this.renderState = "loaded"
+        this.fetchCompleted(payload)
       })
       .catch(e => {
         console.error(e)
