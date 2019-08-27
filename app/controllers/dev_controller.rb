@@ -18,7 +18,7 @@ class DevController < ApplicationController
   end
 
   def logout
-    session[:user_id] = nil
+    reset_session
     flash_confirmation("log out")
     redirect_to "/"
   end

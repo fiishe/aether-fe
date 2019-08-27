@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Redirect from './components/Redirect'
 import TopBar from './containers/TopBar'
 import NavBar from './components/NavBar'
 import HomePage from './pages/HomePage'
@@ -18,7 +19,8 @@ const App = props => {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/home' component={HomePage} />
-          <Route path='/login' component={() => {window.location = '/login'; return(<div />)}} />
+          <Route path='/login' component={Redirect('/login')} />
+          <Route path='/logout' component={Redirect('/logout')} />
           <Route path='/users' component={UserRouter} />
           <Route path='*' component={NotFoundPage} />
         </Switch>
