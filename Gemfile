@@ -64,7 +64,7 @@ gem 'factory_bot', group: [:development, :test]
 gem 'database_cleaner', group: [:development, :test]
 gem 'valid_attribute', group: [:development, :test]
 gem 'shoulda-matchers', group: [:development, :test], require: false
-gem 'devise', '~> 4.6'
+gem 'devise', '~> 4.7'
 gem 'foundation-rails', '~> 5.0'
 gem 'warden'
 gem 'webpacker', '~> 4.0'
