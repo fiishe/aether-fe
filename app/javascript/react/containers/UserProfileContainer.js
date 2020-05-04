@@ -17,9 +17,14 @@ class UserProfileContainer extends FetchingComponent {
 
   yields() {
     return {
-      loading: <UserProfile loading />,
-      loaded: <UserProfile user={this.state.userData} userId={this.props.userId} />,
-      error: <div className="row panel">Something went wrong while retrieving data. Try reloading.</div>
+      loading:
+        <UserProfile loading />,
+      loaded:
+        <UserProfile user={this.state.userData} userId={this.props.userId} />,
+      error:
+        <div className="row panel">
+          Something went wrong while retrieving data. Try reloading.
+        </div>
     }
   }
 }

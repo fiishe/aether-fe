@@ -20,7 +20,9 @@ class UserCharactersContainer extends FetchingComponent {
     if (this.renderState == "loaded") {
       charTiles = this.state.characters.map((charObj, i) => {
         let isLastTile = (i == this.state.characters.length - 1)
-        return(<CharacterTile character={charObj} key={i} isLast={isLastTile} />)
+        return(
+          <CharacterTile character={charObj} key={i} isLast={isLastTile} />
+        )
       })
       if (charTiles.length == 0) {
         charTiles = <p>(none)</p>
@@ -28,7 +30,8 @@ class UserCharactersContainer extends FetchingComponent {
     }
 
     return {
-      loading: <div className="row panel red-bg loading-text">Loading...</div>,
+      loading:
+        <div className="row panel red-bg loading-text">Loading...</div>,
       loaded:
         <div className="row panel red-bg">
           <h5 className="light-text">Characters</h5>
@@ -36,7 +39,10 @@ class UserCharactersContainer extends FetchingComponent {
             {charTiles}
           </div>
         </div>,
-      error: <div className="row panel">Something went wrong while retrieving data. Try reloading.</div>
+      error:
+        <div className="row panel">
+          Something went wrong while retrieving data. Try reloading.
+        </div>
     }
   }
 }
