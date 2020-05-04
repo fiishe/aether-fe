@@ -22,12 +22,13 @@ class FetchingComponent extends Component {
   }
 
   fetchCompleted(response) {
-    // takes JSON response from fetch and does something with it (typically setState).
+    // "custom" lifecycle method
+    // takes JSON response from fetch and does smth with it (typically setState)
     console.log(response);
   }
 
   yields() {
-    // returns what render() should return depending on the state of the fetch.
+    // returns what render() should return depending on the state of the fetch
     return ({
       loading: <div>I am loading.</div>,
       loaded: <div>I have loaded.</div>,
