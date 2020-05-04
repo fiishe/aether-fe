@@ -1,12 +1,12 @@
 import React from 'react'
 import Enzyme from '../enzyme'
-import Home from '../../../app/javascript/react/pages/Home'
+import HomePage from 'pages/HomePage'
 
-describe('Home', () => {
+describe('HomePage', () => {
   let wrapper
   beforeEach(() => {
     wrapper = mount(
-      <Home />
+      <HomePage />
     )
   })
 
