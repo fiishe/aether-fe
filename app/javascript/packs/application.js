@@ -13,6 +13,7 @@ import { render } from 'react-dom'
 import App from '../react/app'
 import RedBox from 'redbox-react'
 
+import NotFoundPage from '../react/pages/NotFoundPage'
 
 document.addEventListener('DOMContentLoaded', () => {
   let reactElement = document.getElementById('app')
@@ -28,5 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
       render(<App />, reactElement)
     }
+  }
+
+  let notFoundElement = document.getElementById('appNotFound')
+  if (notFoundElement) {
+    render(<NotFoundPage />, notFoundElement)
   }
 })

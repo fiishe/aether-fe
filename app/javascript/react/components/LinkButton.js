@@ -1,13 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 const LinkButton = (props) => {
+  let styleClass = "link-button " + (props.className || "")
+  if (props.defaultStyle) {
+    styleClass += " default"
+  }
   return(
-    <div>
+    <div className={styleClass}>
       <Link to={props.to}>
-        <p className="link-button">
-          {props.text}
-        </p>
+        <p>{props.children}</p>
       </Link>
     </div>
   )

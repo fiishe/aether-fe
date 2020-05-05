@@ -2,7 +2,7 @@ import React from 'react';
 import Form from './Form';
 
 class NewCampaignForm extends Form {
-  fields() {
+  getFields() {
     return [
       {
         name: "name",
@@ -17,7 +17,7 @@ class NewCampaignForm extends Form {
     fetch(`/api/v1/campaigns`, {
       credentials: 'same-origin',
       method: 'POST',
-      body: this.payload(),
+      body: JSON.stringify(this.payload()),
       headers: {
         'Content-Type': 'application/json',
         'x-CSRF-Token': this.getCSRFToken()

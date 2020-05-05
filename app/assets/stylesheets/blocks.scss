@@ -1,0 +1,214 @@
+@import '_colors';
+
+body {
+  background-color: $blue-1;
+  font-family: 'Quattrocento Sans', sans-serif;
+}
+
+.bar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bar-spaced {
+  @extend .bar ;
+  justify-content: space-between;
+}
+
+.v-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bar-section {
+  display: inline-block;
+}
+
+.bar-section-right {
+  display: block;
+  float: none;
+  width: 100px;
+  margin-left: auto;
+  margin-right: 0;
+}
+
+$lb-border-radius: 8px;
+
+.link-button.default, .panel .link-button.default {
+  background-color: $button-blue;
+  border-radius: $lb-border-radius;
+}
+
+.link-button a, .panel .link-button a {
+  text-decoration: none !important;
+}
+
+.link-button a p, .panel .link-button a p {
+  padding: 8px 16px;
+  margin: 0px;
+  border-radius: $lb-border-radius;
+  color: $gray-2;
+  text-align: center;
+}
+
+.link-button.default a p {
+  color: white;
+}
+
+.link-button a p:hover, .panel .link-button a p:hover {
+  background-color: $blue-2;
+}
+
+.panel a {
+  color: blue;
+  text-decoration: underline;
+}
+
+button {
+  border-radius: 6px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid gray;
+  margin: 1em 0;
+  padding: 0;
+}
+
+hr.space {
+  border: 1px solid transparent;
+  margin-top: 0;
+}
+
+a, a:hover, a:visited, a:link, a:active { text-decoration: none; }
+
+.title-container img {
+  max-width: 48px;
+  max-height: 48px;
+  margin-left: -8px;
+}
+
+.title-container h2 {
+  display: inline-block;
+  margin: 0px;
+}
+
+nav {
+  padding: 4px 16px;
+}
+
+nav.top {
+  padding: 12px;
+  background-color: $blue-3;
+}
+
+.top-av {
+  width: 48px;
+  height: 48px;
+  background-color: #2C2F33;
+  border-radius: 50%;
+  border: 3px $red-1 solid;
+  z-index: 30;
+}
+.top-av:hover { cursor: pointer; }
+
+.top-av-open-filler {
+  width: 48px;
+  height: 24px;
+  margin-top: -24px;
+  background-color: $red-1;
+  z-index: 25;
+}
+
+.placeholder {
+  color: $gray-3 !important;
+  background-color: $gray-3 !important;
+  border-radius: 6px;
+}
+
+.av-menu {
+  position: absolute;
+  right: 12px;
+  padding: 6px;
+  list-style: none;
+  background-color: $red-1;
+}
+
+.av-menu li a p:hover {
+  background-color: scale-color($red-1, $lightness: -14%);
+}
+
+.nav-icons {
+  width: 100%;
+  color: $gray-2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-icons div {
+  width: 25%;
+}
+
+.flash-container {
+  position: absolute;
+  left: 16px;
+  z-index: 50;
+}
+
+.flash {  // rendered via react
+  background-color: #5854b7;
+  color: white;
+  border-radius: 6px;
+
+  padding: 8px 10px;
+  margin: 10px;
+  min-width: 200px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flash.flash-success { background-color: #22c167 }
+
+.flash.flash-error { background-color: #e01f35 }
+
+.flash:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.flash p, .flash i {
+  margin: 0px;
+}
+
+.flash i:hover {
+  cursor: pointer;
+}
+
+.flash-fading {
+  animation-name: thanos;
+  animation-duration: 0.8s;
+    // if you change animation-duration,
+    // also change the setTimeout in app/javascript/react/components/Flash.js
+  animation-fill-mode: forwards;
+}
+
+@keyframes thanos {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

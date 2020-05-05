@@ -1,0 +1,45 @@
+@import '_colors';
+
+ul.form-errors {
+  border: 1px red solid;
+  color: red;
+}
+
+.form-errors li {
+  color: red;
+  padding: 12px;
+  margin-left: 24px;
+  font-size: 0.94em;
+}
+
+.panel.form-panel {
+  max-width: 500px;
+}
+
+.form-submit-container {
+  
+}
+
+.form-submit {
+  background-color: $button-blue;
+  color: white;
+  font-family: 'Quattrocento Sans', sans-serif;
+  padding: 10px;
+  font-size: 1.1em;
+  width: 100%;
+  max-width: 200px;
+}
+
+.form-submit:hover {
+  background-color: scale-color($button-blue, $lightness: -14%);
+  cursor: pointer
+}
+
+label p, .panel label p {
+  font-size: 0.8em;
+  display: inline-block;
+  margin-bottom: 0px;
+  float: right;
+  text-align: right;
+  color: gray;
+}

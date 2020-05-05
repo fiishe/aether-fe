@@ -5,9 +5,10 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="avatar_url" content="<%= @avatar_url %>" />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quattrocento+Sans&display=swap">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "vendor/modernizr" %>
@@ -15,8 +16,8 @@
   </head>
 
   <body>
-    <%- if Rails.env.development? || Rails.env.test? -%>
-      <div id="dev-links">
+    <%- if Rails.env.development? -%>
+      <div class="dev-links">
         <%= link_to "pry", "/dev/pry" %>
         <%= link_to "user 1", "/dev/login/1" %>
         <%= link_to "user 2", "/dev/login/2" %>
@@ -27,7 +28,7 @@
 
     <div id="flash-init">
       <%- flash.each do |key, value| -%>
-        <div class="flash-doc flash-<%= key %>">
+        <div class="flash-<%= key %> display-none">
           <%= value %>
         </div>
       <%- end -%>

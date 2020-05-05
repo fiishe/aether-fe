@@ -2,13 +2,15 @@ class Api::V1::CampaignsController < ApiController
   before_action :require_login, only: [:create]
 
   def index
-    user = get_user(params['user_id'])
-
-    if user.nil?
-      render json: Campaign.limit(20)
-    else
-      binding.pry
-      render json: user.campaigns
+    begin
+      user = get_user(params['user_id'])
+      render json: user.campaigns, each_serializer: CampaignIndexSerializer
+    rescue ActiveRecord::RecordNotFound
+      render json: {
+        status: "fail",
+        data: { message: "Could not find user with given ID" },
+        code: 404
+      }
     end
   end
 
@@ -27,7 +29,7 @@ class Api::V1::CampaignsController < ApiController
       render json: {
         status: "fail",
         data: {
-          message: "Form validation failed",
+          message: "Validation failed",
           errors: @campaign.errors.full_messages
         }
       }

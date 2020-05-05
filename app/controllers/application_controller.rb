@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def server_log(msg)
+    puts ">> LOG: #{msg}"
+  end
+
   def get_user(id)
     if id == "me"
       return current_user

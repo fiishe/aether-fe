@@ -13,4 +13,9 @@ FactoryBot.define do
   factory :campaign do
     name { "The Hobbit" }
   end
+
+  factory :character do
+    name { "Tim" }
+    user { create(:user) }
+  end
 end

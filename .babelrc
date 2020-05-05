@@ -1,0 +1,12 @@
+{
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./app/javascript/react", "./spec"],
+      "alias": {
+        "test": "./test",
+        "underscore": "lodash"
+      }
+    }]
+  ],
+  "presets": [["@babel/env"], "@babel/react"]
+}
