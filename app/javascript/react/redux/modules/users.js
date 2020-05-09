@@ -1,7 +1,7 @@
 const initialState = {
   userData: {},
   editing: false,
-  render: "loading"
+  isFetching: false
 }
 
 const TOGGLE_USER_PROFILE_EDIT = "TOGGLE_USER_PROFILE_EDIT"
