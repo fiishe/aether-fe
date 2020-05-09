@@ -1,6 +1,6 @@
 import React from 'react';
-import FetchingComponent from '../components/FetchingComponent'
-import CharacterTile from '../components/CharacterTile'
+import FetchingComponent from '../lib/FetchingComponent'
+import CharacterTile from '../characters/CharacterTile'
 
 class UserCharactersContainer extends FetchingComponent {
   constructor(props) {

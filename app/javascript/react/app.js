@@ -1,12 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Redirect from './components/Redirect'
-import TopBar from './containers/TopBar'
-import NavBar from './components/NavBar'
+
+import Redirect from './pages/Redirect'
+import TopBar from './common/TopBar'
+import NavBar from './common/NavBar'
 import HomePage from './pages/HomePage'
 import UserRouter from './routers/UserRouter'
 import NotFoundPage from './pages/NotFoundPage'
-import NewCampaignForm from './forms/NewCampaignForm'
 
 const App = props => {
   return(

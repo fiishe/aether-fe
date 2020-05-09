@@ -1,7 +1,7 @@
 import React from 'react';
-import Form from './Form';
+import Form from '../lib/Form';
 import { withRouter } from 'react-router-dom';
-import UserProfile from '../components/UserProfile';
+import UserProfile from './UserProfile';
 import { stripString } from '../helpers'
 
 class UserEditForm extends Form {

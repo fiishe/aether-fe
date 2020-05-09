@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from './Page';
-import LinkButton from '../components/LinkButton';
+import LinkButton from '../common/LinkButton';
 
 class NotFoundPage extends Page {
   yield() {

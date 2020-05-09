@@ -1,7 +1,7 @@
 import React from 'react'
 import Page from './Page'
-import UserProfileContainer from '../containers/UserProfileContainer'
-import UserCharactersContainer from '../containers/UserCharactersContainer'
+import UserProfileContainer from '../users/UserProfileContainer'
+import UserCharactersContainer from '../users/UserCharactersContainer'
 
 class UserShowPage extends Page {
   yield() {

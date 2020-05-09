@@ -1,6 +1,6 @@
 import React from 'react';
-import FetchingComponent from '../components/FetchingComponent'
-import UserProfile from '../components/UserProfile';
+import FetchingComponent from '../lib/FetchingComponent'
+import UserProfile from './UserProfile';
 
 class UserProfileContainer extends FetchingComponent {
   constructor(props) {

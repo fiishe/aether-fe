@@ -1,5 +1,5 @@
 import React from 'react'
-import LinkButton from './LinkButton'
+import LinkButton from '../common/LinkButton'
 
 const UserProfile = props => {
   let user = props.user

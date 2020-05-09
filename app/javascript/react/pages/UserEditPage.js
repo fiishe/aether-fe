@@ -1,6 +1,6 @@
 import React from 'react'
 import Page from './Page'
-import UserEditForm from '../forms/UserEditForm'
+import UserEditForm from '../users/UserEditForm'
 
 class UserEditPage extends Page {
   yield() {

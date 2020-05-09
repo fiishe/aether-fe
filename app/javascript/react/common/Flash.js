@@ -6,11 +6,17 @@ class Flash extends Component {
     this.state = {
       cls: this.props.className
     }
+
+    this.lifespan = props.lifespan || 3000  // how long it lasts before fading
+    this.killtime = props.killtime || 800   // how long it takes to fade
+      // if you change killtime, also change the animation-duration
+      // of .flash-fading in /assets/stylesheets/blocks.scss
+
     this.kill = this.kill.bind(this)
   }
 
   componentDidMount() {
-    setTimeout(this.kill, 3000)
+    setTimeout(this.kill, this.lifespan)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -23,9 +29,7 @@ class Flash extends Component {
     this.setState({
       cls: this.state.cls + " flash-fading"
     })
-    setTimeout(this.props.remove, 800)
-      // if you change the timeout duration, also change the animation-duration
-      // of .flash-fading in /assets/stylesheets/blocks.scss
+    setTimeout(this.props.remove, this.killtime)
   }
 
   render() {

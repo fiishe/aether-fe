@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AvMenu from '../components/AvMenu'
+import AvMenu from './AvMenu'
 import { getMeta } from '../helpers';
 
 class AvContainer extends Component {
