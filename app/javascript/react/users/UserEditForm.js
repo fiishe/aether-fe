@@ -2,7 +2,7 @@ import React from 'react';
 import Form from '../lib/Form';
 import { withRouter } from 'react-router-dom';
 import UserProfile from './UserProfile';
-import { stripString } from '../helpers'
+import { stripString } from '../lib/utils'
 
 class UserEditForm extends Form {
   constructor(props) {

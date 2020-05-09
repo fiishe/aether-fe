@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AvMenu from './AvMenu'
-import { getMeta } from '../helpers';
+import { getMeta } from '../lib/utils';
 
 class AvContainer extends Component {
   constructor(props) {

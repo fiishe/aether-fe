@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getMeta } from '../helpers';
+import { getMeta } from './utils';
 
 class Form extends Component {
   constructor(props) {

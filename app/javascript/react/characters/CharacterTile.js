@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { abbreviateStats } from '../constants'
-import { defaultFetch } from '../helpers'
+import defaultFetch from '../lib/defaultFetch'
 
 class CharacterTile extends Component {
   constructor(props) {
