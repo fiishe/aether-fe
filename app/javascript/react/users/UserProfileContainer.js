@@ -5,7 +5,7 @@ import FetchingComponent from '../lib/FetchingComponent'
 import UserProfile from './UserProfile'
 import UserEditForm from './UserEditForm'
 
-import { toggleUserProfileEdit } from '../redux/modules/users'
+import { toggleProfileEdit } from '../redux/modules/users'
 
 class UserProfileContainer extends FetchingComponent {
   constructor(props) {

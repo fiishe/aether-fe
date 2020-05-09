@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { abbreviateStats } from '../constants'
+import { abbreviateStats } from '../lib/constants'
 import defaultFetch from '../lib/defaultFetch'
 
 class CharacterTile extends Component {
