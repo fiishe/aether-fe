@@ -11,16 +11,13 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import App from '../react/app'
-import RedBox from 'redbox-react'
 import NotFoundPage from '../react/pages/NotFoundPage'
+import RedBox from 'redbox-react'
 
-import { Provider } from 'react-redux'
+import configureStore from '../react/redux/store/configureStore'
 
-let fullRender = () => {
-  return(
-    1
-  )
-}
+const store = configureStore()
+const appWithStore = <App store={store} />
 
 document.addEventListener('DOMContentLoaded', () => {
   let rootElement = document.getElementById('app')
@@ -28,13 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (rootElement) {
     if(window.railsEnv && window.railsEnv === 'development'){
       try {
-        render(<App />, rootElement)
+        render(appWithStore, rootElement)
       } catch (e) {
         render(<RedBox error={e} />, rootElement)
       }
     }
     else {
-      render(<App />, rootElement)
+      render(appWithStore, rootElement)
     }
   }
 })
