@@ -9,34 +9,14 @@ import { toggleProfileEdit, fetchUserShow } from '../redux/modules/users'
 class UserProfileContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      userData: {}
-    }
-    this.endpoint = `/api/v1/users/${props.userId}`
   }
 
   componentDidMount() {
     this.props.fetchUserShow(this.props.userId)
   }
 
-  yields() {
-    return {
-      loading:
-        <UserProfile loading />,
-      loaded:
-        <div>
-          <UserProfile user={this.props.userData} userId={this.props.userId} />
-        </div>,
-      error:
-        <div className="row panel">
-          Something went wrong while retrieving data. Try reloading.
-        </div>
-    }
-  }
-
   render()
   {
-    console.log(this.props.userData);
     if (this.props.editing) {
       return <UserEditForm  userId={this.props.userId} />
     }
@@ -59,8 +39,6 @@ class UserProfileContainer extends Component {
             </div>
           )
       }
-      return this.yields()[this.props.renderState]
-      //return <UserProfile user={this.props.userData} userId={this.props.userId} />
     }
   }
 }
@@ -75,7 +53,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-// Gain access to action (creators)
+// Gain access to action creators
 const mapDispatchToProps = {
   toggleProfileEdit,
   fetchUserShow
