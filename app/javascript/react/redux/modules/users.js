@@ -5,7 +5,7 @@ const initialState = {
   userData: {},
   editing: false,
   isFetching: false,
-  displayError: false
+  displayState: 'loading'
 }
 
 // ACTION CREATORS
@@ -53,6 +53,7 @@ const fetchUserShow = (userId) => {
       })
       .catch(error => {
         // update state to render an error message
+        console.error(error)
         dispatch(fetchUserShowError(error))
       })
   }
@@ -66,18 +67,22 @@ const users = (state = initialState, action) => {
         // above is object spread syntax for a copy of state with our new info
 
     case FETCH_USER_SHOW_REQUEST:
-      return {...state, isFetching: true }
+      return {...state,
+        isFetching: true,
+        displayState: 'loading'
+      }
 
     case FETCH_USER_SHOW_SUCCESS:
       return {...state,
         isFetching: false,
-        userData: action.userData
+        displayState: 'loaded',
+        userData: action.response
       }
 
     case FETCH_USER_SHOW_ERROR:
       return {...state,
         isFetching: false,
-        displayError: true
+        displayState: 'error'
       }
 
     default:
