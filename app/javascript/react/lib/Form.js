@@ -27,7 +27,7 @@ class Form extends Component {
     this.renderFields = this.renderFields.bind(this)
     this.renderErrors = this.renderErrors.bind(this)
     this.renderForm = this.renderForm.bind(this)
-    this.fetchTo = this.fetchTo.bind(this)
+    this.fetchSendPayload = this.fetchSendPayload.bind(this)
     this.isEmpty = this.isEmpty.bind(this)
   }
 
@@ -188,7 +188,7 @@ class Form extends Component {
     )
   }
 
-  fetchTo(endpoint, method) {
+  fetchSendPayload(endpoint, method) {
     return new Promise((resolve, reject) => {
       fetch(endpoint, {
         credentials: 'same-origin',

@@ -6,7 +6,7 @@ const initialState = {
   userData: {},
   editing: false,
   isFetching: false,
-  displayState: 'loading'
+  renderState: 'loading'
 }
 
 // ACTION CREATORS
@@ -48,30 +48,42 @@ const fetchUserShow = (userId) => {
   }
 }
 
+const UPDATE_USER_DATA = "UPDATE_USER_DATA"
+const updateUserData = makeActionCreator(
+  UPDATE_USER_DATA,
+  'newUserData'
+)
+
 // REDUCER
 const users = (state = initialState, action) => {
   switch(action.type) {
     case TOGGLE_PROFILE_EDIT:
-      return {...state, editing: true }
+      return {...state, editing: !state.editing }
         // above is object spread syntax for a copy of state with our new info
 
     case FETCH_USER_SHOW_REQUEST:
       return {...state,
         isFetching: true,
-        displayState: 'loading'
+        renderState: 'loading'
       }
 
     case FETCH_USER_SHOW_SUCCESS:
       return {...state,
         isFetching: false,
-        displayState: 'loaded',
+        renderState: 'loaded',
         userData: action.response
       }
 
     case FETCH_USER_SHOW_ERROR:
       return {...state,
         isFetching: false,
-        displayState: 'error'
+        renderState: 'error'
+      }
+
+    case UPDATE_USER_DATA:
+      let updatedData = Object.assign({}, state.userData, action.newUserData)
+      return {...state,
+        userData: updatedData
       }
 
     default:
@@ -82,5 +94,6 @@ const users = (state = initialState, action) => {
 export {
   toggleProfileEdit,
   fetchUserShow,
+  updateUserData,
   users
 }

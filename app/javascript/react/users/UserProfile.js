@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import LinkButton from '../common/LinkButton'
 
 const UserProfile = props => {
-  let user = props.user
-  let elems
+  const user = props.user
 
+  let elems
   if (props.loading) {
     elems = {
       avatar: <div className="placeholder av-placeholder" />,
@@ -28,7 +28,12 @@ const UserProfile = props => {
   }
 
   if (props.userId == "me") {
-    elems.editButton = <LinkButton to="/users/me/edit" defaultStyle>Edit</LinkButton>
+    elems.editButton =
+      <button
+        className="link-button default"
+        onClick={props.toggleEdit}>
+        Edit
+      </button>;
   }
 
   return(
