@@ -63,7 +63,6 @@ class UsersController < ApplicationController
 
     user = User.find_by(snowflake: user_data['id'])
     if user
-      binding.pry
       if user.access_token == entry[:access_token]
         entry = entry.except(:access_token_issued)
       end

@@ -17,28 +17,30 @@ class UserProfileContainer extends Component {
 
   render()
   {
-    if (this.props.editing) {
-      return <UserEditForm  userId={this.props.userId} />
-    }
-    else {
-      switch(this.props.displayState) {
-        case 'loading':
-          return(
-            <UserProfile loading />
-          )
-        case 'loaded':
-          return(
-            <div>
-              <UserProfile user={this.props.userData} userId={this.props.userId} />
-            </div>
-          )
-        case 'error':
-          return(
-            <div className="row panel">
-              Something went wrong while retrieving data. Try reloading.
-            </div>
-          )
-      }
+    switch(this.props.displayState) {
+      case 'loading':
+        return(
+          <UserProfile loading />
+        )
+      case 'loaded':
+        return(
+          <div>
+            <UserProfile
+              user={this.props.userData}
+              userId={this.props.userId} />
+          </div>
+        )
+      case 'editing':
+        return(
+          <UserEditForm userId={this.props.userId} />
+        )
+      case 'error':
+      default:
+        return(
+          <div className="row panel">
+            Something went wrong while retrieving data. Try reloading.
+          </div>
+        )
     }
   }
 }

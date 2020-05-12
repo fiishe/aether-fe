@@ -1,7 +1,9 @@
-import React from 'react';
-import Form from '../lib/Form';
-import { withRouter } from 'react-router-dom';
-import UserProfile from './UserProfile';
+import React from 'react'
+import { connect } from 'react-redux'
+
+import Form from '../lib/Form'
+import { withRouter } from 'react-router-dom'
+import UserProfile from './UserProfile'
 import { stripString } from '../lib/utils'
 
 class UserEditForm extends Form {
@@ -92,8 +94,8 @@ class UserEditForm extends Form {
   }
 
   renderForm() {
-    let fields = this.renderFields()
-    let user = this.state.user
+    const fields = this.renderFields()
+    const user = this.state.user
     return (
       <div className="row panel">
         {this.renderErrors()}
@@ -134,5 +136,20 @@ class UserEditForm extends Form {
   }
 }
 
-export default withRouter(UserEditForm)
-// withRouter adds history as a prop so we can redirect by pushing to history
+const mapStateToProps = (state) => {
+  return {
+    userData: state.users.userData,
+    editing: state.users.editing,
+    isFetching: state.users.isFetching,
+    displayState: state.users.displayState
+  }
+}
+
+const mapDispatchToProps = {
+
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserEditForm)

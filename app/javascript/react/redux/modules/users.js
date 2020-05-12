@@ -1,3 +1,4 @@
+import makeActionCreator from './makeActionCreator'
 import defaultFetch from "../../lib/defaultFetch"
 
 // INITIAL STATE
@@ -11,34 +12,22 @@ const initialState = {
 // ACTION CREATORS
 
 const TOGGLE_PROFILE_EDIT = "TOGGLE_PROFILE_EDIT"
-const toggleProfileEdit = () => {
-  return {
-    type: TOGGLE_PROFILE_EDIT
-  }
-}
+const toggleProfileEdit = makeActionCreator(TOGGLE_PROFILE_EDIT)
 
 const FETCH_USER_SHOW_REQUEST = "FETCH_USER_SHOW_REQUEST"
-const fetchUserShowRequest = () => {
-  return {
-    type: FETCH_USER_SHOW_REQUEST
-  }
-}
+const fetchUserShowRequest = makeActionCreator(FETCH_USER_SHOW_REQUEST)
 
 const FETCH_USER_SHOW_SUCCESS = "FETCH_USER_SHOW_SUCCESS"
-const fetchUserShowSuccess = response => {
-  return {
-    type: FETCH_USER_SHOW_SUCCESS,
-    response
-  }
-}
+const fetchUserShowSuccess = makeActionCreator(
+  FETCH_USER_SHOW_SUCCESS,
+  'response'
+)
 
 const FETCH_USER_SHOW_ERROR = "FETCH_USER_SHOW_ERROR"
-const fetchUserShowError = error => {
-  return {
-    type: FETCH_USER_SHOW_ERROR,
-    error
-  }
-}
+const fetchUserShowError = makeActionCreator(
+  FETCH_USER_SHOW_ERROR,
+  'error'
+)
 
 const fetchUserShow = (userId) => {
   return (dispatch) => {
