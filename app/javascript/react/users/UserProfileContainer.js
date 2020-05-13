@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-
 import UserProfile from './UserProfile'
 import UserEditForm from './UserEditForm'
 
+import { connect } from 'react-redux'
 import { toggleProfileEdit, fetchUserShow } from '../redux/modules/users'
 
 class UserProfileContainer extends Component {
@@ -69,5 +68,5 @@ const mapDispatchToProps = {
 // that is subscribed to the store
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(UserProfileContainer)

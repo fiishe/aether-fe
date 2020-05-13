@@ -1,25 +1,21 @@
 import React, { Component } from 'react'
 import AvMenu from './AvMenu'
+
+import { connect } from 'react-redux'
+import { avMenuOpen, avMenuClose } from '../redux/modules/common'
+
 import { getMeta } from '../lib/utils';
 
 class AvContainer extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      expanded: false
-    }
-    this.toggle = this.toggle.bind(this)
     this.outsideClick = this.outsideClick.bind(this)
     this.avatar = this.avatar.bind(this)
   }
 
-  toggle() {
-    this.setState({ expanded: !(this.state.expanded) })
-  }
-
   outsideClick(event) {
     if (!this.refs.node.contains(event.target)) {
-      this.setState({ expanded: false })
+      this.props.avMenuClose()
     }
   }
 
@@ -33,14 +29,17 @@ class AvContainer extends Component {
 
   avatar() {
     return(
-      <img className="top-av" src={getMeta("avatar_url") || "https://i.imgur.com/yC321Eb.png"} />
+      <img
+        className="top-av"
+        src={getMeta("avatar_url") || "https://i.imgur.com/yC321Eb.png"}
+        />
     )
   }
 
   render() {
-    if (this.state.expanded) {
+    if (this.props.avMenuIsOpen) {
       return(
-        <div onClick={this.toggle} ref="node">
+        <div onClick={this.props.avMenuClose} ref="node">
           {this.avatar()}
           <div className="top-av-open-filler" />
           <div>
@@ -51,7 +50,7 @@ class AvContainer extends Component {
     }
     else {
       return(
-        <div onClick={this.toggle} ref="node">
+        <div onClick={this.props.avMenuOpen} ref="node">
           {this.avatar()}
         </div>
       )
@@ -59,4 +58,18 @@ class AvContainer extends Component {
   }
 }
 
-export default AvContainer
+const mapStateToProps = state => {
+  return {
+    avMenuIsOpen: state.common.avMenuIsOpen
+  }
+}
+
+const mapDispatchToProps = {
+  avMenuOpen,
+  avMenuClose
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AvContainer)
