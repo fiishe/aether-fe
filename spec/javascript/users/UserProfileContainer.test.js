@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import UserProfileContainer from 'containers/UserProfileContainer'
+import UserProfileContainer from 'users/UserProfileContainer'
 
 const fetchMock = require("fetch-mock-jest")
 
