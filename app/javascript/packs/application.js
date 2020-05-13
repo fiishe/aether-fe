@@ -11,28 +11,27 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import App from '../react/app'
+import NotFoundPage from '../react/pages/NotFoundPage'
 import RedBox from 'redbox-react'
 
-import NotFoundPage from '../react/pages/NotFoundPage'
+import configureStore from '../react/redux/store/configureStore'
+
+const store = configureStore()
+const appWithStore = <App store={store} />
 
 document.addEventListener('DOMContentLoaded', () => {
-  let reactElement = document.getElementById('app')
+  let rootElement = document.getElementById('app')
 
-  if (reactElement) {
+  if (rootElement) {
     if(window.railsEnv && window.railsEnv === 'development'){
       try {
-        render(<App />, reactElement)
+        render(appWithStore, rootElement)
       } catch (e) {
-        render(<RedBox error={e} />, reactElement)
+        render(<RedBox error={e} />, rootElement)
       }
     }
     else {
-      render(<App />, reactElement)
+      render(appWithStore, rootElement)
     }
-  }
-
-  let notFoundElement = document.getElementById('appNotFound')
-  if (notFoundElement) {
-    render(<NotFoundPage />, notFoundElement)
   }
 })

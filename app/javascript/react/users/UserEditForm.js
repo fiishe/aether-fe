@@ -1,44 +1,30 @@
-import React from 'react';
-import Form from './Form';
-import { withRouter } from 'react-router-dom';
-import UserProfile from '../components/UserProfile';
-import { stripString } from '../helpers'
+import React from 'react'
+import { connect } from 'react-redux'
+
+import Form from '../lib/Form'
+import UserProfile from './UserProfile'
+import { stripString } from '../lib/utils'
+
+import { toggleProfileEdit, updateUserData } from '../redux/modules/users'
 
 class UserEditForm extends Form {
   constructor(props) {
     super(props)
     this.goBack = this.goBack.bind(this)
     this.state['user'] = {}
-    this.state['render'] = 'loading'
 
     this.submitText = 'Save'
   }
 
   componentDidMount() {
-    fetch(`/api/v1/users/me`)
-      .then(res => {
-        if(res.ok) {return res}
-        else {
-          let errorMessage = `${res.status} (${res.statusText})`
-          throw(new Error(errorMessage))
-        }
-      })
-      .then(res => res.json())
-      .then(json => {
-        this.fields[0].placeholder = json.username
-        this.setState({
-          user: json,
-          render: "loaded",
-          values: {
-            nick: json.nick || "",
-            bio: json.bio || ""
-          }
-        })
-      })
-      .catch(e => {
-        console.error(`Error while fetching user data: ${e.message}`)
-        this.setState({render: "error"})
-      })
+    const user = this.props.userData
+    this.setState({
+      user,
+      values: {
+        nick: user.nick || "",
+        bio: user.bio || ""
+      }
+    })
   }
 
   getFields() {
@@ -73,13 +59,14 @@ class UserEditForm extends Form {
   }
 
   submit() {
-    this.fetchTo('/api/v1/users/me', 'PATCH')
+    this.fetchSendPayload('/api/v1/users/me', 'PATCH')
     .then(res => {
       if (res.status == "fail") {
         this.addErrors(res.data.errors)
       }
       else {
-        this.props.history.push("/")
+        this.props.updateUserData(res.data.user) //new data from server response
+        this.props.toggleProfileEdit()
       }
     })
     .catch(e => {
@@ -91,9 +78,9 @@ class UserEditForm extends Form {
     this.props.history.goBack()
   }
 
-  renderForm() {
-    let fields = this.renderFields()
-    let user = this.state.user
+  render() {
+    const fields = this.renderFields()
+    const user = this.state.user
     return (
       <div className="row panel">
         {this.renderErrors()}
@@ -104,7 +91,9 @@ class UserEditForm extends Form {
             </div>
             <div className="bar-section">
               <h3 className="bold">{user.nick || user.username}</h3>
-              <h4 className="discord-tag">{user.username}#{user.discriminator}</h4>
+              <h4 className="discord-tag">
+                {user.username}#{user.discriminator}
+              </h4>
             </div>
             <div className="bar-section right">
               {fields[0]}
@@ -114,25 +103,37 @@ class UserEditForm extends Form {
             {fields[1]}
           </div>
           <div className="form-submit-container right">
-            <input className="form-submit" type="submit" value={this.submitText || "Submit"} />
-            <button className="button secondary small right inline" onClick={this.goBack}>Cancel</button>
+            <input
+              className="form-submit"
+              type="submit"
+              value={this.submitText || "Submit"} />
+            <button
+              className="button secondary small right inline"
+              onClick={this.props.toggleProfileEdit}>
+              Cancel
+            </button>
           </div>
         </form>
       </div>
     )
   }
+}
 
-  render() {
-    if (this.state.render == 'loading') {
-      return(
-        <UserProfile loading={true} />
-      )
-    }
-    else {
-      return this.renderForm()
-    }
+const mapStateToProps = (state) => {
+  return {
+    userData: state.users.userData,
+    editing: state.users.editing,
+    isFetching: state.users.isFetching,
+    displayState: state.users.displayState
   }
 }
 
-export default withRouter(UserEditForm)
-// withRouter adds history as a prop so we can redirect by pushing to history
+const mapDispatchToProps = {
+  toggleProfileEdit,
+  updateUserData
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(UserEditForm)

@@ -1,8 +1,10 @@
 import React from 'react'
-import LinkButton from './LinkButton'
+import { connect } from 'react-redux'
+import LinkButton from '../common/LinkButton'
 
 const UserProfile = props => {
-  let user = props.user
+  const user = props.user
+
   let elems
   if (props.loading) {
     elems = {
@@ -14,18 +16,24 @@ const UserProfile = props => {
     }
   }
   else {
-    let editButton = null
-    if (props.userId == "me") {
-      editButton = <LinkButton to="/users/me/edit" defaultStyle>Edit</LinkButton>
-    }
-
     elems = {
       avatar: <img src={user.avatar_url} />,
       username: <h3 className="bold">{user.nick || user.username}</h3>,
-      discord: <h4 className="discord-tag">{user.username}#{user.discriminator}</h4>,
+      discord: <h4 className="discord-tag">
+        {user.username}#{user.discriminator}
+        </h4>,
       bio: <p>{user.bio}</p>,
-      editButton: editButton
+      editButton: null
     }
+  }
+
+  if (props.userId == "me") {
+    elems.editButton =
+      <button
+        className="link-button default"
+        onClick={props.toggleEdit}>
+        Edit
+      </button>;
   }
 
   return(

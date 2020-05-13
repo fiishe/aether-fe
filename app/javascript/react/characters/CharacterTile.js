@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import { defaultFetch, abbreviateStats } from '../helpers'
+import { abbreviateStats } from '../lib/constants'
+import defaultFetch from '../lib/defaultFetch'
 
 class CharacterTile extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class CharacterTile extends Component {
             Loading
           </div>
         )
-        break;
+        break
       case 'loaded':
         let stats = abbreviateStats(this.state.charDetails.stats)
         let statDisplay = [], i = 0
@@ -64,14 +65,14 @@ class CharacterTile extends Component {
           i += 1
         }
         return( <div className="inner">{statDisplay}</div> )
-        break;
+        break
       case 'error':
         return(
           <div className="inner">
             <p>Something went wrong while loading character data. <a onClick={this.getDetails}>Click here</a> to try again.</p>
           </div>
         )
-        break;
+        break
       default:
         throw new Error('renderDetails called without valid detailsState')
     }

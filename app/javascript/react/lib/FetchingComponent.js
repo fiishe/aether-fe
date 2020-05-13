@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { defaultFetch } from '../helpers'
+import defaultFetch from './defaultFetch'
 
 class FetchingComponent extends Component {
   constructor(props) {

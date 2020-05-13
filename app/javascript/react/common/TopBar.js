@@ -11,7 +11,7 @@ const TopBar = (props) => {
           <div className="title-container">
             <Link to="/home" className="bar">
               <img src={icon} />
-              <h2>AetherFE</h2>
+              <h2>Aether</h2>
             </Link>
           </div>
         </div>
