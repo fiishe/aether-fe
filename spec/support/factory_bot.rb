@@ -10,12 +10,27 @@ FactoryBot.define do
     access_token { SecureRandom.urlsafe_base64 }
   end
 
+  factory :character do
+    name { "Tim" }
+    user { create(:user) }
+  end
+
   factory :campaign do
     name { "The Hobbit" }
   end
 
-  factory :character do
-    name { "Tim" }
+  factory :map do
+    name { "Plains" }
     user { create(:user) }
+    image_url { "http://placekitten.com/256/192" }
+    height { 6 }
+    width { 8 }
+    tile_size { 64 }
+    json { tile_data }
+  end
+
+  factory :chapter do
+    name { "In Which Nothing Happens" }
+    map { create(:map) }
   end
 end

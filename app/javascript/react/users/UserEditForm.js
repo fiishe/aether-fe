@@ -62,7 +62,8 @@ class UserEditForm extends Form {
     this.fetchSendPayload('/api/v1/users/me', 'PATCH')
     .then(res => {
       if (res.status == "fail") {
-        this.addErrors(res.data.errors)
+        console.log(res.data.errors);
+        this.setState({ errors: res.data.errors })
       }
       else {
         this.props.updateUserData(res.data.user) //new data from server response
