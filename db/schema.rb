@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_31_002515) do
+ActiveRecord::Schema.define(version: 2020_05_15_030149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 2019_05_31_002515) do
 
   create_table "campaigns", force: :cascade do |t|
     t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "chapters", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "map_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -46,6 +53,18 @@ ActiveRecord::Schema.define(version: 2019_05_31_002515) do
     t.integer "luck", default: 0, null: false
     t.integer "defense", default: 0, null: false
     t.integer "resistance", default: 0, null: false
+  end
+
+  create_table "maps", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "creator_id", null: false
+    t.string "image_url", null: false
+    t.integer "height", null: false
+    t.integer "width", null: false
+    t.integer "tile_size", null: false
+    t.json "tile_data", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
