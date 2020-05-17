@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   REQUESTED_SCOPE = "identify"
 
   def landing
-    if !current_user.nil?
+    if current_user
       render "/react"
       return
     end
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
     session[:user_id] = user.id
     session[:expires_at] = DateTime.now + 7.days
       # user access token for dAPI also expires after 7days
-    puts "New session with id #{user.id}"
+    server_log "New session with id #{user.id}"
 
     flash[:success] = "Successfully logged in as #{user.nick || user.username}"
     redirect_to "/home"
