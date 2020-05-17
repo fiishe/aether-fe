@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :user do
     sequence(:snowflake) {|n| "%012d" % [n]}
     username { "userguy" }
-    sequence(:discriminator) {|n| "%04d" % [n]}
+    sequence(:discriminator) {"0001"}
     nick { "The Guy" }
     avatar_url { "http://example.com/img.jpg" }
     access_token { SecureRandom.urlsafe_base64 }
@@ -21,16 +21,23 @@ FactoryBot.define do
 
   factory :map do
     name { "Plains" }
-    user { create(:user) }
+    creator_id { 1 }
     image_url { "http://placekitten.com/256/192" }
     height { 6 }
     width { 8 }
     tile_size { 64 }
-    json { tile_data }
+    tile_data { "{
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0]
+      }" }
   end
 
   factory :chapter do
-    name { "In Which Nothing Happens" }
+    title { "In Which Nothing Happens" }
     map { create(:map) }
   end
 end

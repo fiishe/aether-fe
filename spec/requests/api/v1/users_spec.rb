@@ -15,7 +15,7 @@ RSpec.describe "Users API -", type: :request do
           "id" => @id,
           "username" => "userguy",
           "nick" => "The Guy",
-          "discriminator" => "0008",
+          "discriminator" => "0001",
           "avatar_url" => "http://example.com/img.jpg",
           "bio" => nil
         }
