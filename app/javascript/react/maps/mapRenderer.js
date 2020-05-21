@@ -1,3 +1,5 @@
+const CANVAS_DEFAULT_WIDTH = 300
+const CANVAS_DEFAULT_HEIGHT = 150
 const IMAGE_MAX_WIDTH = 4096, IMAGE_MAX_HEIGHT = 4096
 
 class mapRenderer {
@@ -23,8 +25,8 @@ class mapRenderer {
     image.height = Math.min(image.height, IMAGE_MAX_HEIGHT)
 
     // make canvas match image size
-    this.canvas.width = Math.max(image.width, 300)
-    this.canvas.height = Math.max(image.height, 150)
+    this.canvas.width = Math.max(image.width, CANVAS_DEFAULT_WIDTH)
+    this.canvas.height = Math.max(image.height, CANVAS_DEFAULT_HEIGHT)
   }
 
   clear() {
@@ -51,7 +53,7 @@ class mapRenderer {
         height / 2
       )
       ctx.fillText(
-        "to upload a background",
+        "to upload a background image",
         width / 2,
         height / 2 + 14
       )

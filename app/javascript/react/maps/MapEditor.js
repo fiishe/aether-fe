@@ -85,6 +85,7 @@ class MapEditor extends Component {
   handleFileInput(event) {
     event.preventDefault()
 
+    console.log("file loaded successfully");
     let imgFile = event.target.files[0]
     this.processImage(imgFile)
   }
@@ -111,7 +112,7 @@ class MapEditor extends Component {
         </div>
         <div className="row">
           <canvas id="map-editor" ref={this.domCanvasRef} />
-          <MapEditorDialog />
+          <MapEditorDialog handleFileInput={this.handleFileInput} />
         </div>
       </div>
     )

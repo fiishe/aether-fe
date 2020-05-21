@@ -12,6 +12,7 @@ const MapEditorDialog = props => {
         </div>
       )
       break
+
     case "upload":
     default:
       dialog = (
@@ -19,7 +20,8 @@ const MapEditorDialog = props => {
           <label htmlFor="map-bg">Upload a background image.</label>
           <input type="file" className="input-file"
                  id="map-bg" name="map-bg"
-                 accept="image/png, image/jpeg, image/jpg" />
+                 accept="image/png, image/jpeg, image/jpg"
+                 onChange={props.handleFileInput} />
         </div>
       )
   }
