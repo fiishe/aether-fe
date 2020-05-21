@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { setImageSrc } from '../redux/modules/maps'
 
+const IMAGE_MAX_WIDTH = 4096
+const IMAGE_MAX_HEIGHT = 4096
+
 class MapEditor extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +24,6 @@ class MapEditor extends Component {
 
   handleDrop(event) {
     event.preventDefault()
-    console.log(event.dataTransfer.files);
     this.readImage(event.dataTransfer.files[0])
   }
 
@@ -44,11 +46,16 @@ class MapEditor extends Component {
     this.props.setImageSrc(imgData)
 
     let img = new Image()
+    img.addEventListener('load', () => {
+      this.draw(img)
+    })
     img.src = imgData
-    this.draw(img)
   }
 
   draw(image) {
+    this.domCanvas.width = Math.max(image.width, 300)
+    this.domCanvas.height = Math.max(image.height, 150)
+
     let ctx = this.domCanvas.getContext('2d')
     let width = this.domCanvas.width
     let height = this.domCanvas.height
@@ -77,6 +84,10 @@ class MapEditor extends Component {
 
     this.domCanvas.addEventListener("dragover", this.handleDragover, true)
     this.domCanvas.addEventListener("drop", this.handleDrop, true)
+  }
+
+  componentDidUpdate() {
+    console.log("hey i updated");
   }
 
   componentWillUnmount() {
