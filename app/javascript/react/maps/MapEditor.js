@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import MapEditorToolbar from './MapEditorToolbar'
 
 import { connect } from 'react-redux'
 import { setImageSrc } from '../redux/modules/maps'
@@ -53,8 +54,11 @@ class MapEditor extends Component {
   }
 
   draw(image) {
-    this.domCanvas.width = Math.max(image.width, 300)
-    this.domCanvas.height = Math.max(image.height, 150)
+    // make canvas match image size
+    if (image) {
+      this.domCanvas.width = Math.max(image.width, 300)
+      this.domCanvas.height = Math.max(image.height, 150)
+    }
 
     let ctx = this.domCanvas.getContext('2d')
     let width = this.domCanvas.width
@@ -70,24 +74,23 @@ class MapEditor extends Component {
     else { // no image, default bg
       ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
       ctx.fillRect(0, 0, this.domCanvas.width, this.domCanvas.height)
+
+      ctx.font = '12px Arial'
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
+      ctx.fillRect(0, 0, this.domCanvas.width, this.domCanvas.height)
+      ctx.fillStyle = '#cec3be'
+      ctx.fillText("Drag and drop to upload a background", 4, 16)
     }
   }
 
   componentDidMount() {
     this.domCanvas = this.domCanvasRef.current
-    let ctx = this.domCanvas.getContext('2d')
-    ctx.font = '12px Arial'
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
-    ctx.fillRect(0, 0, this.domCanvas.width, this.domCanvas.height)
-    ctx.fillStyle = '#cec3be'
-    ctx.fillText("Drag and drop to upload a background", 4, 16)
-
     this.domCanvas.addEventListener("dragover", this.handleDragover, true)
     this.domCanvas.addEventListener("drop", this.handleDrop, true)
+    this.draw()
   }
 
   componentDidUpdate() {
-    console.log("hey i updated");
   }
 
   componentWillUnmount() {
@@ -98,7 +101,12 @@ class MapEditor extends Component {
   render() {
     return(
       <div>
-        <canvas id="map-editor" ref={this.domCanvasRef} />
+        <div className="row">
+          <MapEditorToolbar />
+        </div>
+        <div className="row">
+          <canvas id="map-editor" ref={this.domCanvasRef} />
+        </div>
       </div>
     )
   }
