@@ -12,9 +12,10 @@
 
 #map-toolbar p {
   padding: 2px 8px;
-  margin: 4px auto;
-  margin-bottom: 0;
+  margin: 4px;
+  border: 1px $blue-2 solid;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 #map-toolbar p:hover {
@@ -24,6 +25,7 @@
 
 #map-toolbar p i {
   margin: 8px;
+  margin-left: 4px;
 }
 
 canvas #map-editor {
