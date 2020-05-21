@@ -15,10 +15,8 @@ const App = props => {
     <Provider store={props.store}>
       <BrowserRouter>
         <div>
-          <div>
-            <TopBar />
-            <NavBar />
-          </div>
+          <TopBar />
+          <NavBar />
           <Switch>
             <Route exact path='/' component={HomePage} />
             <Route path='/home' component={HomePage} />

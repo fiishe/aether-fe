@@ -112,6 +112,7 @@ nav {
 nav.top {
   padding: 12px;
   background-color: $blue-3;
+  width: 100%;
 }
 
 .top-av {
@@ -150,9 +151,17 @@ nav.top {
   background-color: scale-color($red-1, $lightness: -14%);
 }
 
+#nav-container {
+  position: -webkit-sticky; /* safari */
+  position: sticky;
+  top: 0;
+  color: $gray-2;
+  background-color: $blue-1;
+  z-index: 10;
+}
+
 .nav-icons {
   width: 100%;
-  color: $gray-2;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -111,7 +111,9 @@ class MapEditor extends Component {
           <MapEditorToolbar />
         </div>
         <div className="row">
-          <canvas id="map-editor" ref={this.domCanvasRef} />
+          <div className="scroll">
+            <canvas id="map-editor" ref={this.domCanvasRef} />
+          </div>
           <MapEditorDialog handleFileInput={this.handleFileInput} />
         </div>
       </div>

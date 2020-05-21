@@ -27,7 +27,7 @@ const MapEditorDialog = props => {
   }
 
   return (
-    <div id="map-dialog" className="panel float-right">
+    <div id="map-dialog" className="panel">
       {dialog}
     </div>
   )

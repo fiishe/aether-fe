@@ -1,4 +1,4 @@
-const CANVAS_DEFAULT_WIDTH = 300
+const CANVAS_DEFAULT_WIDTH = 260
 const CANVAS_DEFAULT_HEIGHT = 150
 const IMAGE_MAX_WIDTH = 4096, IMAGE_MAX_HEIGHT = 4096
 
@@ -48,7 +48,7 @@ class mapRenderer {
       ctx.fillStyle = '#cec3be'
       ctx.textAlign = 'center'
       ctx.fillText(
-        "Drag and drop or use the dialog",
+        "Drag and drop or use the dialog below",
         width / 2,
         height / 2
       )
