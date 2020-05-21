@@ -17,7 +17,7 @@ ul.form-errors {
 }
 
 .form-submit-container {
-  
+
 }
 
 .form-submit {
@@ -42,4 +42,8 @@ label p, .panel label p {
   float: right;
   text-align: right;
   color: gray;
+}
+
+.input-file {
+  cursor: pointer;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import MapEditorToolbar from './MapEditorToolbar'
+import MapEditorDialog from './MapEditorDialog'
 
 import { connect } from 'react-redux'
 import { editSetImageSrc } from '../redux/modules/maps'
@@ -109,13 +110,21 @@ class MapEditor extends Component {
     }
     else { // no image, default bg
       ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
-      ctx.fillRect(0, 0, this.domCanvas.width, this.domCanvas.height)
+      ctx.fillRect(0, 0, width, height)
 
       ctx.font = '12px Arial'
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
-      ctx.fillRect(0, 0, this.domCanvas.width, this.domCanvas.height)
       ctx.fillStyle = '#cec3be'
-      ctx.fillText("Drag and drop to upload a background", 4, 16)
+      ctx.textAlign = 'center'
+      ctx.fillText(
+        "Drag and drop or use the dialog",
+        width / 2,
+        height / 2
+      )
+      ctx.fillText(
+        "to upload a background",
+        width / 2,
+        height / 2 + 14
+      )
     }
   }
 
@@ -139,6 +148,7 @@ class MapEditor extends Component {
         </div>
         <div className="row">
           <canvas id="map-editor" ref={this.domCanvasRef} />
+          <MapEditorDialog />
         </div>
       </div>
     )

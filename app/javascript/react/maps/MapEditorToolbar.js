@@ -20,17 +20,12 @@ const MapEditorToolbar = props => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentTool: state.maps.editor.currentTool
-  }
-}
 
 const mapDispatchToProps = {
   editSelectTool
 }
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(MapEditorToolbar)

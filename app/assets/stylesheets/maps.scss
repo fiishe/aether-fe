@@ -28,7 +28,15 @@
   margin-left: 4px;
 }
 
-canvas #map-editor {
+#map-editor {
   border: 4px $blue-2 solid;
-  margin: 8px auto;
+  margin: 8px 16px;
+  overflow: scroll;
+}
+
+#map-dialog {
+  padding: 12px;
+  margin: 8px;
+  min-width: 25%;
+  overflow: wrap;
 }
