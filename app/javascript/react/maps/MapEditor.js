@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import MapEditorToolbar from './MapEditorToolbar'
 import MapEditorDialog from './MapEditorDialog'
+import mapRenderer from './mapRenderer'
 
 import { connect } from 'react-redux'
 import { editSetImageSrc } from '../redux/modules/maps'
-
-const IMAGE_MAX_WIDTH = 4096
-const IMAGE_MAX_HEIGHT = 4096
 
 class MapEditor extends Component {
   constructor(props) {
     super(props)
     this.domCanvasRef = React.createRef()
     this.domCanvas = null // Becomes reference to canvas node with all DOM props
+    this.mapRenderer = null // Becomes a mapRenderer instance
 
     this.readImage = this.readImage.bind(this)
     this.loadImage = this.loadImage.bind(this)
@@ -20,7 +19,6 @@ class MapEditor extends Component {
     this.handleDragover = this.handleDragover.bind(this)
     this.handleDrop = this.handleDrop.bind(this)
     this.handleFileInput = this.handleFileInput.bind(this)
-    this.draw = this.draw.bind(this)
   }
 
   readImage(file) { // resolves with base64-encoded image data
@@ -64,7 +62,10 @@ class MapEditor extends Component {
   processImage(file) {
     this.readImage(file)
       .then(imgData => this.loadImage(imgData))
-      .then(image => this.draw(image))
+      .then(image => {
+        this.mapRenderer.setBackground(image)
+        this.mapRenderer.draw()
+      })
       .catch(e => {
         console.error(e)
       })
@@ -88,51 +89,13 @@ class MapEditor extends Component {
     this.processImage(imgFile)
   }
 
-  draw(image) {
-    // make canvas match image size
-    if (image) {
-      image.width = Math.min(image.width, IMAGE_MAX_WIDTH)
-      image.height = Math.min(image.height, IMAGE_MAX_HEIGHT)
-      this.domCanvas.width = Math.max(image.width, 300)
-      this.domCanvas.height = Math.max(image.height, 150)
-    }
-
-    let ctx = this.domCanvas.getContext('2d')
-    let width = this.domCanvas.width
-    let height = this.domCanvas.height
-
-    // clear canvas
-    ctx.clearRect(0, 0, width, height)
-
-    // background
-    if (image) {
-      ctx.drawImage(image, 0, 0)
-    }
-    else { // no image, default bg
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
-      ctx.fillRect(0, 0, width, height)
-
-      ctx.font = '12px Arial'
-      ctx.fillStyle = '#cec3be'
-      ctx.textAlign = 'center'
-      ctx.fillText(
-        "Drag and drop or use the dialog",
-        width / 2,
-        height / 2
-      )
-      ctx.fillText(
-        "to upload a background",
-        width / 2,
-        height / 2 + 14
-      )
-    }
-  }
-
   componentDidMount() {
     this.domCanvas = this.domCanvasRef.current
     this.domCanvas.addEventListener("dragover", this.handleDragover, true)
     this.domCanvas.addEventListener("drop", this.handleDrop, true)
-    this.draw()
+
+    this.mapRenderer = new mapRenderer(this.domCanvas)
+    this.mapRenderer.draw()
   }
 
   componentWillUnmount() {
