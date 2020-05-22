@@ -23,6 +23,10 @@
   color: $gray-1;
 }
 
+#map-toolbar p.selected {
+  border-color: $gray-2;
+}
+
 #map-toolbar p i {
   margin: 8px;
   margin-left: 4px;

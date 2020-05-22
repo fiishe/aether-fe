@@ -4,15 +4,18 @@ import { connect } from 'react-redux'
 import { editSelectTool } from '../redux/modules/maps'
 
 const MapEditorToolbar = props => {
+  const currentTool = props.currentTool
   const selectTool = tool => props.editSelectTool(tool)
 
   return (
     <div id="map-toolbar">
-      <p onClick={ () => {selectTool('upload')} }>
+      <p className={currentTool == 'upload' ? 'selected' : ''}
+         onClick={ () => {selectTool('upload')} }>
         <i className="fas fa-upload" />
         upload
       </p>
-      <p onClick={ () => {selectTool('grid')} }>
+      <p className={currentTool == 'grid' ? 'selected' : ''}
+         onClick={ () => {selectTool('grid')} }>
         <i className="fas fa-expand" />
         grid
       </p>
@@ -20,12 +23,17 @@ const MapEditorToolbar = props => {
   )
 }
 
+const mapStateToProps = state => {
+  return {
+    currentTool: state.maps.editor.currentTool
+  }
+}
 
 const mapDispatchToProps = {
   editSelectTool
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(MapEditorToolbar)

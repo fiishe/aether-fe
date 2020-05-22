@@ -14,7 +14,7 @@ const initialState = {
     tileSize: 16
   },
   editor: {
-    currentTool: null,
+    currentTool: 'upload',
     imageSrc: null
   }
 }
