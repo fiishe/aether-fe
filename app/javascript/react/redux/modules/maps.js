@@ -3,7 +3,8 @@ import makeActionCreator from './makeActionCreator'
 
 const editorTools = {
   upload: 'upload',
-  grid: 'grid'
+  grid: 'grid',
+  terrain: 'terrain'
 }
 
 // INITIAL STATE

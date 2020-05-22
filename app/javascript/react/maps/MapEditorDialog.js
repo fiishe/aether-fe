@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Upload from './editors/Upload'
 import Grid from './editors/Grid'
+import Terrain from './editors/Terrain'
 
 import { connect } from 'react-redux'
 import {
@@ -22,12 +23,20 @@ class MapEditorDialog extends Component {
     let gridSetTileSize = event => { this.setState({ tileSize: event.target.value }) }
 
     switch (this.props.currentTool) {
-      case "grid":
+      case 'upload':
+        return <Upload handleFileInput={this.props.handleFileInput} />
+        break
+
+      case 'grid':
         return <Grid />
         break
 
-      case "upload":
+      case 'terrain':
+        return <Terrain />
+        break
+
       default:
+        console.log("Invalid currentTool, rendering Upload");
         return <Upload handleFileInput={this.props.handleFileInput} />
     }
   }
