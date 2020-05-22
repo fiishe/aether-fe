@@ -8,6 +8,11 @@ const editorTools = {
 
 // INITIAL STATE
 const initialState = {
+  grid: {
+    alpha: 100,
+    color: "#000000",
+    tileSize: 16
+  },
   editor: {
     currentTool: null,
     imageSrc: null
@@ -15,6 +20,12 @@ const initialState = {
 }
 
 // ACTION CREATORS
+const GRID_SET = "GRID_SET"
+const gridSet = makeActionCreator(
+  GRID_SET,
+  'newGridState'
+)
+
 const EDIT_SET_IMAGE_SRC = "EDIT_SET_IMAGE_SRC"
 const editSetImageSrc = makeActionCreator(
   EDIT_SET_IMAGE_SRC,
@@ -30,6 +41,10 @@ const editSelectTool = makeActionCreator(
 // REDUCERS
 const maps = (state = initialState, action) => {
   switch(action.type) {
+    case GRID_SET:
+      return {...state,
+        grid: action.newGridState
+      }
     case EDIT_SET_IMAGE_SRC:
       return {...state,
         editor: {...state.editor,
@@ -48,6 +63,10 @@ const maps = (state = initialState, action) => {
 }
 
 export {
+  gridSetAlpha,
+  gridSetColor,
+  gridSetTileSize,
+  gridUpdate,
   editSetImageSrc,
   editSelectTool,
   maps
