@@ -43,3 +43,7 @@ label p, .panel label p {
 .input-file {
   cursor: pointer;
 }
+
+input.error {
+  background-color: $red-2;
+}

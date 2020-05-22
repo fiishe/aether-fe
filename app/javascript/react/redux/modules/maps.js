@@ -20,10 +20,28 @@ const initialState = {
 }
 
 // ACTION CREATORS
-const GRID_SET = "GRID_SET"
-const gridSet = makeActionCreator(
-  GRID_SET,
-  'newGridState'
+const GRID_SET_ALPHA = "GRID_SET_ALPHA"
+const gridSetAlpha = makeActionCreator(
+  GRID_SET_ALPHA,
+  'newAlpha'
+)
+
+const GRID_SET_COLOR = "GRID_SET_COLOR"
+const gridSetColor = makeActionCreator(
+  GRID_SET_COLOR,
+  'newColor'
+)
+
+const GRID_SET_TILESIZE = "GRID_SET_TILESIZE"
+const gridSetTileSize = makeActionCreator(
+  GRID_SET_TILESIZE,
+  'newTileSize'
+)
+
+const GRID_UPDATE = "GRID_UPDATE"
+const gridUpdate = makeActionCreator(
+  GRID_SET_TILESIZE,
+  'diff'
 )
 
 const EDIT_SET_IMAGE_SRC = "EDIT_SET_IMAGE_SRC"
@@ -41,9 +59,27 @@ const editSelectTool = makeActionCreator(
 // REDUCERS
 const maps = (state = initialState, action) => {
   switch(action.type) {
-    case GRID_SET:
+    case GRID_SET_ALPHA:
       return {...state,
-        grid: action.newGridState
+        grid: {...state.grid,
+          alpha: action.newAlpha
+        }
+      }
+    case GRID_SET_COLOR:
+      return {...state,
+        grid: {...state.grid,
+          color: action.newColor
+        }
+      }
+    case GRID_SET_TILESIZE:
+      return {...state,
+        grid: {...state.grid,
+          tileSize: action.newTileSize
+        }
+      }
+    case GRID_UPDATE:
+      return {...state,
+        grid: Object.assign({}, state.grid, action.diff)
       }
     case EDIT_SET_IMAGE_SRC:
       return {...state,
@@ -66,7 +102,6 @@ export {
   gridSetAlpha,
   gridSetColor,
   gridSetTileSize,
-  gridUpdate,
   editSetImageSrc,
   editSelectTool,
   maps
