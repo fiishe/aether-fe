@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     end
 
     client_id = ENV['DISCORD_CLIENT_ID']
-    redirect_uri = root_url + "login/callback"
+    redirect_uri = CGI::escape(request.base_url + "/login/callback")
     state = SecureRandom.urlsafe_base64
     cookies.encrypted[:auth_state] = { value: state, expires: 1.minute }
 
