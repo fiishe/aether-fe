@@ -12,7 +12,7 @@ const initialState = {
   grid: {
     alpha: 100,
     color: "#000000",
-    tileSize: 16
+    tileSize: 32
   },
   editor: {
     currentTool: 'upload',

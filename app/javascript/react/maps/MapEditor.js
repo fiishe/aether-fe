@@ -84,7 +84,7 @@ class MapEditor extends Component {
 
   handleFileInput(event) {
     event.preventDefault()
-    
+
     let imgFile = event.target.files[0]
     this.processImage(imgFile)
   }
@@ -94,8 +94,17 @@ class MapEditor extends Component {
     this.domCanvas.addEventListener("dragover", this.handleDragover, true)
     this.domCanvas.addEventListener("drop", this.handleDrop, true)
 
-    this.mapRenderer = new mapRenderer(this.domCanvas)
+    this.mapRenderer = new mapRenderer(this.domCanvas, {
+      grid: this.props.grid
+    })
     this.mapRenderer.draw()
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.grid != this.props.grid) {
+      this.mapRenderer.setGrid(this.props.grid)
+      this.mapRenderer.draw()
+    }
   }
 
   componentWillUnmount() {
@@ -122,7 +131,7 @@ class MapEditor extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    editor: state.maps.editor
+    grid: state.maps.grid
   }
 }
 
