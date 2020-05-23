@@ -9,6 +9,7 @@ const editorTools = {
 
 // INITIAL STATE
 const initialState = {
+  imageSrc: null,
   grid: {
     alpha: 100,
     color: "#000000",
@@ -16,7 +17,6 @@ const initialState = {
   },
   editor: {
     currentTool: 'upload',
-    imageSrc: null
   }
 }
 
@@ -83,11 +83,8 @@ const maps = (state = initialState, action) => {
         grid: Object.assign({}, state.grid, action.diff)
       }
     case EDIT_SET_IMAGE_SRC:
-      return {...state,
-        editor: {...state.editor,
-          imageSrc: action.src
-        }
-      }
+      return {...state, imageSrc: action.src }
+
     case EDIT_SELECT_TOOL:
       return {...state,
         editor: {...state.editor,

@@ -131,6 +131,7 @@ class MapEditor extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    currentTool: state.maps.editor.currentTool,
     grid: state.maps.grid
   }
 }
