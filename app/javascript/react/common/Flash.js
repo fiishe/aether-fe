@@ -19,12 +19,6 @@ class Flash extends Component {
     setTimeout(this.kill, this.lifespan)
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      cls: nextProps.className
-    })
-  }
-
   kill() {
     this.setState({
       cls: this.state.cls + " flash-fading"
