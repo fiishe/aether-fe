@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     client_id = ENV['DISCORD_CLIENT_ID']
     redirect_uri = CGI::escape(request.base_url + "/login/callback")
     state = SecureRandom.urlsafe_base64
-    session[:auth_state] = { value: state, expires: 1.minute }
+    session[:auth_state] = { value: state, expires: 1.minute, secure: true }
 
     redirect_to "#{DISCORD_API_ENDPOINT}/oauth2/authorize?client_id=#{client_id}&redirect_uri=#{redirect_uri}&response_type=code&scope=#{REQUESTED_SCOPE}&state=#{state}"
     # Discord prompts user to authorize AetherFE to access their account,
