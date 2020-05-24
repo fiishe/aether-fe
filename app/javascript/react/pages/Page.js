@@ -26,9 +26,12 @@ class Page extends Component {
   mountFlashes() {
     let flashList = document.getElementsByClassName('flash-doc') //returns a NodeList
     let flashArr = Array.from(flashList) //to Array
+    console.log(flashArr);
 
     let displayFlashData = flashArr.map((elem, index) => {
       let cls = elem.className.replace("flash-doc", "flash")
+                  .replace("display-none","")
+
       flashList[index].parentNode.removeChild(flashList[index]) // prevent re-rendering on navigation
       return(
         {

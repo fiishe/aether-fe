@@ -1,26 +1,42 @@
 [![Build Status](https://app.codeship.com/projects/034d3720-48b2-0137-0bcb-72c5a15f5221/status?branch=master)](https://app.codeship.com/projects/337952)
 
 # aether-fe
+## Setup
+Requirements:
+* Ruby 2.4.5
+* PostgreSQL 11
+* Yarn
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Run `setup.sh` to install dependencies and migrate/seed dev database.
 
-Things you may want to cover:
+## Environment
+Authentication is performed through Discord's OAuth2 provider, so you will need to register a [developer application](https://discord.com/developers/). Then, store the client ID and secret in `.env`:
+```
+DISCORD_CLIENT_ID=
+DISCORD_CLIENT_SECRET=
+```
 
-* Ruby version
+## Testing
+Back end (RSpec):
+```
+rspec
+```
+Front end (React, Jest+Enzyme):
+```
+yarn run test
+```
 
-* System dependencies
+## Deploying to Heroku
+After creating the Heroku app, add PostgreSQL and Redis addons:
+```
+heroku addons:add heroku-postgresql -a app-name
+heroku addons:add redistogo -a app-name
+```
 
-* Configuration
+Initialize the production database:
+```
+heroku run bundle exec rails db:schema:load -a app-name
+heroku run bundle exec rails db:seed -a app-name
+```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Finally, deploy from Github or `git push heroku master`.
