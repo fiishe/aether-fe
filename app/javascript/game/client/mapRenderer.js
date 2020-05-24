@@ -1,6 +1,9 @@
-const CANVAS_DEFAULT_WIDTH = 260
-const CANVAS_DEFAULT_HEIGHT = 150
-const IMAGE_MAX_WIDTH = 4096, IMAGE_MAX_HEIGHT = 4096
+import mapConfig from '../config/mapConfig'
+
+const CANVAS_DEFAULT_WIDTH = mapConfig.canvas.defaultWidth
+const CANVAS_DEFAULT_HEIGHT = mapConfig.canvas.defaultHeight
+const IMAGE_MAX_WIDTH = mapConfig.imageSize.maximum
+const IMAGE_MAX_HEIGHT = mapConfig.imageSize.maximum
 
 const hex2rgba = (hex, alpha = 1.0) => {
   let r = parseInt(hex.slice(1, 3), 16),

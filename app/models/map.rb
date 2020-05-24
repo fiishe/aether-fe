@@ -13,7 +13,7 @@ class Map < ApplicationRecord
   validates :tile_size, numericality: {
     only_integer: true,
     greater_than_or_equal_to: 16,
-    less_than_or_equal_to: 64
+    less_than_or_equal_to: 128
   }
 
   def creator

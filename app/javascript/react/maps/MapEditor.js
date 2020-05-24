@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import MapEditorToolbar from './MapEditorToolbar'
 import MapEditorDialog from './MapEditorDialog'
-import mapRenderer from './mapRenderer'
 
 import { connect } from 'react-redux'
 import { editSetImageSrc } from '../redux/modules/maps'
+
+import mapRenderer from '../../game/client/mapRenderer'
 
 class MapEditor extends Component {
   constructor(props) {

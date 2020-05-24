@@ -8,6 +8,8 @@ import {
   gridUpdate
 } from '../../redux/modules/maps'
 
+import mapConfig from '../../../game/config/mapConfig'
+
 class Grid extends Component {
   constructor(props) {
     super(props)
@@ -16,7 +18,7 @@ class Grid extends Component {
       color: this.props.color,
       tileSize: this.props.tileSize
     }
-    
+
     this.setAlpha = this.setAlpha.bind(this)
     this.setColor = this.setColor.bind(this)
     this.setTileSize = this.setTileSize.bind(this)
@@ -45,7 +47,9 @@ class Grid extends Component {
     let newTileSize = event.target.value
     this.setState({ tileSize: newTileSize })
 
-    if (newTileSize && newTileSize >= 16 && newTileSize <= 64) {
+    if (newTileSize &&
+        newTileSize >= mapConfig.tileSize.minimum &&
+        newTileSize <= mapConfig.tileSize.maximum) {
       this.props.gridSetTileSize(parseInt(newTileSize))
     }
   }
@@ -66,7 +70,8 @@ class Grid extends Component {
           <label htmlFor="grid-alpha">Opacity (%)</label>
           <input type="number"
             id="grid-alpha" name="grid-alpha"
-            min="0" max="100" value={this.state.alpha}
+            min="0" max="100"
+            value={this.state.alpha}
             onChange={this.setAlpha}
             />
         </div>
@@ -74,7 +79,8 @@ class Grid extends Component {
           <label htmlFor="grid-size">Tile size (px)</label>
           <input type="number"
             id="grid-size" name="grid-size"
-            min="16" max="64" value={this.state.tileSize}
+            min={mapConfig.tileSize.minimum} max={mapConfig.tileSize.maximum}
+            value={this.state.tileSize}
             onChange={this.setTileSize}
             />
         </div>

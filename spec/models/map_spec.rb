@@ -17,7 +17,7 @@ RSpec.describe Map, type: :model do
 
   it { should validate_numericality_of(:tile_size).only_integer }
   it { should validate_numericality_of(:tile_size).is_greater_than_or_equal_to(16) }
-  it { should validate_numericality_of(:tile_size).is_less_than_or_equal_to(64) }
+  it { should validate_numericality_of(:tile_size).is_less_than_or_equal_to(128) }
 
   it { should have_many(:chapters) }
 end
