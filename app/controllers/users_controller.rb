@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     client_id = ENV['DISCORD_CLIENT_ID']
     redirect_uri = CGI::escape(request.base_url + "/login/callback")
     state = SecureRandom.urlsafe_base64
-    cookies.encrypted[:auth_state] = { value: state, expires: 1.minute }
+    session[:auth_state] = { value: state, expires: 1.minute }
 
     redirect_to "#{DISCORD_API_ENDPOINT}/oauth2/authorize?client_id=#{client_id}&redirect_uri=#{redirect_uri}&response_type=code&scope=#{REQUESTED_SCOPE}&state=#{state}"
     # Discord prompts user to authorize AetherFE to access their account,
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   end
 
   def callback
-    if params[:state] != cookies.encrypted[:auth_state]
+    if params[:state] != session[:auth_state]["value"]
       raise "Login failed due to bad state variable"
     end
     token_response = discord_exchange_code(params[:code])
