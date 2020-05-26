@@ -1,6 +1,8 @@
 import React from 'react'
 import makeActionCreator from './makeActionCreator'
 
+import { mapConfig } from '../../../../game/models/Map'
+
 const editorTools = {
   upload: 'upload',
   grid: 'grid',
@@ -9,11 +11,15 @@ const editorTools = {
 
 // INITIAL STATE
 const initialState = {
+  size: {
+    width: mapConfig.mapSize.default,
+    height: mapConfig.mapSize.default
+  },
   imageSrc: null,
   grid: {
     alpha: 100,
     color: "#000000",
-    tileSize: 32
+    tileSize: mapConfig.tileSize.default
   },
   editor: {
     currentTool: 'upload',

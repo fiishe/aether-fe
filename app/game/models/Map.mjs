@@ -4,8 +4,8 @@
 const mapConfig = {
   canvas: {
     // canvas element
-    defaultWidth: 260,
-    defaultHeight: 150
+    defaultWidth: 384,
+    defaultHeight: 384
   },
   imageSize: {
     // image width/height in pixels
@@ -14,36 +14,75 @@ const mapConfig = {
   mapSize: {
     // map width/height in tiles
     minimum: 1,
-    maximum: 64
+    maximum: 64,
+    default: 6
   },
   tileSize: {
     // tile width/height in pixels
-    minimum: 16,
-    maximum: 128
+    minimum: 32,
+    maximum: 128,
+    default: 32
   }
 }
 
 class Map {
   constructor(init) {
-    this.terrain = init.terrain || [] // 2d array of tile IDs
+    if (init.tiles) {
+      this.tiles = init.tiles
+    }
+    else if (init.width && init.height) {
+      this.tiles = Array(init.height).fill(
+        Array(init.width).fill(0)
+      )
+    }
+    else {
+      this.tiles = [ [0] ]
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // GETTERS
+  // READ
 
   getWidth() { // map width in tiles
-    
+    return this.tiles[0].length
   }
 
   getHeight() { // map height in tiles
+    return this.tiles.length
+  }
 
+  getTile(x, y) {
+    return this.tiles[y][x]
+  }
+
+  tileIsInRange(x, y) {
+    return x >= 0 && x < this.getWidth() &&
+           y >= 0 && y < this.getHeight()
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // SETTERS
+  // WRITE
 
-  setTerrain() {
-    // Validate
+  setTile(x, y, newVal) {
+    if (this.tileIsInRange(x, y)) {
+      this.tiles[y][x] = newVal
+    }
+  }
+
+  pushRow(row) {
+    let newRow = row || Array(this.getWidth()).fill(0)
+    this.tiles.push(newRow)
+  }
+
+  pushColumn(col) {
+    let inserter
+    if (col) {
+      inserter = (row, index) => { row.push(col[index]) }
+    }
+    else {
+      inserter = (row) => { row.push(0) }
+    }
+    this.tiles.forEach(inserter)
   }
 }
 

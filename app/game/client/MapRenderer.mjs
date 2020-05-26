@@ -24,17 +24,27 @@ class MapRenderer {
       alpha: 100,
       tileSize: 32
     }
+
+    this.map = new Map({ width: 6, height: 6 })
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // GETTERS
+  // READ
 
-  getCanvasWidth() {
-    return this.canvas.width
+  widthInTiles() {
+    return this.map.getWidth()
   }
 
-  getCanvasHeight() {
-    return this.canvas.height
+  heightInTiles() {
+    return this.map.getHeight()
+  }
+
+  widthInPixels() {
+    return this.widthInTiles() * this.grid.tileSize
+  }
+
+  heightInPixels() {
+    return this.heightInTiles() * this.grid.tileSize
   }
 
   getGridRGBA() {
@@ -59,7 +69,13 @@ class MapRenderer {
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // SETTERS
+  // WRITE
+
+  // Update canvas size to fit current map/tile sizes
+  updateCanvas() {
+    this.canvas.width = this.widthInPixels()
+    this.canvas.height = this.heightInPixels()
+  }
 
   setBackground(image) { // image is an Image object
     this.bg = image
@@ -68,35 +84,41 @@ class MapRenderer {
     image.width = Math.min(image.width, mapConfig.imageSize.maximum)
     image.height = Math.min(image.height, mapConfig.imageSize.maximum)
 
-    // make canvas match image size
-    this.canvas.width = Math.max(image.width, mapConfig.canvas.defaultWidth)
-    this.canvas.height = Math.max(image.height, mapConfig.canvas.defaultHeight)
+    this.updateCanvas()
   }
 
   setGrid(gridObj) {
     this.grid.alpha = gridObj.alpha
     this.grid.color = gridObj.color
     this.grid.tileSize = gridObj.tileSize
+
+    // update attribs dependent on tileSize
+    this.updateCanvas()
+  }
+
+  setTile(tileX, tileY, tileId) {
+    this.map.setTile(tileX, tileY, tileId)
   }
 
   //////////////////////////////////////////////////////////////////////////////
-  // DRAWING METHODS
+  // DRAW
 
   clear() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+    this.ctx.fillStyle = "#2F3440"
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
   }
 
   // Called when there is no background image
   drawDefault() {
     let ctx = this.ctx,
-        width = this.getCanvasWidth(),
-        height = this.getCanvasHeight()
+        width = this.canvas.width,
+        height = this.canvas.height
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
     ctx.fillRect(0, 0, width, height)
 
     ctx.font = '12px Arial'
-    ctx.fillStyle = '#cec3be'
+    ctx.fillStyle = '#CEC3BE'
     ctx.textAlign = 'center'
     ctx.fillText(
       "Drag and drop or use the dialog below",
@@ -115,20 +137,23 @@ class MapRenderer {
   }
 
   drawGrid() {
-    let ctx = this.ctx, width = this.getWidth(), height = this.getHeight()
+    let ctx = this.ctx,
+        width = this.widthInPixels(),
+        height = this.heightInPixels()
 
     ctx.beginPath()
 
     // draw vertical lines
     let x = 0
-    while (x < width) {
+    while (x < this.widthInPixels()) {
       ctx.moveTo(x, 0)
       ctx.lineTo(x, height)
       x += this.grid.tileSize
     }
+
     //  draw horizontal lines
     let y = 0
-    while (y < height) {
+    while (y < this.heightInPixels()) {
       ctx.moveTo(0, y)
       ctx.lineTo(width, y)
       y += this.grid.tileSize
