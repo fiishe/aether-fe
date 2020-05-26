@@ -16,6 +16,14 @@ DISCORD_CLIENT_ID=
 DISCORD_CLIENT_SECRET=
 ```
 
+## Development
+Start a local rails development server (at `localhost:3000`), webpack-dev-server for live reloading javascript, and the game server respectively.
+```
+bundle exec rails server
+yarn run start
+yarn run game
+```
+
 ## Testing
 Back end (RSpec):
 ```

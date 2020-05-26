@@ -1,9 +1,7 @@
-import mapConfig from '../config/mapConfig'
+// MapRenderer
+// Extends Map to add rendering methods
 
-const CANVAS_DEFAULT_WIDTH = mapConfig.canvas.defaultWidth
-const CANVAS_DEFAULT_HEIGHT = mapConfig.canvas.defaultHeight
-const IMAGE_MAX_WIDTH = mapConfig.imageSize.maximum
-const IMAGE_MAX_HEIGHT = mapConfig.imageSize.maximum
+import Map, { mapConfig } from '../models/Map'
 
 const hex2rgba = (hex, alpha = 1.0) => {
   let r = parseInt(hex.slice(1, 3), 16),
@@ -14,7 +12,7 @@ const hex2rgba = (hex, alpha = 1.0) => {
   return `rgba(${r}, ${g}, ${b}, ${a})`
 }
 
-class mapRenderer {
+class MapRenderer {
   constructor(canvas, init) {
     this.canvas = canvas
     this.ctx = canvas.getContext('2d')
@@ -26,17 +24,16 @@ class mapRenderer {
       alpha: 100,
       tileSize: 32
     }
-    this.terrain = {}
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // GETTERS
 
-  getWidth() {
+  getCanvasWidth() {
     return this.canvas.width
   }
 
-  getHeight() {
+  getCanvasHeight() {
     return this.canvas.height
   }
 
@@ -68,12 +65,12 @@ class mapRenderer {
     this.bg = image
 
     // cap image size
-    image.width = Math.min(image.width, IMAGE_MAX_WIDTH)
-    image.height = Math.min(image.height, IMAGE_MAX_HEIGHT)
+    image.width = Math.min(image.width, mapConfig.imageSize.maximum)
+    image.height = Math.min(image.height, mapConfig.imageSize.maximum)
 
     // make canvas match image size
-    this.canvas.width = Math.max(image.width, CANVAS_DEFAULT_WIDTH)
-    this.canvas.height = Math.max(image.height, CANVAS_DEFAULT_HEIGHT)
+    this.canvas.width = Math.max(image.width, mapConfig.canvas.defaultWidth)
+    this.canvas.height = Math.max(image.height, mapConfig.canvas.defaultHeight)
   }
 
   setGrid(gridObj) {
@@ -91,7 +88,9 @@ class mapRenderer {
 
   // Called when there is no background image
   drawDefault() {
-    let ctx = this.ctx, width = this.getWidth(), height = this.getHeight()
+    let ctx = this.ctx,
+        width = this.getCanvasWidth(),
+        height = this.getCanvasHeight()
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
     ctx.fillRect(0, 0, width, height)
@@ -164,4 +163,4 @@ class mapRenderer {
   }
 }
 
-export default mapRenderer
+export default MapRenderer

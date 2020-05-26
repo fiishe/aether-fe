@@ -5,7 +5,7 @@ import MapEditorDialog from './MapEditorDialog'
 import { connect } from 'react-redux'
 import { editSetImageSrc } from '../redux/modules/maps'
 
-import mapRenderer from '../../game/client/mapRenderer'
+import MapRenderer from '../../../game/client/MapRenderer'
 
 class MapEditor extends Component {
   constructor(props) {
@@ -95,7 +95,7 @@ class MapEditor extends Component {
     this.domCanvas.addEventListener("dragover", this.handleDragover, true)
     this.domCanvas.addEventListener("drop", this.handleDrop, true)
 
-    this.mapRenderer = new mapRenderer(this.domCanvas, {
+    this.mapRenderer = new MapRenderer(this.domCanvas, {
       grid: this.props.grid
     })
     this.mapRenderer.draw()
