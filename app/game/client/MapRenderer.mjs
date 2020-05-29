@@ -136,6 +136,17 @@ class MapRenderer {
     this.ctx.drawImage(this.bg, 0, 0)
   }
 
+  drawTerrainMarkers() {
+    this.map.forEachTile((x, y, terrain) => {
+      let pos = this.getTileCorner(x, y)
+
+      this.ctx.font = '12px Arial'
+      this.ctx.fillStyle = '#CEC3BE'
+      this.ctx.textAlign = 'left'
+      this.ctx.fillText(terrain.toString(), pos.x, pos.y + 12)
+    })
+  }
+
   drawGrid() {
     let ctx = this.ctx,
         width = this.widthInPixels(),

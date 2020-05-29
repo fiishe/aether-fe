@@ -65,7 +65,7 @@ class MapEditor extends Component {
       .then(imgData => this.loadImage(imgData))
       .then(image => {
         this.mapRenderer.setBackground(image)
-        this.mapRenderer.draw()
+        this.mapRenderer.draw(true)
       })
       .catch(e => {
         console.error(e)
@@ -104,7 +104,12 @@ class MapEditor extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.grid != this.props.grid) {
       this.mapRenderer.setGrid(this.props.grid)
-      this.mapRenderer.draw()
+    }
+    
+    this.mapRenderer.draw()
+
+    if (this.props.currentTool == 'terrain') {
+      this.mapRenderer.drawTerrainMarkers()
     }
   }
 

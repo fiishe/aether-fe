@@ -84,6 +84,15 @@ class Map {
     }
     this.tiles.forEach(inserter)
   }
+
+  // Iterates through all of the map's tiles
+  forEachTile(func) {
+    this.tiles.forEach((row, y) => {
+      row.forEach((tile, x) => {
+        func(x, y, this.tiles[x][y])
+      })
+    })
+  }
 }
 
 export { mapConfig }
