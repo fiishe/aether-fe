@@ -22,7 +22,8 @@ const initialState = {
     tileSize: mapConfig.tileSize.default
   },
   editor: {
-    currentTool: 'upload',
+    tool: 'upload',
+    tileBrush: 'plain'
   }
 }
 
@@ -63,6 +64,12 @@ const editSelectTool = makeActionCreator(
   'tool'
 )
 
+const EDIT_SELECT_TILE_BRUSH = "EDIT_SELECT_TILE_BRUSH"
+const editSelectTileBrush = makeActionCreator(
+  EDIT_SELECT_TILE_BRUSH,
+  'tileBrush'
+)
+
 // REDUCERS
 const maps = (state = initialState, action) => {
   switch(action.type) {
@@ -94,7 +101,14 @@ const maps = (state = initialState, action) => {
     case EDIT_SELECT_TOOL:
       return {...state,
         editor: {...state.editor,
-          currentTool: action.tool
+          tool: action.tool
+        }
+      }
+
+    case EDIT_SELECT_TILE_BRUSH:
+      return {...state,
+        editor: {...state.editor,
+          tileBrush: action.tileBrush
         }
       }
     default:
@@ -108,5 +122,6 @@ export {
   gridSetTileSize,
   editSetImageSrc,
   editSelectTool,
+  editSelectTileBrush,
   maps
 }

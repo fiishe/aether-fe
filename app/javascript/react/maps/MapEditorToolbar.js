@@ -30,7 +30,7 @@ const MapEditorToolbar = props => {
 
 const mapStateToProps = state => {
   return {
-    currentTool: state.maps.editor.currentTool
+    currentTool: state.maps.editor.tool
   }
 }
 

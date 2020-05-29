@@ -1,0 +1,33 @@
+{
+  "plain": {
+    "symbol": "p",
+    "cost": {
+      "inf": 1,
+      "cav": 1,
+      "arm": 1,
+      "fly": 1
+    }
+  },
+  "forest": {
+    "symbol": "f",
+    "cost": {
+      "inf": 2,
+      "cav": 3,
+      "arm": 2,
+      "fly": 1
+    },
+    "bonus": {
+      "defense": 1,
+      "avoid": 20
+    }
+  },
+  "wall": {
+    "symbol": "w",
+    "cost": {
+      "inf": 99,
+      "cav": 99,
+      "arm": 99,
+      "fly": 99
+    }
+  }
+}

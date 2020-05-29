@@ -102,15 +102,17 @@ class MapEditor extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    // update mapRenderer grid if grid was changed in store
     if (prevProps.grid != this.props.grid) {
       this.mapRenderer.setGrid(this.props.grid)
     }
-    
-    this.mapRenderer.draw()
 
-    if (this.props.currentTool == 'terrain') {
-      this.mapRenderer.drawTerrainMarkers()
-    }
+    // only draw terrain markers if terrain tool is selected
+    this.mapRenderer.drawSettings.terrainMarkers = (
+      this.props.currentTool == 'terrain'
+    )
+
+    this.mapRenderer.draw()
   }
 
   componentWillUnmount() {
@@ -137,7 +139,7 @@ class MapEditor extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentTool: state.maps.editor.currentTool,
+    currentTool: state.maps.editor.tool,
     grid: state.maps.grid
   }
 }

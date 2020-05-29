@@ -1,6 +1,8 @@
 // Map
 // Represents a map.
 
+import tileData from '../models/tileData'
+
 const mapConfig = {
   canvas: {
     // canvas element
@@ -32,7 +34,7 @@ class Map {
     }
     else if (init.width && init.height) {
       this.tiles = Array(init.height).fill(
-        Array(init.width).fill(0)
+        Array(init.width).fill(tileData['plains'])
       )
     }
     else {

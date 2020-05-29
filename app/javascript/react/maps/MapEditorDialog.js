@@ -52,7 +52,7 @@ class MapEditorDialog extends Component {
 
 const mapStateToProps = state => {
   return {
-    currentTool: state.maps.editor.currentTool
+    currentTool: state.maps.editor.tool
   }
 }
 

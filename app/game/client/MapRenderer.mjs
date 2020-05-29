@@ -17,6 +17,12 @@ class MapRenderer {
     this.canvas = canvas
     this.ctx = canvas.getContext('2d')
 
+    this.drawSettings = {
+      // What to draw
+      grid: true,
+      terrainMarkers: false
+    }
+
     // Payload data
     this.bg = init.background || null
     this.grid = init.grid || {
@@ -137,13 +143,19 @@ class MapRenderer {
   }
 
   drawTerrainMarkers() {
-    this.map.forEachTile((x, y, terrain) => {
-      let pos = this.getTileCorner(x, y)
+    this.ctx.strokeStyle = "#000000"
+    this.ctx.font = '14px Arial'
+    this.ctx.fillStyle = '#ffffff'
+    this.ctx.textAlign = 'left'
 
-      this.ctx.font = '12px Arial'
-      this.ctx.fillStyle = '#CEC3BE'
-      this.ctx.textAlign = 'left'
-      this.ctx.fillText(terrain.toString(), pos.x, pos.y + 12)
+    this.map.forEachTile((x, y, tile) => {
+      let terrainId = tile.symbol
+      let pos = this.getTileCorner(x, y)
+      pos.x += 2
+      pos.y += 14
+
+      this.ctx.strokeText(terrainId, pos.x, pos.y)
+      this.ctx.fillText(terrainId, pos.x, pos.y)
     })
   }
 
@@ -195,7 +207,8 @@ class MapRenderer {
     }
 
     this.drawBackground()
-    this.drawGrid()
+    if (this.drawSettings.grid) { this.drawGrid() }
+    if (this.drawSettings.terrainMarkers) { this.drawTerrainMarkers() }
   }
 }
 

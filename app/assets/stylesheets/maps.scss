@@ -21,7 +21,6 @@
 
 #map-toolbar p:hover {
   background-color: $blue-4;
-  color: $gray-1;
 }
 
 #map-toolbar p.selected {
@@ -44,4 +43,16 @@
 
 #map-dialog input[type="color"], #map-dialog input[type="number"] {
   max-width: 100px;
+}
+
+#map-dialog p {
+  padding: 2px 8px;
+  margin: 4px;
+  border: 1px $red-1 solid;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#map-dialog p:hover, #map-dialog p.selected {
+  background-color: $red-1;
 }
