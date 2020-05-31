@@ -11,8 +11,9 @@ class MapEditor extends Component {
   constructor(props) {
     super(props)
     this.domCanvasRef = React.createRef()
-    this.domCanvas = null // Becomes reference to canvas node with all DOM props
-    this.mapRenderer = null // Becomes a mapRenderer instance
+    this.domCanvas = null         // Becomes reference to canvas node
+    this.mapRenderer = null       // Becomes a mapRenderer instance
+    this.touchAction = () => {}   // Becomes func called when canvas is touched
 
     this.readImage = this.readImage.bind(this)
     this.loadImage = this.loadImage.bind(this)
@@ -21,8 +22,15 @@ class MapEditor extends Component {
     this.handleDrop = this.handleDrop.bind(this)
     this.handleFileInput = this.handleFileInput.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseUp = this.handleMouseUp.bind(this)
+    this.handleTouchStart = this.handleTouchStart.bind(this)
+    this.handleTouchMove = this.handleTouchMove.bind(this)
+    this.handleTouchEnd = this.handleTouchEnd.bind(this)
   }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // IMAGE LOADING
 
   readImage(file) { // resolves with base64-encoded image data
     return new Promise((resolve, reject) => {
@@ -92,26 +100,63 @@ class MapEditor extends Component {
     this.processImage(imgFile)
   }
 
-  handleMouseDown(event) {
-    // if (!this.mapRenderer || !this.mapRenderer.src) { return }
+  //////////////////////////////////////////////////////////////////////////////
+  // EDITING
 
-    let pX = event.layerX, pY = event.layerY                // in pixels
-    let tileCoords = this.mapRenderer.getTileCoords(pX, pY) // in tiles
+  editTerrain(tX, tY) {
+    let newTile = this.props.currentTileBrush
+    let tileChanged = this.mapRenderer.map.setTile(tX, tY, newTile)
+
+    if (tileChanged) { this.mapRenderer.draw() }
+  }
+
+  handleMouseDown(event) {
+    event.preventDefault()
+    // Do nothing if mapRenderer is not ready
+    if (!this.mapRenderer || !this.mapRenderer.src) { return }
 
     switch(this.props.currentTool) {
       case 'terrain':
-        let newTile = this.props.currentTileBrush
-        this.mapRenderer.map.setTile(tileCoords.x, tileCoords.y, newTile)
-        this.mapRenderer.draw()
+        this.touchAction = this.editTerrain
       break
 
       default:
+        this.touchAction = () => {}
     }
+
+    // do action once to support tap clicking
+    this.handleMouseMove(event)
+  }
+
+  handleMouseMove(event) {
+    let pX = event.layerX, pY = event.layerY      // touch coords in pixels
+
+    let tX = this.mapRenderer.pixelsToTiles(pX),  // in tiles
+        tY = this.mapRenderer.pixelsToTiles(pY)
+
+    this.touchAction(tX, tY)
   }
 
   handleMouseUp(event) {
+    this.touchAction = () => {}
+  }
+
+  handleTouchStart(event) {
+    event.preventDefault()
+
 
   }
+
+  handleTouchMove(event) {
+
+  }
+
+  handleTouchEnd(event) {
+
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  // LIFECYCLE
 
   componentDidMount() {
     this.domCanvas = this.domCanvasRef.current
@@ -119,10 +164,12 @@ class MapEditor extends Component {
       grid: this.props.grid
     })
 
-    this.domCanvas.addEventListener("dragover", this.handleDragover, true)
-    this.domCanvas.addEventListener("drop", this.handleDrop, true)
-    this.domCanvas.onmousedown = this.handleMouseDown
-    this.domCanvas.onmouseup = this.handleMouseUp
+    let canvas = this.domCanvas
+    canvas.addEventListener("dragover", this.handleDragover, true)
+    canvas.addEventListener("drop", this.handleDrop, true)
+    canvas.onmousedown = this.handleMouseDown
+    canvas.onmousemove = this.handleMouseMove
+    canvas.onmouseup = this.handleMouseUp
 
     this.mapRenderer.draw()
   }
@@ -154,7 +201,9 @@ class MapEditor extends Component {
         </div>
         <div className="row">
           <div className="scroll">
-            <canvas id="map-editor" ref={this.domCanvasRef} />
+            <canvas id="map-editor" ref={this.domCanvasRef}>
+              If you see this on the page, you need a better browser
+            </canvas>
           </div>
           <MapEditorDialog handleFileInput={this.handleFileInput} />
         </div>
