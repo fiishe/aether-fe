@@ -24,7 +24,7 @@ class MapRenderer {
     }
 
     // Payload data
-    this.bg = init.background || null
+    this.src = init.background || null
     this.grid = init.grid || {
       color: "#000000",
       alpha: 100,
@@ -32,6 +32,9 @@ class MapRenderer {
     }
 
     this.map = new Map({ width: 6, height: 6 })
+
+    // bind funcs
+    this.drawTerrainMarker = this.drawTerrainMarker.bind(this)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -74,6 +77,14 @@ class MapRenderer {
     }
   }
 
+  // returns tile coords of tile at (x, y) in pixels
+  getTileCoords(pixelX, pixelY) {
+    return {
+      x: parseInt(pixelX / this.grid.tileSize),
+      y: parseInt(pixelY / this.grid.tileSize)
+    }
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // WRITE
 
@@ -84,7 +95,7 @@ class MapRenderer {
   }
 
   setBackground(image) { // image is an Image object
-    this.bg = image
+    this.src = image
 
     // cap image size
     image.width = Math.min(image.width, mapConfig.imageSize.maximum)
@@ -139,7 +150,34 @@ class MapRenderer {
   }
 
   drawBackground() {
-    this.ctx.drawImage(this.bg, 0, 0)
+    this.ctx.drawImage(this.src, 0, 0)
+  }
+
+  // draw() but only for a single tile at grid coords x, y
+  drawTile(x, y) {
+    let topLeft = this.getTileCorner(x, y),
+        tileSize = this.grid.tileSize
+
+    this.ctx.drawImage(
+      this.src,             // image
+      topLeft.x, topLeft.y, // topleft corner of section of source image
+      tileSize, tileSize,   // size of section of source image
+      topLeft.x, topLeft.y  // offset at which to draw on canvas
+    )
+
+    if (this.drawSettings.terrainMarkers) {
+      this.drawTerrainMarker(x, y, this.map.getTile(x, y))
+    }
+  }
+
+  drawTerrainMarker(x, y, tile) {
+    let terrainId = tile.symbol
+    let pos = this.getTileCorner(x, y)
+    pos.x += 2
+    pos.y += 14
+
+    this.ctx.strokeText(terrainId, pos.x, pos.y)
+    this.ctx.fillText(terrainId, pos.x, pos.y)
   }
 
   drawTerrainMarkers() {
@@ -148,15 +186,7 @@ class MapRenderer {
     this.ctx.fillStyle = '#ffffff'
     this.ctx.textAlign = 'left'
 
-    this.map.forEachTile((x, y, tile) => {
-      let terrainId = tile.symbol
-      let pos = this.getTileCorner(x, y)
-      pos.x += 2
-      pos.y += 14
-
-      this.ctx.strokeText(terrainId, pos.x, pos.y)
-      this.ctx.fillText(terrainId, pos.x, pos.y)
-    })
+    this.map.forEachTile(this.drawTerrainMarker)
   }
 
   drawGrid() {
@@ -187,7 +217,7 @@ class MapRenderer {
     ctx.stroke()
   }
 
-  // draws image in center of given grid tile
+  // draws given image in center of given grid tile
   drawImageOnGrid(image, gridX, gridY) {
     let origin = this.getTileCenter(gridX, gridY)
     origin.x -= image.width / 2
@@ -201,7 +231,7 @@ class MapRenderer {
     this.clear()
 
     // Check if background img exists
-    if (!this.bg) {
+    if (!this.src) {
       this.drawDefault()
       return
     }

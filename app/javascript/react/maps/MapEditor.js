@@ -20,6 +20,8 @@ class MapEditor extends Component {
     this.handleDragover = this.handleDragover.bind(this)
     this.handleDrop = this.handleDrop.bind(this)
     this.handleFileInput = this.handleFileInput.bind(this)
+    this.handleMouseDown = this.handleMouseDown.bind(this)
+    this.handleMouseUp = this.handleMouseUp.bind(this)
   }
 
   readImage(file) { // resolves with base64-encoded image data
@@ -65,7 +67,7 @@ class MapEditor extends Component {
       .then(imgData => this.loadImage(imgData))
       .then(image => {
         this.mapRenderer.setBackground(image)
-        this.mapRenderer.draw(true)
+        this.mapRenderer.draw()
       })
       .catch(e => {
         console.error(e)
@@ -90,14 +92,38 @@ class MapEditor extends Component {
     this.processImage(imgFile)
   }
 
+  handleMouseDown(event) {
+    // if (!this.mapRenderer || !this.mapRenderer.src) { return }
+
+    let pX = event.layerX, pY = event.layerY                // in pixels
+    let tileCoords = this.mapRenderer.getTileCoords(pX, pY) // in tiles
+
+    switch(this.props.currentTool) {
+      case 'terrain':
+        let newTile = this.props.currentTileBrush
+        this.mapRenderer.map.setTile(tileCoords.x, tileCoords.y, newTile)
+        this.mapRenderer.draw()
+      break
+
+      default:
+    }
+  }
+
+  handleMouseUp(event) {
+
+  }
+
   componentDidMount() {
     this.domCanvas = this.domCanvasRef.current
-    this.domCanvas.addEventListener("dragover", this.handleDragover, true)
-    this.domCanvas.addEventListener("drop", this.handleDrop, true)
-
     this.mapRenderer = new MapRenderer(this.domCanvas, {
       grid: this.props.grid
     })
+
+    this.domCanvas.addEventListener("dragover", this.handleDragover, true)
+    this.domCanvas.addEventListener("drop", this.handleDrop, true)
+    this.domCanvas.onmousedown = this.handleMouseDown
+    this.domCanvas.onmouseup = this.handleMouseUp
+
     this.mapRenderer.draw()
   }
 
@@ -140,6 +166,7 @@ class MapEditor extends Component {
 const mapStateToProps = (state) => {
   return {
     currentTool: state.maps.editor.tool,
+    currentTileBrush: state.maps.editor.tileBrush,
     grid: state.maps.grid
   }
 }

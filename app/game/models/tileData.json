@@ -1,5 +1,6 @@
 {
   "plain": {
+    "name": "plain",
     "symbol": "p",
     "cost": {
       "inf": 1,
@@ -9,6 +10,7 @@
     }
   },
   "forest": {
+    "name": "forest",
     "symbol": "f",
     "cost": {
       "inf": 2,
@@ -22,6 +24,7 @@
     }
   },
   "wall": {
+    "name": "wall",
     "symbol": "w",
     "cost": {
       "inf": 99,

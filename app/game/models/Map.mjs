@@ -33,8 +33,10 @@ class Map {
       this.tiles = init.tiles
     }
     else if (init.width && init.height) {
-      this.tiles = Array(init.height).fill(
-        Array(init.width).fill(tileData['plains'])
+      // initialize 2d array filled with plains
+      this.tiles = Array.from(
+        Array(init.height),
+        () => new Array(init.width).fill(tileData['plain'])
       )
     }
     else {
@@ -62,12 +64,25 @@ class Map {
            y >= 0 && y < this.getHeight()
   }
 
+  dump() {
+    let out = ""
+    this.tiles.forEach((row, y) => {
+      row.forEach((tile, x) => {
+        out += tile.symbol
+      })
+      out += "\n"
+    })
+    console.log(out);
+    return out
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // WRITE
 
-  setTile(x, y, newVal) {
+  setTile(x, y, tileName) {
     if (this.tileIsInRange(x, y)) {
-      this.tiles[y][x] = newVal
+      let newTile = tileData[tileName]
+      this.tiles[y][x] = newTile
     }
   }
 
@@ -91,7 +106,7 @@ class Map {
   forEachTile(func) {
     this.tiles.forEach((row, y) => {
       row.forEach((tile, x) => {
-        func(x, y, this.tiles[x][y])
+        func(x, y, tile)
       })
     })
   }

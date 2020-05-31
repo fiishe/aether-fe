@@ -27,7 +27,7 @@ const Terrain = props => {
         name={terrain}
         symbol={tileData[terrain].symbol}
         isSelected={props.currentTileBrush == terrain}
-        onClick={ () => { props.editSelectTileBrush(terrain) } }/>
+        onClick={ () => { props.editSelectTileBrush(terrain) } } />
     )
   })
 
