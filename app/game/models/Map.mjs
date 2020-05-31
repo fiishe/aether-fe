@@ -6,8 +6,8 @@ import tileData from '../models/tileData'
 const mapConfig = {
   canvas: {
     // canvas element
-    defaultWidth: 384,
-    defaultHeight: 384
+    defaultWidth: 300,
+    defaultHeight: 150
   },
   imageSize: {
     // image width/height in pixels
@@ -79,10 +79,15 @@ class Map {
   //////////////////////////////////////////////////////////////////////////////
   // WRITE
 
+  // set value of a single tile, returning true if it changed
   setTile(x, y, tileName) {
-    if (this.tileIsInRange(x, y)) {
+    if (this.tiles[y][x].name != tileName) {
       let newTile = tileData[tileName]
       this.tiles[y][x] = newTile
+      return true
+    }
+    else {
+      return false
     }
   }
 

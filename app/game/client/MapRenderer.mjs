@@ -16,6 +16,9 @@ class MapRenderer {
   constructor(canvas, init) {
     this.canvas = canvas
     this.ctx = canvas.getContext('2d')
+    this.scaleCanvas(
+      mapConfig.canvas.defaultWidth, mapConfig.canvas.defaultHeight
+    )
 
     this.drawSettings = {
       // What to draw
@@ -35,6 +38,22 @@ class MapRenderer {
 
     // bind funcs
     this.drawTerrainMarker = this.drawTerrainMarker.bind(this)
+  }
+
+  scaleCanvas(targetWidth, targetHeight) {
+    // scale canvas up by dpr and down by the same amount in class
+    //  so that it doesn't look awful on hiDPI screens
+    // https://html5rocks.com/en/tutorials/canvas/hidpi
+    let canvas = this.canvas
+    let dpr = window.devicePixelRatio || 1    // device pixel ratio
+
+    canvas.width = targetWidth * dpr
+    canvas.height = targetHeight * dpr
+    canvas.style.width = `${targetWidth}px`
+    canvas.style.height = `${targetHeight}px`
+
+    let ctx = canvas.getContext('2d')
+    ctx.scale(dpr, dpr)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -77,12 +96,9 @@ class MapRenderer {
     }
   }
 
-  // returns tile coords of tile at (x, y) in pixels
-  getTileCoords(pixelX, pixelY) {
-    return {
-      x: parseInt(pixelX / this.grid.tileSize),
-      y: parseInt(pixelY / this.grid.tileSize)
-    }
+  // convert pixel values to tile values
+  pixelsToTiles(pixels) {
+    return parseInt(pixels / this.grid.tileSize)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -90,8 +106,7 @@ class MapRenderer {
 
   // Update canvas size to fit current map/tile sizes
   updateCanvas() {
-    this.canvas.width = this.widthInPixels()
-    this.canvas.height = this.heightInPixels()
+    this.scaleCanvas(this.widthInPixels(), this.heightInPixels())
   }
 
   setBackground(image) { // image is an Image object
@@ -113,10 +128,6 @@ class MapRenderer {
     this.updateCanvas()
   }
 
-  setTile(tileX, tileY, tileId) {
-    this.map.setTile(tileX, tileY, tileId)
-  }
-
   //////////////////////////////////////////////////////////////////////////////
   // DRAW
 
@@ -128,8 +139,8 @@ class MapRenderer {
   // Called when there is no background image
   drawDefault() {
     let ctx = this.ctx,
-        width = this.canvas.width,
-        height = this.canvas.height
+        width = mapConfig.canvas.defaultWidth,
+        height = mapConfig.canvas.defaultHeight
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
     ctx.fillRect(0, 0, width, height)
@@ -172,9 +183,8 @@ class MapRenderer {
 
   drawTerrainMarker(x, y, tile) {
     let terrainId = tile.symbol
-    let pos = this.getTileCorner(x, y)
-    pos.x += 2
-    pos.y += 14
+    let pos = this.getTileCenter(x, y)
+    pos.y += 5
 
     this.ctx.strokeText(terrainId, pos.x, pos.y)
     this.ctx.fillText(terrainId, pos.x, pos.y)
@@ -184,7 +194,7 @@ class MapRenderer {
     this.ctx.strokeStyle = "#000000"
     this.ctx.font = '14px Arial'
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.textAlign = 'left'
+    this.ctx.textAlign = 'center'
 
     this.map.forEachTile(this.drawTerrainMarker)
   }
