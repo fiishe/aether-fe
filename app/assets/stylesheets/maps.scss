@@ -32,6 +32,11 @@
   margin-left: 4px;
 }
 
+canvas {
+  // touch-action: none; // prevent scrolling from touch here
+                         // but also kills touch events
+}
+
 #map-dialog {
   padding: 12px;
   padding-bottom: 24px;

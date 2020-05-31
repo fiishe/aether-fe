@@ -27,6 +27,17 @@ class MapEditor extends Component {
     this.handleTouchStart = this.handleTouchStart.bind(this)
     this.handleTouchMove = this.handleTouchMove.bind(this)
     this.handleTouchEnd = this.handleTouchEnd.bind(this)
+
+    this.eventListeners = [
+      { event: 'dragover',    func: this.handleDragover,  useCapture: true },
+      { event: 'drop',        func: this.handleDrop,      useCapture: true },
+      { event: 'mousedown',   func: this.handleMouseDown  },
+      { event: 'mousemove',   func: this.handleMouseMove  },
+      { event: 'mouseup',     func: this.handleMouseUp    },
+      { event: 'touchstart',  func: this.handleTouchStart },
+      { event: 'touchmove',   func: this.handleTouchMove  },
+      { event: 'touchend',    func: this.handleTouchEnd   }
+    ]
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -129,6 +140,8 @@ class MapEditor extends Component {
   }
 
   handleMouseMove(event) {
+    event.preventDefault()
+
     let pX = event.layerX, pY = event.layerY      // touch coords in pixels
 
     let tX = this.mapRenderer.pixelsToTiles(pX),  // in tiles
@@ -138,21 +151,20 @@ class MapEditor extends Component {
   }
 
   handleMouseUp(event) {
+    event.preventDefault()
     this.touchAction = () => {}
   }
 
   handleTouchStart(event) {
-    event.preventDefault()
-
-
+    this.handleMouseDown(event)
   }
 
   handleTouchMove(event) {
-
+    this.handleMouseMove(event)
   }
 
   handleTouchEnd(event) {
-
+    this.handleMouseUp(event)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -165,9 +177,10 @@ class MapEditor extends Component {
     })
 
     let canvas = this.domCanvas
-    canvas.addEventListener("dragover", this.handleDragover, true)
-    canvas.addEventListener("drop", this.handleDrop, true)
-    canvas.onmousedown = this.handleMouseDown
+    this.eventListeners.forEach(item => {
+      canvas.addEventListener(item.event, item.func, item.useCapture)
+    })
+
     canvas.onmousemove = this.handleMouseMove
     canvas.onmouseup = this.handleMouseUp
 
@@ -189,8 +202,9 @@ class MapEditor extends Component {
   }
 
   componentWillUnmount() {
-    this.domCanvas.removeEventListener("dragover", this.handleDragover)
-    this.domCanvas.removeEventListener("drop", this.handleDrop)
+    this.eventListeners.forEach(item => {
+      canvas.removeEventListener(item.event, item.func)
+    })
   }
 
   render() {
