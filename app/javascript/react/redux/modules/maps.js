@@ -12,14 +12,14 @@ const editorTools = {
 // INITIAL STATE
 const initialState = {
   size: {
-    width: mapConfig.mapSize.default,
-    height: mapConfig.mapSize.default
+    width: mapConfig.default.mapWidth,
+    height: mapConfig.default.mapHeight
   },
   imageSrc: null,
   grid: {
     alpha: 100,
     color: "#000000",
-    tileSize: mapConfig.tileSize.default
+    tileSize: mapConfig.default.tileSize
   },
   editor: {
     tool: 'upload',

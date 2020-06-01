@@ -4,26 +4,21 @@
 import tileData from '../models/tileData'
 
 const mapConfig = {
-  canvas: {
-    // canvas element
-    defaultWidth: 300,
-    defaultHeight: 150
+  default: {
+    canvasWidth: 256,   // canvas width in pixels
+    canvasHeight: 192,  // canvas height in pixels
+    mapWidth: 8,        // map width in tiles
+    mapHeight: 6,       // map height in tiles
+    tileSize: 32        // tile width/height in pixels
   },
-  imageSize: {
-    // image width/height in pixels
-    maximum: 4096
+  minimum: {
+    mapSize: 1,         // map width/height in tiles
+    tileSize: 32        // tile width/height in pixels
   },
-  mapSize: {
-    // map width/height in tiles
-    minimum: 1,
-    maximum: 64,
-    default: 6
-  },
-  tileSize: {
-    // tile width/height in pixels
-    minimum: 32,
-    maximum: 128,
-    default: 32
+  maximum: {
+    mapSize: 64,
+    tileSize: 128,
+    imageSize: 4096     // image width/height in pixels
   }
 }
 

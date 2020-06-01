@@ -17,7 +17,7 @@ class MapRenderer {
     this.canvas = canvas
     this.ctx = canvas.getContext('2d')
     this.scaleCanvas(
-      mapConfig.canvas.defaultWidth, mapConfig.canvas.defaultHeight
+      mapConfig.default.canvasWidth, mapConfig.default.canvasHeight
     )
 
     this.drawSettings = {
@@ -34,7 +34,8 @@ class MapRenderer {
       tileSize: 32
     }
 
-    this.map = new Map({ width: 6, height: 6 })
+    let width = mapConfig.default.mapWidth, height = mapConfig.default.mapHeight
+    this.map = new Map({ width: width, height: height })
 
     // bind funcs
     this.drawTerrainMarker = this.drawTerrainMarker.bind(this)
@@ -113,8 +114,8 @@ class MapRenderer {
     this.src = image
 
     // cap image size
-    image.width = Math.min(image.width, mapConfig.imageSize.maximum)
-    image.height = Math.min(image.height, mapConfig.imageSize.maximum)
+    image.width = Math.min(image.width, mapConfig.maximum.imageSize)
+    image.height = Math.min(image.height, mapConfig.maximum.imageSize)
 
     this.updateCanvas()
   }
@@ -139,8 +140,8 @@ class MapRenderer {
   // Called when there is no background image
   drawDefault() {
     let ctx = this.ctx,
-        width = mapConfig.canvas.defaultWidth,
-        height = mapConfig.canvas.defaultHeight
+        width = mapConfig.default.canvasWidth,
+        height = mapConfig.default.canvasHeight
 
     ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
     ctx.fillRect(0, 0, width, height)
@@ -240,13 +241,14 @@ class MapRenderer {
   draw() {
     this.clear()
 
-    // Check if background img exists
-    if (!this.src) {
+    if (this.src) {
+      this.drawBackground()
+    }
+    else {
       this.drawDefault()
       return
     }
 
-    this.drawBackground()
     if (this.drawSettings.grid) { this.drawGrid() }
     if (this.drawSettings.terrainMarkers) { this.drawTerrainMarkers() }
   }

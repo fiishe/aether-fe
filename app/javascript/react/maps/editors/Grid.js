@@ -48,8 +48,8 @@ class Grid extends Component {
     this.setState({ tileSize: newTileSize })
 
     if (newTileSize &&
-        newTileSize >= mapConfig.tileSize.minimum &&
-        newTileSize <= mapConfig.tileSize.maximum) {
+        newTileSize >= mapConfig.minimum.tileSize &&
+        newTileSize <= mapConfig.maximum.tileSize) {
       this.props.gridSetTileSize(parseInt(newTileSize))
     }
   }
@@ -79,7 +79,7 @@ class Grid extends Component {
           <label htmlFor="grid-size">Tile size (px)</label>
           <input type="number"
             id="grid-size" name="grid-size"
-            min={mapConfig.tileSize.minimum} max={mapConfig.tileSize.maximum}
+            min={mapConfig.minimum.tileSize} max={mapConfig.maximum.tileSize}
             value={this.state.tileSize}
             onChange={this.setTileSize}
             />
