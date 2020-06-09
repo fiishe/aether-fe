@@ -8,7 +8,7 @@ import {
   gridUpdate
 } from '../../redux/modules/maps'
 
-import { mapConfig } from '../../../../game/models/Map'
+import { mapConfig } from '../../../../game/models/TileMap'
 
 class Grid extends Component {
   constructor(props) {

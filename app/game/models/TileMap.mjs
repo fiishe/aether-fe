@@ -5,38 +5,32 @@ import tileData from '../models/tileData'
 
 const mapConfig = {
   default: {
-    canvasWidth: 256,   // canvas width in pixels
-    canvasHeight: 192,  // canvas height in pixels
-    mapWidth: 8,        // map width in tiles
-    mapHeight: 6,       // map height in tiles
-    tileSize: 32        // tile width/height in pixels
+    canvasWidth: 256,     // canvas width in pixels
+    canvasHeight: 192,    // canvas height in pixels
+    mapWidth: 8,          // map width in tiles
+    mapHeight: 6,         // map height in tiles
+    tileSize: 32,         // tile width/height in pixels
+    gridColor: '#000000', // grid color
+    gridAlpha: 100        // grid alpha
   },
   minimum: {
-    mapSize: 1,         // map width/height in tiles
-    tileSize: 32        // tile width/height in pixels
+    mapSize: 1,           // map width/height in tiles
+    tileSize: 32          // tile width/height in pixels
   },
   maximum: {
     mapSize: 64,
     tileSize: 128,
-    imageSize: 4096     // image width/height in pixels
+    imageSize: 4096       // image width/height in pixels
   }
 }
 
-class Map {
-  constructor(init) {
-    if (init.tiles) {
-      this.tiles = init.tiles
-    }
-    else if (init.width && init.height) {
-      // initialize 2d array filled with plains
-      this.tiles = Array.from(
-        Array(init.height),
-        () => new Array(init.width).fill(tileData['plain'])
-      )
-    }
-    else {
-      this.tiles = [ [0] ]
-    }
+class TileMap {
+  constructor(width = 1, height = 1) {
+    // initialize 2d array filled with plains
+    this.tiles = Array.from(
+      Array(height),
+      () => new Array(width).fill(tileData['plain'])
+    )
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -113,4 +107,4 @@ class Map {
 }
 
 export { mapConfig }
-export default Map
+export default TileMap

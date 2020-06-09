@@ -1,6 +1,7 @@
 import React from 'react'
 import Page from './Page'
 import MapEditor from '../maps/MapEditor'
+import MapView from '../maps/MapView'
 
 class MapEditPage extends Page {
   yield() {

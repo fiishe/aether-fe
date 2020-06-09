@@ -6,12 +6,18 @@ import {
 } from '../../redux/modules/maps'
 
 import tileData from '../../../../game/models/tileData'
+import terrainIcons from 'images/terrain/terrainIcons.mjs'
 
 const TerrainSelector = props => {
   return (
-    <div className="small-6 medium-4 large-2 columns" onClick={props.onClick}>
+    <div className="small-6 medium-3 large-2 columns" onClick={props.onClick}>
       <p className={props.isSelected ? "selected" : ""}>
-        {props.symbol} - {props.name}
+        <img
+          src={terrainIcons[props.name]}
+          width="32px" height="32px"
+          className="terrain-icon"
+          id={`terrain-icon-${props.name}`} />
+        {props.name}
       </p>
     </div>
   )

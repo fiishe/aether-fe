@@ -32,15 +32,22 @@
   margin-left: 4px;
 }
 
-canvas {
-  // touch-action: none; // prevent scrolling from touch here
-                         // but also kills touch events
+#map-stage {
+  position: relative;
 }
+
+canvas { position: absolute; }
+#ui-layer { z-index: 4; }
+#units-layer { z-index: 3; }
+#grid-layer { z-index: 2; }
+#bg-layer { z-index: 1; }
 
 #map-dialog {
   padding: 12px;
   padding-bottom: 24px;
   min-width: 25%;
+  max-height: 50%;
+  overflow-y: scroll;
 
   position: sticky;
   bottom: 0;
@@ -60,4 +67,8 @@ canvas {
 
 #map-dialog p:hover, #map-dialog p.selected {
   background-color: $red-1;
+}
+
+img.terrain-icon {
+  margin-right: 4px;
 }

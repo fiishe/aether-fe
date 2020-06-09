@@ -1,24 +1,22 @@
 import React, { Component } from 'react'
 import MapEditorToolbar from './MapEditorToolbar'
+import MapView from './MapView'
 import MapEditorDialog from './MapEditorDialog'
 
 import { connect } from 'react-redux'
-import { editSetImageSrc } from '../redux/modules/maps'
+import { setImage } from '../redux/modules/maps'
 
 import MapRenderer from '../../../game/client/MapRenderer'
 
 class MapEditor extends Component {
   constructor(props) {
     super(props)
-    this.domCanvasRef = React.createRef()
-    this.domCanvas = null         // Becomes reference to canvas node
-    this.mapRenderer = null       // Becomes a mapRenderer instance
     this.touchAction = () => {}   // Becomes func called when canvas is touched
 
     this.readImage = this.readImage.bind(this)
     this.loadImage = this.loadImage.bind(this)
     this.processImage = this.processImage.bind(this)
-    this.handleDragover = this.handleDragover.bind(this)
+    this.handleDragOver = this.handleDragOver.bind(this)
     this.handleDrop = this.handleDrop.bind(this)
     this.handleFileInput = this.handleFileInput.bind(this)
     this.handleMouseDown = this.handleMouseDown.bind(this)
@@ -29,7 +27,7 @@ class MapEditor extends Component {
     this.handleTouchEnd = this.handleTouchEnd.bind(this)
 
     this.eventListeners = [
-      { event: 'dragover',    func: this.handleDragover,  useCapture: true },
+      { event: 'dragover',    func: this.handleDragOver,  useCapture: true },
       { event: 'drop',        func: this.handleDrop,      useCapture: true },
       { event: 'mousedown',   func: this.handleMouseDown  },
       { event: 'mousemove',   func: this.handleMouseMove  },
@@ -67,8 +65,6 @@ class MapEditor extends Component {
   loadImage(imgData) { // resolves with loaded image object (ready to draw)
     return new Promise((resolve, reject) => {
       try {
-        this.props.editSetImageSrc(imgData)
-
         let img = new Image()
         img.addEventListener('load', () => {
           resolve(img)
@@ -85,15 +81,14 @@ class MapEditor extends Component {
     this.readImage(file)
       .then(imgData => this.loadImage(imgData))
       .then(image => {
-        this.mapRenderer.setBackground(image)
-        this.mapRenderer.draw()
+        this.props.setImage(image)
       })
       .catch(e => {
         console.error(e)
       })
   }
 
-  handleDragover(event) {
+  handleDragOver(event) {
     event.preventDefault()
   }
 
@@ -171,26 +166,17 @@ class MapEditor extends Component {
   // LIFECYCLE
 
   componentDidMount() {
-    this.domCanvas = this.domCanvasRef.current
-    this.mapRenderer = new MapRenderer(this.domCanvas, {
-      grid: this.props.grid
-    })
 
-    let canvas = this.domCanvas
-    this.eventListeners.forEach(item => {
-      canvas.addEventListener(item.event, item.func, item.useCapture)
-    })
-
-    canvas.onmousemove = this.handleMouseMove
-    canvas.onmouseup = this.handleMouseUp
-
-    this.mapRenderer.draw()
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    /*
+    let shouldRedraw = false
+
     // update mapRenderer grid if grid was changed in store
     if (prevProps.grid != this.props.grid) {
       this.mapRenderer.setGrid(this.props.grid)
+      shouldRedraw = true
     }
 
     // only draw terrain markers if terrain tool is selected
@@ -198,12 +184,15 @@ class MapEditor extends Component {
       this.props.currentTool == 'terrain'
     )
 
-    this.mapRenderer.draw()
+    if (shouldRedraw) {
+      this.mapRenderer.draw()
+    }
+    */
   }
 
   componentWillUnmount() {
     this.eventListeners.forEach(item => {
-      canvas.removeEventListener(item.event, item.func)
+      this.domCanvas.removeEventListener(item.event, item.func)
     })
   }
 
@@ -215,9 +204,12 @@ class MapEditor extends Component {
         </div>
         <div className="row">
           <div className="scroll">
-            <canvas id="map-editor" ref={this.domCanvasRef}>
-              If you see this on the page, you need a better browser
-            </canvas>
+            <div id="map-edit-container"
+              onDragOver = {this.handleDragOver}
+              onDrop = {this.handleDrop}
+              >
+              <MapView />
+            </div>
           </div>
           <MapEditorDialog handleFileInput={this.handleFileInput} />
         </div>
@@ -235,7 +227,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  editSetImageSrc
+  setImage
 }
 
 export default connect(

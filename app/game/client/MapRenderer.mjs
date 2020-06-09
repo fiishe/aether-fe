@@ -1,7 +1,8 @@
 // MapRenderer
-// Extends Map to add rendering methods
+// Supplements MapView component to draw a map on a canvas
 
-import Map, { mapConfig } from '../models/Map'
+import TileMap, { mapConfig } from '../models/TileMap'
+import terrainIcons from 'images/terrain/terrainIcons.mjs'
 
 const hex2rgba = (hex, alpha = 1.0) => {
   let r = parseInt(hex.slice(1, 3), 16),
@@ -13,48 +14,30 @@ const hex2rgba = (hex, alpha = 1.0) => {
 }
 
 class MapRenderer {
-  constructor(canvas, init) {
-    this.canvas = canvas
-    this.ctx = canvas.getContext('2d')
-    this.scaleCanvas(
-      mapConfig.default.canvasWidth, mapConfig.default.canvasHeight
+  constructor(map, layers, gridOptions) {
+    // map object or width/height
+    this.map = map || new TileMap(
+      init.width || mapConfig.default.mapWidth,
+      init.height || mapConfig.default.mapHeight
     )
 
-    this.drawSettings = {
-      // What to draw
-      grid: true,
-      terrainMarkers: false
+    // canvas elements
+    this.layers = layers || {
+      ui: null,
+      game: null,
+      grid: null,
+      bg: null
     }
 
-    // Payload data
-    this.src = init.background || null
-    this.grid = init.grid || {
-      color: "#000000",
-      alpha: 100,
-      tileSize: 32
+    // grid options object
+    this.grid = gridOptions || {
+      alpha: mapConfig.default.gridAlpha,
+      color: mapConfig.default.gridColor,
+      tileSize: mapConfig.default.tileSize
     }
-
-    let width = mapConfig.default.mapWidth, height = mapConfig.default.mapHeight
-    this.map = new Map({ width: width, height: height })
 
     // bind funcs
     this.drawTerrainMarker = this.drawTerrainMarker.bind(this)
-  }
-
-  scaleCanvas(targetWidth, targetHeight) {
-    // scale canvas up by dpr and down by the same amount in class
-    //  so that it doesn't look awful on hiDPI screens
-    // https://html5rocks.com/en/tutorials/canvas/hidpi
-    let canvas = this.canvas
-    let dpr = window.devicePixelRatio || 1    // device pixel ratio
-
-    canvas.width = targetWidth * dpr
-    canvas.height = targetHeight * dpr
-    canvas.style.width = `${targetWidth}px`
-    canvas.style.height = `${targetHeight}px`
-
-    let ctx = canvas.getContext('2d')
-    ctx.scale(dpr, dpr)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -105,11 +88,6 @@ class MapRenderer {
   //////////////////////////////////////////////////////////////////////////////
   // WRITE
 
-  // Update canvas size to fit current map/tile sizes
-  updateCanvas() {
-    this.scaleCanvas(this.widthInPixels(), this.heightInPixels())
-  }
-
   setBackground(image) { // image is an Image object
     this.src = image
 
@@ -132,9 +110,8 @@ class MapRenderer {
   //////////////////////////////////////////////////////////////////////////////
   // DRAW
 
-  clear() {
-    this.ctx.fillStyle = "#2F3440"
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
+  clearLayer(layerName) {
+    console.log('ok');
   }
 
   // Called when there is no background image
@@ -161,8 +138,8 @@ class MapRenderer {
     )
   }
 
-  drawBackground() {
-    this.ctx.drawImage(this.src, 0, 0)
+  drawBackground(image) {
+    this.layers.bg.drawImage(image, 0, 0)
   }
 
   // draw() but only for a single tile at grid coords x, y
@@ -184,24 +161,28 @@ class MapRenderer {
 
   drawTerrainMarker(x, y, tile) {
     let terrainId = tile.symbol
-    let pos = this.getTileCenter(x, y)
-    pos.y += 5
+    let pos = this.getTileCorner(x, y)
+    let tileSize = this.grid.tileSize
 
-    this.ctx.strokeText(terrainId, pos.x, pos.y)
-    this.ctx.fillText(terrainId, pos.x, pos.y)
+    let img = new Image()
+
+    img.onload = () => {
+      this.ctx.drawImage(img, pos.x, pos.y, tileSize, tileSize)
+    }
+
+    img.src = terrainIcons[tile.name]
   }
 
   drawTerrainMarkers() {
-    this.ctx.strokeStyle = "#000000"
     this.ctx.font = '14px Arial'
-    this.ctx.fillStyle = '#ffffff'
+    this.ctx.fillStyle = '#0000ff'
     this.ctx.textAlign = 'center'
 
     this.map.forEachTile(this.drawTerrainMarker)
   }
 
-  drawGrid() {
-    let ctx = this.ctx,
+  drawGrid(canvas) {
+    let ctx = canvas.getContext('2d'),
         width = this.widthInPixels(),
         height = this.heightInPixels()
 

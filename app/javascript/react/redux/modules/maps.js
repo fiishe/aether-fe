@@ -1,7 +1,7 @@
 import React from 'react'
 import makeActionCreator from './makeActionCreator'
 
-import { mapConfig } from '../../../../game/models/Map'
+import TileMap, { mapConfig } from '../../../../game/models/TileMap'
 
 const editorTools = {
   upload: 'upload',
@@ -11,14 +11,15 @@ const editorTools = {
 
 // INITIAL STATE
 const initialState = {
+  map: new TileMap(mapConfig.default.mapWidth, mapConfig.default.mapHeight),
   size: {
     width: mapConfig.default.mapWidth,
     height: mapConfig.default.mapHeight
   },
-  imageSrc: null,
+  image: null,
   grid: {
-    alpha: 100,
-    color: "#000000",
+    alpha: mapConfig.default.gridAlpha,
+    color: mapConfig.default.gridColor,
     tileSize: mapConfig.default.tileSize
   },
   editor: {
@@ -28,6 +29,12 @@ const initialState = {
 }
 
 // ACTION CREATORS
+const SET_IMAGE = "SET_IMAGE"
+const setImage = makeActionCreator(
+  SET_IMAGE,
+  'newImage'
+)
+
 const GRID_SET_ALPHA = "GRID_SET_ALPHA"
 const gridSetAlpha = makeActionCreator(
   GRID_SET_ALPHA,
@@ -52,12 +59,6 @@ const gridUpdate = makeActionCreator(
   'diff'
 )
 
-const EDIT_SET_IMAGE_SRC = "EDIT_SET_IMAGE_SRC"
-const editSetImageSrc = makeActionCreator(
-  EDIT_SET_IMAGE_SRC,
-  'src'
-)
-
 const EDIT_SELECT_TOOL = "EDIT_SELECT_TOOL"
 const editSelectTool = makeActionCreator(
   EDIT_SELECT_TOOL,
@@ -73,6 +74,9 @@ const editSelectTileBrush = makeActionCreator(
 // REDUCERS
 const maps = (state = initialState, action) => {
   switch(action.type) {
+    case SET_IMAGE:
+      return {...state, image: action.newImage }
+
     case GRID_SET_ALPHA:
       return {...state,
         grid: {...state.grid,
@@ -95,8 +99,6 @@ const maps = (state = initialState, action) => {
       return {...state,
         grid: Object.assign({}, state.grid, action.diff)
       }
-    case EDIT_SET_IMAGE_SRC:
-      return {...state, imageSrc: action.src }
 
     case EDIT_SELECT_TOOL:
       return {...state,
@@ -117,10 +119,10 @@ const maps = (state = initialState, action) => {
 }
 
 export {
+  setImage,
   gridSetAlpha,
   gridSetColor,
   gridSetTileSize,
-  editSetImageSrc,
   editSelectTool,
   editSelectTileBrush,
   maps
