@@ -27,9 +27,13 @@ class MapView extends Component {
     this.viewHeight = this.props.mapHeight * this.props.gridOptions.tileSize
 
     // binds
+    this.getPWidth = this.getPWidth.bind(this)
+    this.getPHeight = this.getPHeight.bind(this)
     this.scaleCanvases = this.scaleCanvases.bind(this)
     this.updateViewDimensions = this.updateViewDimensions.bind(this)
     this.fullDraw = this.fullDraw.bind(this)
+    this.drawBackground = this.drawBackground.bind(this)
+    this.drawGrid = this.drawGrid.bind(this)
   }
 
   scaleCanvases(targetWidth, targetHeight) {
@@ -54,6 +58,15 @@ class MapView extends Component {
     }
   }
 
+  // width in pixels
+  getPWidth() {
+    return this.props.map.getWidth() * this.props.gridOptions.tileSize
+  }
+
+  getPHeight() {
+    return this.props.map.getHeight() * this.props.gridOptions.tileSize
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // DRAWING
 
@@ -63,11 +76,22 @@ class MapView extends Component {
   }
 
   fullDraw() {
-
+    this.drawBackground()
+    this.drawGrid()
   }
 
   drawBackground() {
+    if (this.props.image) {
+      this.mapRenderer.drawBackground(this.props.image)
+    }
+    else {
+      this.mapRenderer.drawDefaultBackground()
+    }
+  }
 
+  drawGrid() {
+    this.mapRenderer.clear(this.mapRenderer.layers.grid)
+    this.mapRenderer.drawGrid(this.props.gridOptions)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -109,16 +133,12 @@ class MapView extends Component {
     }
 
     if (prevProps.image != this.props.image) {
-      console.log("bg changed");
-      console.log(this.props.image);
-
-      this.mapRenderer.drawBackground(this.props.image)
+      this.drawBackground()
     }
 
-    if (prevProps.grid != this.props.grid) {
+    if (prevProps.gridOptions != this.props.gridOptions) {
       // redraw grid layer
-      console.log("grid changed");
-      console.log(this.props.grid);
+      this.drawGrid()
     }
   }
 

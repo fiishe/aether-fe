@@ -16,10 +16,7 @@ const hex2rgba = (hex, alpha = 1.0) => {
 class MapRenderer {
   constructor(map, layers, gridOptions) {
     // map object or width/height
-    this.map = map || new TileMap(
-      init.width || mapConfig.default.mapWidth,
-      init.height || mapConfig.default.mapHeight
-    )
+    this.map = map
 
     // canvas elements
     this.layers = layers || {
@@ -29,12 +26,7 @@ class MapRenderer {
       bg: null
     }
 
-    // grid options object
-    this.grid = gridOptions || {
-      alpha: mapConfig.default.gridAlpha,
-      color: mapConfig.default.gridColor,
-      tileSize: mapConfig.default.tileSize
-    }
+    this.gridOptions = gridOptions
 
     // bind funcs
     this.drawTerrainMarker = this.drawTerrainMarker.bind(this)
@@ -52,16 +44,16 @@ class MapRenderer {
   }
 
   widthInPixels() {
-    return this.widthInTiles() * this.grid.tileSize
+    return this.widthInTiles() * this.gridOptions.tileSize
   }
 
   heightInPixels() {
-    return this.heightInTiles() * this.grid.tileSize
+    return this.heightInTiles() * this.gridOptions.tileSize
   }
 
-  getGridRGBA() {
-    let alpha = parseFloat(this.grid.alpha) / 100.0
-    return hex2rgba(this.grid.color, alpha)
+  getGridRGBA(gridOptions) {
+    let alpha = parseFloat(gridOptions.alpha) / 100.0
+    return hex2rgba(gridOptions.color, alpha)
   }
 
   // returns {x, y} at top left corner of the tile at given coords
@@ -82,41 +74,25 @@ class MapRenderer {
 
   // convert pixel values to tile values
   pixelsToTiles(pixels) {
-    return parseInt(pixels / this.grid.tileSize)
+    return parseInt(pixels / this.gridOptions.tileSize)
   }
 
   //////////////////////////////////////////////////////////////////////////////
   // WRITE
 
-  setBackground(image) { // image is an Image object
-    this.src = image
 
-    // cap image size
-    image.width = Math.min(image.width, mapConfig.maximum.imageSize)
-    image.height = Math.min(image.height, mapConfig.maximum.imageSize)
-
-    this.updateCanvas()
-  }
-
-  setGrid(gridObj) {
-    this.grid.alpha = gridObj.alpha
-    this.grid.color = gridObj.color
-    this.grid.tileSize = gridObj.tileSize
-
-    // update attribs dependent on tileSize
-    this.updateCanvas()
-  }
 
   //////////////////////////////////////////////////////////////////////////////
   // DRAW
 
-  clearLayer(layerName) {
-    console.log('ok');
+  clear(layer) {
+    let ctx = layer
+    ctx.clearRect(0, 0, this.widthInPixels(), this.heightInPixels())
   }
 
   // Called when there is no background image
-  drawDefault() {
-    let ctx = this.ctx,
+  drawDefaultBackground() {
+    let ctx = this.layers.bg,
         width = mapConfig.default.canvasWidth,
         height = mapConfig.default.canvasHeight
 
@@ -167,22 +143,23 @@ class MapRenderer {
     let img = new Image()
 
     img.onload = () => {
-      this.ctx.drawImage(img, pos.x, pos.y, tileSize, tileSize)
+      this.layers.game.drawImage(img, pos.x, pos.y, tileSize, tileSize)
     }
 
     img.src = terrainIcons[tile.name]
   }
 
   drawTerrainMarkers() {
-    this.ctx.font = '14px Arial'
-    this.ctx.fillStyle = '#0000ff'
-    this.ctx.textAlign = 'center'
+    let ctx = this.layers.game
+    ctx.font = '14px Arial'
+    ctx.fillStyle = '#0000ff'
+    ctx.textAlign = 'center'
 
     this.map.forEachTile(this.drawTerrainMarker)
   }
 
-  drawGrid(canvas) {
-    let ctx = canvas.getContext('2d'),
+  drawGrid(options) {
+    let ctx = this.layers.grid,
         width = this.widthInPixels(),
         height = this.heightInPixels()
 
@@ -190,21 +167,21 @@ class MapRenderer {
 
     // draw vertical lines
     let x = 0
-    while (x < this.widthInPixels()) {
+    while (x < width) {
       ctx.moveTo(x, 0)
       ctx.lineTo(x, height)
-      x += this.grid.tileSize
+      x += options.tileSize
     }
 
     //  draw horizontal lines
     let y = 0
-    while (y < this.heightInPixels()) {
+    while (y < height) {
       ctx.moveTo(0, y)
       ctx.lineTo(width, y)
-      y += this.grid.tileSize
+      y += options.tileSize
     }
 
-    ctx.strokeStyle = this.getGridRGBA()
+    ctx.strokeStyle = this.getGridRGBA(options)
     ctx.lineWidth = 1
     ctx.stroke()
   }
@@ -216,22 +193,6 @@ class MapRenderer {
     origin.y -= image.height / 2
 
     this.ctx.drawImage(image, origin.x, origin.y)
-  }
-
-  // Main rendering function
-  draw() {
-    this.clear()
-
-    if (this.src) {
-      this.drawBackground()
-    }
-    else {
-      this.drawDefault()
-      return
-    }
-
-    if (this.drawSettings.grid) { this.drawGrid() }
-    if (this.drawSettings.terrainMarkers) { this.drawTerrainMarkers() }
   }
 }
 

@@ -25,17 +25,6 @@ class MapEditor extends Component {
     this.handleTouchStart = this.handleTouchStart.bind(this)
     this.handleTouchMove = this.handleTouchMove.bind(this)
     this.handleTouchEnd = this.handleTouchEnd.bind(this)
-
-    this.eventListeners = [
-      { event: 'dragover',    func: this.handleDragOver,  useCapture: true },
-      { event: 'drop',        func: this.handleDrop,      useCapture: true },
-      { event: 'mousedown',   func: this.handleMouseDown  },
-      { event: 'mousemove',   func: this.handleMouseMove  },
-      { event: 'mouseup',     func: this.handleMouseUp    },
-      { event: 'touchstart',  func: this.handleTouchStart },
-      { event: 'touchmove',   func: this.handleTouchMove  },
-      { event: 'touchend',    func: this.handleTouchEnd   }
-    ]
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -170,30 +159,7 @@ class MapEditor extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    /*
-    let shouldRedraw = false
-
-    // update mapRenderer grid if grid was changed in store
-    if (prevProps.grid != this.props.grid) {
-      this.mapRenderer.setGrid(this.props.grid)
-      shouldRedraw = true
-    }
-
-    // only draw terrain markers if terrain tool is selected
-    this.mapRenderer.drawSettings.terrainMarkers = (
-      this.props.currentTool == 'terrain'
-    )
-
-    if (shouldRedraw) {
-      this.mapRenderer.draw()
-    }
-    */
-  }
-
-  componentWillUnmount() {
-    this.eventListeners.forEach(item => {
-      this.domCanvas.removeEventListener(item.event, item.func)
-    })
+    
   }
 
   render() {
@@ -205,8 +171,14 @@ class MapEditor extends Component {
         <div className="row">
           <div className="scroll">
             <div id="map-edit-container"
-              onDragOver = {this.handleDragOver}
-              onDrop = {this.handleDrop}
+              onDragOver={this.handleDragOver}
+              onDrop={this.handleDrop}
+              onMouseDown={this.handleMouseDown}
+              onMouseMove={this.handleMouseMove}
+              onMouseUp={this.handleMouseUp}
+              onTouchStart={this.handleTouchStart}
+              onTouchMove={this.handleTouchMove}
+              onTouchEnd={this.handleTouchEnd}
               >
               <MapView />
             </div>
