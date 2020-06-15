@@ -14,6 +14,11 @@ const MapEditorToolbar = props => {
         <i className="fas fa-upload" />
         upload
       </p>
+      <p className={currentTool == 'size' ? 'selected' : ''}
+         onClick={ () => {selectTool('size')} }>
+        <i className="fas fa-expand" />
+        size
+      </p>
       <p className={currentTool == 'grid' ? 'selected' : ''}
          onClick={ () => {selectTool('grid')} }>
         <i className="fas fa-expand" />

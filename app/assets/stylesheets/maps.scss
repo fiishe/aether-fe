@@ -52,6 +52,7 @@ canvas { position: absolute; }
 
   position: sticky;
   bottom: 0;
+  z-index: 10;
 }
 
 #map-dialog input[type="color"], #map-dialog input[type="number"] {

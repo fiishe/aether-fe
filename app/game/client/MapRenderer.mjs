@@ -59,10 +59,12 @@ class MapRenderer {
   //////////////////////////////////////////////////////////////////////////////
   // WRITE
 
-  updateViewDimensions() {
-    let ts = this.gridOptions.tileSize
-    this.viewWidth = this.widthInTiles() * ts
-    this.viewHeight = this.heightInTiles() * ts
+  setWidth(w) {
+    this.width = w
+  }
+
+  setHeight(h) {
+    this.height = h
   }
 
   updateGridOptions(gridOptions) {
@@ -78,8 +80,8 @@ class MapRenderer {
 
   // Drawn when there is no background image
   drawUploadPrompt(bgLayer, textLayer) {
-    let width = mapConfig.default.canvasWidth,
-        height = mapConfig.default.canvasHeight
+    let width = this.width,
+        height = this.height
 
     bgLayer.fillStyle = 'rgba(255, 255, 255, 0.1)'
     bgLayer.fillRect(0, 0, width, height)
@@ -140,7 +142,7 @@ class MapRenderer {
     img.src = terrainIcons[tile.name]
   }
 
-  clearGameTile(ctx, x, y) {
+  clearTile(ctx, x, y) {
     let pos = this.getTileCorner(x, y),
         tileSize = this.gridOptions.tileSize
 

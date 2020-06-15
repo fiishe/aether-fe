@@ -12,10 +12,10 @@ const editorTools = {
 // INITIAL STATE
 const initialState = {
   map: new TileMap(mapConfig.default.mapWidth, mapConfig.default.mapHeight),
-  size: {
-    width: mapConfig.default.mapWidth,
-    height: mapConfig.default.mapHeight
-  },
+  mapWidth: mapConfig.default.mapWidth,
+  mapHeight: mapConfig.default.mapHeight,
+  viewWidth: mapConfig.default.mapWidth * mapConfig.default.tileSize,
+  viewHeight: mapConfig.default.mapHeight * mapConfig.default.tileSize,
   image: null,
   grid: {
     alpha: mapConfig.default.gridAlpha,
@@ -34,6 +34,22 @@ const setImage = makeActionCreator(
   SET_IMAGE,
   'newImage'
 )
+
+const ADD_TO_MAP_WIDTH = "ADD_TO_MAP_WIDTH"
+const addToMapWidth = makeActionCreator(
+  ADD_TO_MAP_WIDTH,
+  'delta'
+)
+const incrementWidth = () => { return dispatch => { dispatch(addToMapWidth(1)) } }
+const decrementWidth = () => { return dispatch => { dispatch(addToMapWidth(-1)) } }
+
+const ADD_TO_MAP_HEIGHT = "ADD_TO_MAP_HEIGHT"
+const addToMapHeight = makeActionCreator(
+  ADD_TO_MAP_HEIGHT,
+  'delta'
+)
+const incrementHeight = () => { return dispatch => { dispatch(addToMapHeight(1)) } }
+const decrementHeight = () => { return dispatch => { dispatch(addToMapHeight(-1)) } }
 
 const GRID_SET_ALPHA = "GRID_SET_ALPHA"
 const gridSetAlpha = makeActionCreator(
@@ -77,6 +93,22 @@ const maps = (state = initialState, action) => {
     case SET_IMAGE:
       return {...state, image: action.newImage }
 
+    case ADD_TO_MAP_WIDTH:
+      return {...state,
+        mapWidth: state.mapWidth + action.delta,
+        mapHeight: state.mapHeight,
+        viewWidth: state.viewWidth + action.delta * state.grid.tileSize,
+        viewHeight: state.viewHeight
+      }
+
+    case ADD_TO_MAP_HEIGHT:
+      return {...state,
+        mapWidth: state.mapWidth,
+        mapHeight: state.mapHeight + action.delta,
+        viewWidth: state.viewWidth,
+        viewHeight: state.viewHeight + action.delta * state.grid.tileSize
+      }
+
     case GRID_SET_ALPHA:
       return {...state,
         grid: {...state.grid,
@@ -91,6 +123,8 @@ const maps = (state = initialState, action) => {
       }
     case GRID_SET_TILESIZE:
       return {...state,
+        viewWidth: state.mapWidth * action.newTileSize,
+        viewHeight: state.mapHeight * action.newTileSize,
         grid: {...state.grid,
           tileSize: action.newTileSize
         }
@@ -120,6 +154,10 @@ const maps = (state = initialState, action) => {
 
 export {
   setImage,
+  incrementWidth,
+  decrementWidth,
+  incrementHeight,
+  decrementHeight,
   gridSetAlpha,
   gridSetColor,
   gridSetTileSize,

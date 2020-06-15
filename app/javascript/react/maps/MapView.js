@@ -23,8 +23,6 @@ class MapView extends Component {
     this.ctx = {}
 
     this.mapRenderer = null
-    this.viewWidth = this.props.mapWidth * this.props.gridOptions.tileSize
-    this.viewHeight = this.props.mapHeight * this.props.gridOptions.tileSize
 
     // binds
     this.getPWidth = this.getPWidth.bind(this)
@@ -37,12 +35,13 @@ class MapView extends Component {
   }
 
   scaleCanvases(targetWidth, targetHeight) {
-    let scaleCanvas = canvas => {
+    let dpr = window.devicePixelRatio || 1
+    if (dpr == 1) { return }
+
+    let scaleCanvas = (canvas) => {
       // scale canvas up by dpr and down by the same amount in css
       //  so that it doesn't look awful on hiDPI screens
       // https://html5rocks.com/en/tutorials/canvas/hidpi
-
-      let dpr = window.devicePixelRatio || 1    // device pixel ratio
 
       canvas.width = targetWidth * dpr
       canvas.height = targetHeight * dpr
@@ -75,8 +74,10 @@ class MapView extends Component {
   // DRAWING
 
   updateViewDimensions() {
-    this.viewWidth = this.props.mapWidth * this.props.gridOptions.tileSize
-    this.viewHeight = this.props.mapHeight * this.props.gridOptions.tileSize
+    this.mapRenderer.setWidth(this.props.viewWidth)
+    this.mapRenderer.setHeight(this.props.viewHeight)
+
+    this.scaleCanvases(this.props.viewWidth, this.props.viewHeight)
   }
 
   fullDraw() {
@@ -120,20 +121,21 @@ class MapView extends Component {
 
     // Initialize drawing module
     this.mapRenderer = new MapRenderer(
-      this.viewWidth, this.viewHeight, this.props.gridOptions
+      this.props.viewWidth, this.props.viewHeight, this.props.gridOptions
     )
 
     // Resize canvas elements to fix resolution on hiDPI screens
-    this.scaleCanvases(this.viewWidth, this.viewHeight)
+    this.scaleCanvases(this.props.viewWidth, this.props.viewHeight)
 
     // First draw
     this.fullDraw()
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.size != this.props.size) {
-      console.log("size changed");
-      console.log(this.props.size);
+    if (prevProps.viewWidth != this.props.viewWidth ||
+        prevProps.viewHeight != this.props.viewHeight) {
+      this.updateViewDimensions()
+      this.fullDraw()
     }
 
     if (prevProps.image != this.props.image) {
@@ -154,15 +156,15 @@ class MapView extends Component {
   render() {
     return (
       <div id="map-stage" className="scroll"
-        style={ { width: this.viewWidth+'px', height: this.viewHeight+'px' } }
+        style={ { width: this.props.viewWidth+'px', height: this.props.viewHeight+'px' } }
       >
-        <canvas id="ui-layer" width={this.width} height={this.height}
+        <canvas id="ui-layer" width={this.props.viewWidth} height={this.props.viewHeight}
           ref={this.state.refs.ui} />
-        <canvas id="game-layer" width={this.width} height={this.height}
+        <canvas id="game-layer" width={this.props.viewWidth} height={this.props.viewHeight}
           ref={this.state.refs.game} />
-        <canvas id="grid-layer" width={this.width} height={this.height}
+        <canvas id="grid-layer" width={this.props.viewWidth} height={this.props.viewHeight}
           ref={this.state.refs.grid} />
-        <canvas id="bg-layer" width={this.width} height={this.height}
+        <canvas id="bg-layer" width={this.props.viewWidth} height={this.props.viewHeight}
           ref={this.state.refs.bg} />
       </div>
     )
@@ -171,11 +173,11 @@ class MapView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    map: state.maps.map,
-    mapWidth: state.maps.size.width,
-    mapHeight: state.maps.size.height,
+    gridOptions: state.maps.grid,
     image: state.maps.image,
-    gridOptions: state.maps.grid
+    map: state.maps.map,
+    viewWidth: state.maps.viewWidth,
+    viewHeight: state.maps.viewHeight
   }
 }
 export default connect(

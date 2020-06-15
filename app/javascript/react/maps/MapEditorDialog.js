@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Upload from './editors/Upload'
+import Size from './editors/Size'
 import Grid from './editors/Grid'
 import Terrain from './editors/Terrain'
 
@@ -25,6 +26,10 @@ class MapEditorDialog extends Component {
     switch (this.props.currentTool) {
       case 'upload':
         return <Upload handleFileInput={this.props.handleFileInput} />
+        break
+
+      case 'size':
+        return <Size />
         break
 
       case 'grid':
