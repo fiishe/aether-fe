@@ -172,6 +172,7 @@ class MapEditor extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.currentTool != prevProps.currentTool) {
       if (this.props.currentTool == 'terrain') {
+        console.log('drawing markers');
         this.mapRenderer.drawTerrainMarkers(this.mapView.layers.game, this.props.map)
       }
       else {

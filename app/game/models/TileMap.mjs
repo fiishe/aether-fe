@@ -90,7 +90,7 @@ class TileMap {
   }
 
   pushRow(row) {
-    let newRow = row || Array(this.getWidth()).fill(0)
+    let newRow = row || Array(this.getWidth()).fill(tileData['plain'])
     this.tiles.push(newRow)
   }
 
@@ -100,9 +100,23 @@ class TileMap {
       inserter = (row, index) => { row.push(col[index]) }
     }
     else {
-      inserter = (row) => { row.push(0) }
+      inserter = (row) => { row.push(tileData['plain']) }
     }
     this.tiles.forEach(inserter)
+  }
+
+  crop(targetWidth, targetHeight) {
+    let i
+
+    // vertical crop
+    for (i = this.getHeight(); i > targetHeight; i--) {
+      this.tiles.pop()
+    }
+
+    // horizontal crop
+    this.tiles.forEach(row => {
+      // row = subset of row that only has targetWidth elements
+    })
   }
 
   // Iterates through all of the map's tiles

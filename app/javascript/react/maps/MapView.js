@@ -25,8 +25,6 @@ class MapView extends Component {
     this.mapRenderer = null
 
     // binds
-    this.getPWidth = this.getPWidth.bind(this)
-    this.getPHeight = this.getPHeight.bind(this)
     this.scaleCanvases = this.scaleCanvases.bind(this)
     this.updateViewDimensions = this.updateViewDimensions.bind(this)
     this.fullDraw = this.fullDraw.bind(this)
@@ -55,19 +53,6 @@ class MapView extends Component {
     for (let layerName in this.canvas) {
       scaleCanvas(this.canvas[layerName])
     }
-  }
-
-  // width in pixels
-  getPWidth() {
-    return this.props.map.getWidth() * this.props.gridOptions.tileSize
-  }
-
-  getPHeight() {
-    return this.props.map.getHeight() * this.props.gridOptions.tileSize
-  }
-
-  getMapRenderer() {
-    return this.mapRenderer
   }
 
   //////////////////////////////////////////////////////////////////////////////
