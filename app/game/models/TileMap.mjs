@@ -31,6 +31,15 @@ class TileMap {
       Array(height),
       () => new Array(width).fill(tileData['plain'])
     )
+
+    this.getWidth = this.getWidth.bind(this)
+    this.getHeight = this.getHeight.bind(this)
+    this.getTile = this.getTile.bind(this)
+    this.tileIsInRange = this.tileIsInRange.bind(this)
+    this.setTile = this.setTile.bind(this)
+    this.pushRow = this.pushRow.bind(this)
+    this.pushColumn = this.pushColumn.bind(this)
+    this.forEachTile = this.forEachTile.bind(this)
   }
 
   //////////////////////////////////////////////////////////////////////////////

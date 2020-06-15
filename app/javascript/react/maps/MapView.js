@@ -67,6 +67,10 @@ class MapView extends Component {
     return this.props.map.getHeight() * this.props.gridOptions.tileSize
   }
 
+  getMapRenderer() {
+    return this.mapRenderer
+  }
+
   //////////////////////////////////////////////////////////////////////////////
   // DRAWING
 
@@ -79,19 +83,14 @@ class MapView extends Component {
     this.drawBackground()
     this.drawGrid()
   }
-
-  drawBackground() {
-    if (this.props.image) {
-      this.mapRenderer.drawBackground(this.props.image)
-    }
-    else {
-      this.mapRenderer.drawDefaultBackground()
-    }
-  }
-
+  
   drawGrid() {
     this.mapRenderer.clear(this.mapRenderer.layers.grid)
     this.mapRenderer.drawGrid(this.props.gridOptions)
+  }
+
+  drawBackground() {
+    this.mapRenderer.drawBackground(this.props.image)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -133,6 +132,9 @@ class MapView extends Component {
     }
 
     if (prevProps.image != this.props.image) {
+      // clear upload prompt
+      this.mapRenderer.clear(this.mapRenderer.layers.ui)
+
       this.drawBackground()
     }
 
@@ -171,5 +173,7 @@ const mapStateToProps = (state) => {
 }
 export default connect(
   mapStateToProps,
-  null
+  null,
+  null,
+  { forwardRef: true }
 )(MapView)

@@ -27,6 +27,8 @@ class MapRenderer {
     }
 
     this.gridOptions = gridOptions
+    this.viewWidth = mapConfig.default.canvasWidth
+    this.viewHeight = mapConfig.default.canvasHeight
 
     // bind funcs
     this.drawTerrainMarker = this.drawTerrainMarker.bind(this)
@@ -43,14 +45,6 @@ class MapRenderer {
     return this.map.getHeight()
   }
 
-  widthInPixels() {
-    return this.widthInTiles() * this.gridOptions.tileSize
-  }
-
-  heightInPixels() {
-    return this.heightInTiles() * this.gridOptions.tileSize
-  }
-
   getGridRGBA(gridOptions) {
     let alpha = parseFloat(gridOptions.alpha) / 100.0
     return hex2rgba(gridOptions.color, alpha)
@@ -59,13 +53,13 @@ class MapRenderer {
   // returns {x, y} at top left corner of the tile at given coords
   getTileCorner(gridX, gridY) {
     return {
-      x: gridX * this.grid.tileSize,
-      y: gridY * this.grid.tileSize
+      x: gridX * this.gridOptions.tileSize,
+      y: gridY * this.gridOptions.tileSize
     }
   }
 
   getTileCenter(gridX, gridY) {
-    let tileSize = this.grid.tileSize
+    let tileSize = this.gridOptions.tileSize
     return {
       x: gridX * tileSize + (tileSize / 2),
       y: gridY * tileSize + (tileSize / 2)
@@ -80,34 +74,43 @@ class MapRenderer {
   //////////////////////////////////////////////////////////////////////////////
   // WRITE
 
+  updateViewDimensions() {
+    let ts = this.gridOptions.tileSize
+    this.viewWidth = this.widthInTiles() * ts
+    this.viewHeight = this.heightInTiles() * ts
+  }
 
+  updateGridOptions(gridOptions) {
+    this.gridOptions = gridOptions
+  }
 
   //////////////////////////////////////////////////////////////////////////////
   // DRAW
 
   clear(layer) {
     let ctx = layer
-    ctx.clearRect(0, 0, this.widthInPixels(), this.heightInPixels())
+    ctx.clearRect(0, 0, this.viewWidth, this.viewHeight)
   }
 
   // Called when there is no background image
-  drawDefaultBackground() {
-    let ctx = this.layers.bg,
+  drawUploadPrompt() {
+    let bg = this.layers.bg,
+        ui = this.layers.ui,
         width = mapConfig.default.canvasWidth,
         height = mapConfig.default.canvasHeight
 
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
-    ctx.fillRect(0, 0, width, height)
+    bg.fillStyle = 'rgba(255, 255, 255, 0.1)'
+    bg.fillRect(0, 0, width, height)
 
-    ctx.font = '12px Arial'
-    ctx.fillStyle = '#CEC3BE'
-    ctx.textAlign = 'center'
-    ctx.fillText(
+    ui.font = '12px Arial'
+    ui.fillStyle = '#CEC3BE'
+    ui.textAlign = 'center'
+    ui.fillText(
       "Drag and drop or use the dialog below",
       width / 2,
       height / 2
     )
-    ctx.fillText(
+    ui.fillText(
       "to upload a background image",
       width / 2,
       height / 2 + 14
@@ -115,13 +118,18 @@ class MapRenderer {
   }
 
   drawBackground(image) {
-    this.layers.bg.drawImage(image, 0, 0)
+    if (image) {
+      this.layers.bg.drawImage(image, 0, 0)
+    }
+    else {
+      this.drawUploadPrompt()
+    }
   }
 
   // draw() but only for a single tile at grid coords x, y
   drawTile(x, y) {
     let topLeft = this.getTileCorner(x, y),
-        tileSize = this.grid.tileSize
+        tileSize = this.gridOptions.tileSize
 
     this.ctx.drawImage(
       this.src,             // image
@@ -138,7 +146,7 @@ class MapRenderer {
   drawTerrainMarker(x, y, tile) {
     let terrainId = tile.symbol
     let pos = this.getTileCorner(x, y)
-    let tileSize = this.grid.tileSize
+    let tileSize = this.gridOptions.tileSize
 
     let img = new Image()
 
@@ -147,6 +155,13 @@ class MapRenderer {
     }
 
     img.src = terrainIcons[tile.name]
+  }
+
+  clearGameTile(x, y) {
+    let pos = this.getTileCorner(x, y),
+        tileSize = this.gridOptions.tileSize
+
+    this.layers.game.clearRect(pos.x, pos.y, tileSize, tileSize)
   }
 
   drawTerrainMarkers() {
@@ -160,8 +175,8 @@ class MapRenderer {
 
   drawGrid(options) {
     let ctx = this.layers.grid,
-        width = this.widthInPixels(),
-        height = this.heightInPixels()
+        width = this.viewWidth,
+        height = this.viewHeight
 
     ctx.beginPath()
 

@@ -13,6 +13,9 @@ class MapEditor extends Component {
     super(props)
     this.touchAction = () => {}   // Becomes func called when canvas is touched
 
+    this.mapViewRef = React.createRef()
+    this.mapView = null
+
     this.readImage = this.readImage.bind(this)
     this.loadImage = this.loadImage.bind(this)
     this.processImage = this.processImage.bind(this)
@@ -99,16 +102,20 @@ class MapEditor extends Component {
   // EDITING
 
   editTerrain(tX, tY) {
+    console.log(`${tX}, ${tY}`);
     let newTile = this.props.currentTileBrush
     let tileChanged = this.mapRenderer.map.setTile(tX, tY, newTile)
 
-    if (tileChanged) { this.mapRenderer.draw() }
+    if (tileChanged) {
+      this.mapRenderer.clearGameTile(tX, tY)
+      this.mapRenderer.drawTerrainMarker(tX, tY, newTile)
+    }
   }
 
   handleMouseDown(event) {
     event.preventDefault()
     // Do nothing if mapRenderer is not ready
-    if (!this.mapRenderer || !this.mapRenderer.src) { return }
+    if (!this.mapRenderer) { return }
 
     switch(this.props.currentTool) {
       case 'terrain':
@@ -126,12 +133,14 @@ class MapEditor extends Component {
   handleMouseMove(event) {
     event.preventDefault()
 
-    let pX = event.layerX, pY = event.layerY      // touch coords in pixels
+    let pX = event.screenX, pY = event.screenY      // touch coords in pixels
 
     let tX = this.mapRenderer.pixelsToTiles(pX),  // in tiles
         tY = this.mapRenderer.pixelsToTiles(pY)
 
-    this.touchAction(tX, tY)
+    console.log(`${tX}, ${tY}`);
+
+    // this.touchAction(tX, tY)
   }
 
   handleMouseUp(event) {
@@ -155,11 +164,26 @@ class MapEditor extends Component {
   // LIFECYCLE
 
   componentDidMount() {
+    this.mapView = this.mapViewRef.current
+    this.mapRenderer = this.mapView.mapRenderer
 
+    this.mapView.onDragOver = this.handleDragOver
+    this.mapView.onDrop = this.handleDrop
+    this.mapView.mousedown = this.handleMouseDown
+    this.mapView.mousemove = this.handleMouseMove
+    this.mapView.onMouseUp = this.handleMouseUp
+    this.mapView.onTouchStart = this.handleTouchStart
+    this.mapView.onTouchMove = this.handleTouchMove
+    this.mapView.onTouchEnd = this.handleTouchEnd
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    
+    if (this.props.currentTool == 'terrain') {
+      this.mapRenderer.drawTerrainMarkers()
+    }
+    else {
+      this.mapRenderer.clear(this.mapRenderer.layers.game)
+    }
   }
 
   render() {
@@ -170,18 +194,7 @@ class MapEditor extends Component {
         </div>
         <div className="row">
           <div className="scroll">
-            <div id="map-edit-container"
-              onDragOver={this.handleDragOver}
-              onDrop={this.handleDrop}
-              onMouseDown={this.handleMouseDown}
-              onMouseMove={this.handleMouseMove}
-              onMouseUp={this.handleMouseUp}
-              onTouchStart={this.handleTouchStart}
-              onTouchMove={this.handleTouchMove}
-              onTouchEnd={this.handleTouchEnd}
-              >
-              <MapView />
-            </div>
+            <MapView ref={this.mapViewRef} />
           </div>
           <MapEditorDialog handleFileInput={this.handleFileInput} />
         </div>
