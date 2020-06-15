@@ -14,21 +14,14 @@ const hex2rgba = (hex, alpha = 1.0) => {
 }
 
 class MapRenderer {
-  constructor(map, layers, gridOptions) {
-    // map object or width/height
-    this.map = map
-
-    // canvas elements
-    this.layers = layers || {
-      ui: null,
-      game: null,
-      grid: null,
-      bg: null
+  constructor(width, height, gridOptions) {
+    this.width = width || mapConfig.default.canvasWidth
+    this.height = height || mapConfig.default.canvasHeight
+    this.gridOptions = gridOptions || {
+      alpha: mapConfig.default.gridAlpha,
+      color: mapConfig.default.gridColor,
+      tileSize: mapConfig.default.tileSize
     }
-
-    this.gridOptions = gridOptions
-    this.viewWidth = mapConfig.default.canvasWidth
-    this.viewHeight = mapConfig.default.canvasHeight
 
     // bind funcs
     this.drawTerrainMarker = this.drawTerrainMarker.bind(this)
@@ -37,17 +30,9 @@ class MapRenderer {
   //////////////////////////////////////////////////////////////////////////////
   // READ
 
-  widthInTiles() {
-    return this.map.getWidth()
-  }
-
-  heightInTiles() {
-    return this.map.getHeight()
-  }
-
-  getGridRGBA(gridOptions) {
-    let alpha = parseFloat(gridOptions.alpha) / 100.0
-    return hex2rgba(gridOptions.color, alpha)
+  getGridRGBA() {
+    let alpha = parseFloat(this.gridOptions.alpha) / 100.0
+    return hex2rgba(this.gridOptions.color, alpha)
   }
 
   // returns {x, y} at top left corner of the tile at given coords
@@ -87,51 +72,49 @@ class MapRenderer {
   //////////////////////////////////////////////////////////////////////////////
   // DRAW
 
-  clear(layer) {
-    let ctx = layer
-    ctx.clearRect(0, 0, this.viewWidth, this.viewHeight)
+  clear(ctx) {
+    ctx.clearRect(0, 0, this.width, this.height)
   }
 
-  // Called when there is no background image
-  drawUploadPrompt() {
-    let bg = this.layers.bg,
-        ui = this.layers.ui,
-        width = mapConfig.default.canvasWidth,
+  // Drawn when there is no background image
+  drawUploadPrompt(bgLayer, textLayer) {
+    let width = mapConfig.default.canvasWidth,
         height = mapConfig.default.canvasHeight
 
-    bg.fillStyle = 'rgba(255, 255, 255, 0.1)'
-    bg.fillRect(0, 0, width, height)
+    bgLayer.fillStyle = 'rgba(255, 255, 255, 0.1)'
+    bgLayer.fillRect(0, 0, width, height)
 
-    ui.font = '12px Arial'
-    ui.fillStyle = '#CEC3BE'
-    ui.textAlign = 'center'
-    ui.fillText(
+    textLayer.font = '12px Arial'
+    textLayer.fillStyle = '#CEC3BE'
+    textLayer.textAlign = 'center'
+    textLayer.fillText(
       "Drag and drop or use the dialog below",
       width / 2,
       height / 2
     )
-    ui.fillText(
+    textLayer.fillText(
       "to upload a background image",
       width / 2,
       height / 2 + 14
     )
   }
 
-  drawBackground(image) {
+  drawBackground(ctx, image) {
     if (image) {
-      this.layers.bg.drawImage(image, 0, 0)
+      ctx.drawImage(image, 0, 0)
+      return true
     }
     else {
-      this.drawUploadPrompt()
+      return false
     }
   }
 
   // draw() but only for a single tile at grid coords x, y
-  drawTile(x, y) {
+  drawTile(ctx, x, y) {
     let topLeft = this.getTileCorner(x, y),
         tileSize = this.gridOptions.tileSize
 
-    this.ctx.drawImage(
+    ctx.drawImage(
       this.src,             // image
       topLeft.x, topLeft.y, // topleft corner of section of source image
       tileSize, tileSize,   // size of section of source image
@@ -143,7 +126,7 @@ class MapRenderer {
     }
   }
 
-  drawTerrainMarker(x, y, tile) {
+  drawTerrainMarker(ctx, x, y, tile) {
     let terrainId = tile.symbol
     let pos = this.getTileCorner(x, y)
     let tileSize = this.gridOptions.tileSize
@@ -151,32 +134,32 @@ class MapRenderer {
     let img = new Image()
 
     img.onload = () => {
-      this.layers.game.drawImage(img, pos.x, pos.y, tileSize, tileSize)
+      ctx.drawImage(img, pos.x, pos.y, tileSize, tileSize)
     }
 
     img.src = terrainIcons[tile.name]
   }
 
-  clearGameTile(x, y) {
+  clearGameTile(ctx, x, y) {
     let pos = this.getTileCorner(x, y),
         tileSize = this.gridOptions.tileSize
 
-    this.layers.game.clearRect(pos.x, pos.y, tileSize, tileSize)
+    ctx.clearRect(pos.x, pos.y, tileSize, tileSize)
   }
 
-  drawTerrainMarkers() {
-    let ctx = this.layers.game
+  drawTerrainMarkers(ctx, map) {
     ctx.font = '14px Arial'
     ctx.fillStyle = '#0000ff'
     ctx.textAlign = 'center'
 
-    this.map.forEachTile(this.drawTerrainMarker)
+    map.forEachTile((x, y, tile) => {
+      this.drawTerrainMarker(ctx, x, y, tile)
+    })
   }
 
-  drawGrid(options) {
-    let ctx = this.layers.grid,
-        width = this.viewWidth,
-        height = this.viewHeight
+  drawGrid(ctx) {
+    let width = this.width,
+        height = this.height
 
     ctx.beginPath()
 
@@ -185,7 +168,7 @@ class MapRenderer {
     while (x < width) {
       ctx.moveTo(x, 0)
       ctx.lineTo(x, height)
-      x += options.tileSize
+      x += this.gridOptions.tileSize
     }
 
     //  draw horizontal lines
@@ -193,21 +176,21 @@ class MapRenderer {
     while (y < height) {
       ctx.moveTo(0, y)
       ctx.lineTo(width, y)
-      y += options.tileSize
+      y += this.gridOptions.tileSize
     }
 
-    ctx.strokeStyle = this.getGridRGBA(options)
+    ctx.strokeStyle = this.getGridRGBA(this.gridOptions)
     ctx.lineWidth = 1
     ctx.stroke()
   }
 
   // draws given image in center of given grid tile
-  drawImageOnGrid(image, gridX, gridY) {
+  drawImageOnGrid(ctx, image, gridX, gridY) {
     let origin = this.getTileCenter(gridX, gridY)
     origin.x -= image.width / 2
     origin.y -= image.height / 2
 
-    this.ctx.drawImage(image, origin.x, origin.y)
+    ctx.drawImage(image, origin.x, origin.y)
   }
 }
 

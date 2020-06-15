@@ -83,14 +83,19 @@ class MapView extends Component {
     this.drawBackground()
     this.drawGrid()
   }
-  
+
   drawGrid() {
-    this.mapRenderer.clear(this.mapRenderer.layers.grid)
-    this.mapRenderer.drawGrid(this.props.gridOptions)
+    this.mapRenderer.clear(this.layers.grid)
+    this.mapRenderer.drawGrid(this.layers.grid)
   }
 
   drawBackground() {
-    this.mapRenderer.drawBackground(this.props.image)
+    if (this.props.image) {
+      this.mapRenderer.drawBackground(this.layers.bg, this.props.image)
+    }
+    else {
+      this.mapRenderer.drawUploadPrompt(this.layers.bg, this.layers.ui)
+    }
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -106,7 +111,7 @@ class MapView extends Component {
     }
 
     // Get references to drawing contexts
-    this.ctx = {
+    this.layers = {
       ui: this.canvas.ui.getContext('2d'),
       game: this.canvas.game.getContext('2d'),
       grid: this.canvas.grid.getContext('2d'),
@@ -115,7 +120,7 @@ class MapView extends Component {
 
     // Initialize drawing module
     this.mapRenderer = new MapRenderer(
-      this.props.map, this.ctx, this.props.gridOptions
+      this.viewWidth, this.viewHeight, this.props.gridOptions
     )
 
     // Resize canvas elements to fix resolution on hiDPI screens
@@ -133,14 +138,16 @@ class MapView extends Component {
 
     if (prevProps.image != this.props.image) {
       // clear upload prompt
-      this.mapRenderer.clear(this.mapRenderer.layers.ui)
+      this.mapRenderer.clear(this.layers.ui)
+      this.mapRenderer.clear(this.layers.bg)
 
       this.drawBackground()
     }
 
     if (prevProps.gridOptions != this.props.gridOptions) {
       // redraw grid layer
-      this.drawGrid()
+      this.mapRenderer.updateGridOptions(this.props.gridOptions)
+      this.drawGrid(this.layers.grid)
     }
   }
 

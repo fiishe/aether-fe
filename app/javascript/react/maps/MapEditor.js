@@ -114,6 +114,7 @@ class MapEditor extends Component {
 
   handleMouseDown(event) {
     event.preventDefault()
+    console.log('i been touched');
     // Do nothing if mapRenderer is not ready
     if (!this.mapRenderer) { return }
 
@@ -138,7 +139,7 @@ class MapEditor extends Component {
     let tX = this.mapRenderer.pixelsToTiles(pX),  // in tiles
         tY = this.mapRenderer.pixelsToTiles(pY)
 
-    console.log(`${tX}, ${tY}`);
+    // console.log(`${tX}, ${tY}`);
 
     // this.touchAction(tX, tY)
   }
@@ -166,23 +167,16 @@ class MapEditor extends Component {
   componentDidMount() {
     this.mapView = this.mapViewRef.current
     this.mapRenderer = this.mapView.mapRenderer
-
-    this.mapView.onDragOver = this.handleDragOver
-    this.mapView.onDrop = this.handleDrop
-    this.mapView.mousedown = this.handleMouseDown
-    this.mapView.mousemove = this.handleMouseMove
-    this.mapView.onMouseUp = this.handleMouseUp
-    this.mapView.onTouchStart = this.handleTouchStart
-    this.mapView.onTouchMove = this.handleTouchMove
-    this.mapView.onTouchEnd = this.handleTouchEnd
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.currentTool == 'terrain') {
-      this.mapRenderer.drawTerrainMarkers()
-    }
-    else {
-      this.mapRenderer.clear(this.mapRenderer.layers.game)
+    if (this.props.currentTool != prevProps.currentTool) {
+      if (this.props.currentTool == 'terrain') {
+        this.mapRenderer.drawTerrainMarkers(this.mapView.layers.game, this.props.map)
+      }
+      else {
+        this.mapRenderer.clear(this.mapView.layers.game)
+      }
     }
   }
 
@@ -194,7 +188,18 @@ class MapEditor extends Component {
         </div>
         <div className="row">
           <div className="scroll">
-            <MapView ref={this.mapViewRef} />
+            <div id="map-edit-container"
+              onDragOver={this.handleDragOver}
+              onDrop={this.handleDrop}
+              onMouseDown={this.handleMouseDown}
+              onMouseMove={this.handleMouseMove}
+              onMouseUp={this.handleMouseUp}
+              onTouchStart={this.handleTouchStart}
+              onTouchMove={this.handleTouchMove}
+              onTouchEnd={this.handleTouchEnd}
+              >
+              <MapView ref={this.mapViewRef} />
+            </div>
           </div>
           <MapEditorDialog handleFileInput={this.handleFileInput} />
         </div>
@@ -205,9 +210,9 @@ class MapEditor extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    map: state.maps.map,
     currentTool: state.maps.editor.tool,
-    currentTileBrush: state.maps.editor.tileBrush,
-    grid: state.maps.grid
+    currentTileBrush: state.maps.editor.tileBrush
   }
 }
 
