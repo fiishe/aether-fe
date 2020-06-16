@@ -29,7 +29,7 @@ class TileMap {
     // initialize 2d array filled with plains
     this.tiles = Array.from(
       Array(height),
-      () => new Array(width).fill(tileData['plain'])
+      () => new Array(width).fill(tileData.tiles[0])
     )
 
     this.getWidth = this.getWidth.bind(this)
@@ -78,10 +78,11 @@ class TileMap {
   // WRITE
 
   // set value of a single tile, returning true if it changed
-  setTile(x, y, tileName) {
-    if (this.tiles[y][x].name != tileName) {
-      let newTile = tileData[tileName]
-      this.tiles[y][x] = newTile
+  setTile(x, y, tileId) {
+    let tile = tileData.tiles[tileId]
+
+    if (tile && (this.tiles[y][x].name != tile.name)) {
+      this.tiles[y][x] = tile
       return true
     }
     else {
@@ -90,7 +91,7 @@ class TileMap {
   }
 
   pushRow(row) {
-    let newRow = row || Array(this.getWidth()).fill(tileData['plain'])
+    let newRow = row || Array(this.getWidth()).fill(tileData.tiles[0])
     this.tiles.push(newRow)
   }
 
@@ -100,7 +101,7 @@ class TileMap {
       inserter = (row, index) => { row.push(col[index]) }
     }
     else {
-      inserter = (row) => { row.push(tileData['plain']) }
+      inserter = (row) => { row.push(tileData.tiles[0]) }
     }
     this.tiles.forEach(inserter)
   }

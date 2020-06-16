@@ -24,16 +24,16 @@ const TerrainSelector = props => {
 }
 
 const Terrain = props => {
-  let terrains = Object.keys(tileData) // ['plains', 'forest', ... ]
+  let terrains = tileData.tiles // array of terrain objects
 
   let selectors = terrains.map((terrain, index) => {
     return (
       <TerrainSelector
         key={index}
-        name={terrain}
-        symbol={tileData[terrain].symbol}
-        isSelected={props.currentTileBrush == terrain}
-        onClick={ () => { props.editSelectTileBrush(terrain) } } />
+        name={terrain.name}
+        symbol={terrain.symbol}
+        isSelected={props.currentTileBrush == terrain.id}
+        onClick={ () => { props.editSelectTileBrush(terrain.id) } } />
     )
   })
 

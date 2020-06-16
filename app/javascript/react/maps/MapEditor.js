@@ -15,6 +15,7 @@ class MapEditor extends Component {
 
     this.mapViewRef = React.createRef()
     this.mapView = null
+    this.layers = null
 
     this.readImage = this.readImage.bind(this)
     this.loadImage = this.loadImage.bind(this)
@@ -102,19 +103,20 @@ class MapEditor extends Component {
   // EDITING
 
   editTerrain(tX, tY) {
-    console.log(`${tX}, ${tY}`);
     let newTile = this.props.currentTileBrush
-    let tileChanged = this.mapRenderer.map.setTile(tX, tY, newTile)
+    let tileChanged = this.props.map.setTile(tX, tY, newTile)
 
     if (tileChanged) {
-      this.mapRenderer.clearGameTile(tX, tY)
-      this.mapRenderer.drawTerrainMarker(tX, tY, newTile)
+      this.mapRenderer.clearTile(this.layers.game, tX, tY)
+      this.mapRenderer.drawTerrainMarker(
+        this.layers.game, tX, tY, this.props.map.getTile(tX, tY)
+      )
     }
   }
 
   handleMouseDown(event) {
     event.preventDefault()
-    console.log('i been touched');
+
     // Do nothing if mapRenderer is not ready
     if (!this.mapRenderer) { return }
 
@@ -133,15 +135,15 @@ class MapEditor extends Component {
 
   handleMouseMove(event) {
     event.preventDefault()
+    let boundingRect = event.target.getBoundingClientRect()
 
-    let pX = event.screenX, pY = event.screenY      // touch coords in pixels
+    let pX = event.clientX - boundingRect.x, // touch coords in pixels
+        pY = event.clientY - boundingRect.y
 
     let tX = this.mapRenderer.pixelsToTiles(pX),  // in tiles
         tY = this.mapRenderer.pixelsToTiles(pY)
 
-    // console.log(`${tX}, ${tY}`);
-
-    // this.touchAction(tX, tY)
+    this.touchAction(tX, tY)
   }
 
   handleMouseUp(event) {
@@ -167,16 +169,16 @@ class MapEditor extends Component {
   componentDidMount() {
     this.mapView = this.mapViewRef.current
     this.mapRenderer = this.mapView.mapRenderer
+    this.layers = this.mapView.layers
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.currentTool != prevProps.currentTool) {
       if (this.props.currentTool == 'terrain') {
-        console.log('drawing markers');
-        this.mapRenderer.drawTerrainMarkers(this.mapView.layers.game, this.props.map)
+        this.mapRenderer.drawTerrainMarkers(this.layers.game, this.props.map)
       }
       else {
-        this.mapRenderer.clear(this.mapView.layers.game)
+        this.mapRenderer.clear(this.layers.game)
       }
     }
   }
@@ -189,7 +191,8 @@ class MapEditor extends Component {
         </div>
         <div className="row">
           <div className="scroll">
-            <div id="map-edit-container"
+            <MapView
+              ref={this.mapViewRef}
               onDragOver={this.handleDragOver}
               onDrop={this.handleDrop}
               onMouseDown={this.handleMouseDown}
@@ -198,9 +201,7 @@ class MapEditor extends Component {
               onTouchStart={this.handleTouchStart}
               onTouchMove={this.handleTouchMove}
               onTouchEnd={this.handleTouchEnd}
-              >
-              <MapView ref={this.mapViewRef} />
-            </div>
+              />
           </div>
           <MapEditorDialog handleFileInput={this.handleFileInput} />
         </div>

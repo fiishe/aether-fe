@@ -142,6 +142,14 @@ class MapView extends Component {
     return (
       <div id="map-stage" className="scroll"
         style={ { width: this.props.viewWidth+'px', height: this.props.viewHeight+'px' } }
+        onDragOver={this.props.onDragOver}
+        onDrop={this.props.onDrop}
+        onMouseDown={this.props.onMouseDown}
+        onMouseMove={this.props.onMouseMove}
+        onMouseUp={this.props.onMouseUp}
+        onTouchStart={this.props.onTouchStart}
+        onTouchMove={this.props.onTouchMove}
+        onTouchEnd={this.props.onTouchEnd}
       >
         <canvas id="ui-layer" width={this.props.viewWidth} height={this.props.viewHeight}
           ref={this.state.refs.ui} />

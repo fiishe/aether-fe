@@ -1,36 +1,42 @@
 {
-  "plain": {
-    "name": "plain",
-    "symbol": "p",
-    "cost": {
-      "inf": 1,
-      "cav": 1,
-      "arm": 1,
-      "fly": 1
-    }
-  },
-  "forest": {
-    "name": "forest",
-    "symbol": "f",
-    "cost": {
-      "inf": 2,
-      "cav": 3,
-      "arm": 2,
-      "fly": 1
+  "version": "0.0.0",
+  "tiles": [
+    {
+      "id": 0,
+      "name": "plain",
+      "symbol": "p",
+      "cost": {
+        "inf": 1,
+        "cav": 1,
+        "arm": 1,
+        "fly": 1
+      }
     },
-    "bonus": {
-      "defense": 1,
-      "avoid": 20
+    {
+      "id": 1,
+      "name": "forest",
+      "symbol": "f",
+      "cost": {
+        "inf": 2,
+        "cav": 3,
+        "arm": 2,
+        "fly": 1
+      },
+      "bonus": {
+        "defense": 1,
+        "avoid": 20
+      }
+    },
+    {
+      "id": 2,
+      "name": "wall",
+      "symbol": "w",
+      "cost": {
+        "inf": 99,
+        "cav": 99,
+        "arm": 99,
+        "fly": 99
+      }
     }
-  },
-  "wall": {
-    "name": "wall",
-    "symbol": "w",
-    "cost": {
-      "inf": 99,
-      "cav": 99,
-      "arm": 99,
-      "fly": 99
-    }
-  }
+  ]
 }
