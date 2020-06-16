@@ -17,6 +17,10 @@ class MapEditor extends Component {
     this.mapView = null
     this.layers = null
 
+    this.state = {
+      mouseDown: false
+    }
+
     this.readImage = this.readImage.bind(this)
     this.loadImage = this.loadImage.bind(this)
     this.processImage = this.processImage.bind(this)
@@ -129,6 +133,8 @@ class MapEditor extends Component {
         this.touchAction = () => {}
     }
 
+    this.setState({ mouseDown: true })
+
     // do action once to support tap clicking
     this.handleMouseMove(event)
   }
@@ -148,6 +154,9 @@ class MapEditor extends Component {
 
   handleMouseUp(event) {
     event.preventDefault()
+    if (!this.state.mouseDown) { return }
+
+    this.setState({ mouseDown: false })
     this.touchAction = () => {}
   }
 
@@ -170,6 +179,9 @@ class MapEditor extends Component {
     this.mapView = this.mapViewRef.current
     this.mapRenderer = this.mapView.mapRenderer
     this.layers = this.mapView.layers
+
+    // capture mouseup event from outside the component
+    document.addEventListener('click', this.handleMouseUp)
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -181,6 +193,10 @@ class MapEditor extends Component {
         this.mapRenderer.clear(this.layers.game)
       }
     }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('click', this.handleMouseUp)
   }
 
   render() {

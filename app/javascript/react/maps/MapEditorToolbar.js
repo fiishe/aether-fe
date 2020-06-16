@@ -21,7 +21,7 @@ const MapEditorToolbar = props => {
       </p>
       <p className={currentTool == 'grid' ? 'selected' : ''}
          onClick={ () => {selectTool('grid')} }>
-        <i className="fas fa-expand" />
+        <i className="fas fa-th" />
         grid
       </p>
       <p className={currentTool == 'terrain' ? 'selected' : ''}
