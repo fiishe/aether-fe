@@ -35,21 +35,21 @@ const setImage = makeActionCreator(
   'newImage'
 )
 
-const ADD_TO_MAP_WIDTH = "ADD_TO_MAP_WIDTH"
-const addToMapWidth = makeActionCreator(
-  ADD_TO_MAP_WIDTH,
+const CHANGE_MAP_WIDTH = "CHANGE_MAP_WIDTH"
+const changeMapWidth = makeActionCreator(
+  CHANGE_MAP_WIDTH,
   'delta'
 )
-const incrementWidth = () => { return dispatch => { dispatch(addToMapWidth(1)) } }
-const decrementWidth = () => { return dispatch => { dispatch(addToMapWidth(-1)) } }
+const incrementWidth = () => { return dispatch => { dispatch(changeMapWidth(1)) } }
+const decrementWidth = () => { return dispatch => { dispatch(changeMapWidth(-1)) } }
 
-const ADD_TO_MAP_HEIGHT = "ADD_TO_MAP_HEIGHT"
-const addToMapHeight = makeActionCreator(
-  ADD_TO_MAP_HEIGHT,
+const CHANGE_MAP_HEIGHT = "CHANGE_MAP_HEIGHT"
+const changeMapHeight = makeActionCreator(
+  CHANGE_MAP_HEIGHT,
   'delta'
 )
-const incrementHeight = () => { return dispatch => { dispatch(addToMapHeight(1)) } }
-const decrementHeight = () => { return dispatch => { dispatch(addToMapHeight(-1)) } }
+const incrementHeight = () => { return dispatch => { dispatch(changeMapHeight(1)) } }
+const decrementHeight = () => { return dispatch => { dispatch(changeMapHeight(-1)) } }
 
 const GRID_SET_ALPHA = "GRID_SET_ALPHA"
 const gridSetAlpha = makeActionCreator(
@@ -93,7 +93,7 @@ const maps = (state = initialState, action) => {
     case SET_IMAGE:
       return {...state, image: action.newImage }
 
-    case ADD_TO_MAP_WIDTH:
+    case CHANGE_MAP_WIDTH:
       return {...state,
         mapWidth: state.mapWidth + action.delta,
         mapHeight: state.mapHeight,
@@ -101,7 +101,7 @@ const maps = (state = initialState, action) => {
         viewHeight: state.viewHeight
       }
 
-    case ADD_TO_MAP_HEIGHT:
+    case CHANGE_MAP_HEIGHT:
       return {...state,
         mapWidth: state.mapWidth,
         mapHeight: state.mapHeight + action.delta,
