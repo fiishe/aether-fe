@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Tooltip from '../../common/Tooltip'
 
 import { connect } from 'react-redux'
 import {
@@ -11,14 +12,14 @@ import terrainIcons from 'images/terrain/terrainIcons.mjs'
 const TerrainSelector = props => {
   return (
     <div className="small-6 medium-3 large-2 columns" onClick={props.onClick}>
-      <p className={props.isSelected ? "selected" : ""}>
+      <div className={"selector " + (props.isSelected ? "selected" : "")}>
         <img
           src={terrainIcons[props.name]}
           width="32px" height="32px"
           className="terrain-icon"
           id={`terrain-icon-${props.name}`} />
         {props.name}
-      </p>
+      </div>
     </div>
   )
 }
@@ -38,8 +39,16 @@ const Terrain = props => {
   })
 
   return (
-    <div className="row">
-      {selectors}
+    <div>
+      <h5>
+        Terrain Editor
+        <Tooltip
+          body="Select the terrain type and click on the map to edit."
+          />
+      </h5>
+      <div className="row">
+        {selectors}
+      </div>
     </div>
   )
 }

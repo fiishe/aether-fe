@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Ticker from '../../common/Ticker'
 
 import { connect } from 'react-redux'
 import {
@@ -7,16 +8,6 @@ import {
   incrementHeight,
   decrementHeight
 } from '../../redux/modules/maps'
-
-const Ticker = props => {
-  return (
-    <div>
-      <h6>{props.name}</h6>
-      <p onClick={props.increment}>+</p>
-      <p onClick={props.decrement}>-</p>
-    </div>
-  )
-}
 
 class Size extends Component {
   constructor(props) {
@@ -39,15 +30,19 @@ class Size extends Component {
   render() {
     return (
       <div>
-        <h4>Dimensions</h4>
-        <Ticker name={"Width: " + this.props.width}
-          increment={this.incWidth}
-          decrement={this.props.decrementWidth}
-          />
-        <Ticker name={"Height: " + this.props.height}
-          increment={this.incHeight}
-          decrement={this.props.decrementHeight}
-          />
+        <h5>Map Dimensions</h5>
+        <div className="inline-block">
+          <Ticker name="Width: " value={this.props.width}
+            increment={this.incWidth}
+            decrement={this.props.decrementWidth}
+            />
+        </div>
+        <div className="inline-block">
+          <Ticker name="Height: " value={this.props.height}
+            increment={this.incHeight}
+            decrement={this.props.decrementHeight}
+            />
+        </div>
       </div>
     )
   }

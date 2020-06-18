@@ -56,8 +56,8 @@ class Grid extends Component {
 
   render() {
     return(
-      <div className="row">
-        <h4>Grid Options</h4>
+      <div>
+        <h5>Grid Options</h5>
         <div className="columns small-6 medium-4">
           <label htmlFor="grid-color">Color</label>
           <input type="color"

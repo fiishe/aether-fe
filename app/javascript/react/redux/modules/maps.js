@@ -24,7 +24,7 @@ const initialState = {
   },
   editor: {
     tool: 'upload',
-    tileBrush: 'plain'
+    tileBrush: 0
   }
 }
 

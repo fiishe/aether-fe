@@ -60,6 +60,10 @@ canvas { position: absolute; }
 }
 
 #map-dialog p {
+  font-size: 0.875rem;
+}
+
+#map-dialog .selector {
   padding: 2px 8px;
   margin: 4px;
   border: 1px $red-1 solid;
@@ -67,7 +71,7 @@ canvas { position: absolute; }
   cursor: pointer;
 }
 
-#map-dialog p:hover, #map-dialog p.selected {
+#map-dialog .selector:hover, #map-dialog .selector.selected {
   background-color: $red-1;
 }
 
