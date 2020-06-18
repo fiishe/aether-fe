@@ -233,8 +233,19 @@ nav.top {
   min-width: 150px;
 }
 
-.tooltip-icon {
+span.tooltip-container i {
   color: $button-blue;
   margin-left: 8px;
   margin-right: 8px;
+}
+
+span.tooltip-container div {
+  background-color: $button-blue;
+  color: $white;
+  font-size: 0.8em;
+  padding: 8px;
+  margin: 2px;
+
+  position: absolute;
+  z-index: 50;
 }
