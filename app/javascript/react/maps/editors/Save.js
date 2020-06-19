@@ -3,20 +3,28 @@ import FetchingComponent from '../../lib/FetchingComponent'
 import Tooltip from '../../common/Tooltip'
 
 import { connect } from 'react-redux'
+import { editMapName, upload } from '../../redux/modules/maps'
 
 class Save extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      name: ""
+      // use interpolation to create a new copy of the string
+      // instead of a reference to it
+      name: `${this.props.name}`
     }
 
     this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange(event) {
+    this.setState({ name: event.target.value })
+  }
 
+  handleSubmit(event) {
+    this.props.editMapName(this.state.name)
   }
 
   render() {
@@ -35,18 +43,32 @@ class Save extends React.Component {
             type="text"name="mapname"
             placeholder=""
             maxLength="32"
+            value={this.state.name}
+            onChange={this.handleChange}
             />
         </label>
+        <button onClick={this.handleSubmit}>Submit</button>
       </div>
     )
   }
 }
 
-const mapDispatchToProps = {
+const mapStateToProps = state => {
+  return {
+    name: state.maps.name,
+    image: state.maps.image,
+    width: state.maps.mapWidth,
+    height: state.maps.mapHeight,
+    grid: state.maps.grid
+  }
+}
 
+const mapDispatchToProps = {
+  editMapName,
+  upload
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Save)

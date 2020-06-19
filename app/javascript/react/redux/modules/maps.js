@@ -16,7 +16,7 @@ const initialState = {
   mapHeight: mapConfig.default.mapHeight,
   viewWidth: mapConfig.default.mapWidth * mapConfig.default.tileSize,
   viewHeight: mapConfig.default.mapHeight * mapConfig.default.tileSize,
-  name: null,
+  name: "",
   image: null,
   grid: {
     alpha: mapConfig.default.gridAlpha,
