@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Tooltip from '../../common/Tooltip'
 
 import { connect } from 'react-redux'
 import {
@@ -57,7 +58,12 @@ class Grid extends Component {
   render() {
     return(
       <div>
-        <h5>Grid Options</h5>
+        <h5>
+          Grid Options
+          <Tooltip
+            body="Edit how the grid displays on the map."
+            />
+        </h5>
         <div className="columns small-6 medium-4">
           <label htmlFor="grid-color">Color</label>
           <input type="color"

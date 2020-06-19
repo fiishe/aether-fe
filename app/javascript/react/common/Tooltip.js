@@ -30,6 +30,9 @@ class Tooltip extends Component {
   render() {
     return(
       <span className="tooltip-container"
+        title={this.props.body}
+        role="tooltip"
+        aria-haspopup="true"
         onClick={this.toggle}
         onMouseEnter={this.open}
         onMouseLeave={this.close}

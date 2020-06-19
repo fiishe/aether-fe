@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Tooltip from '../../common/Tooltip'
 import Ticker from '../../common/Ticker'
 
 import { connect } from 'react-redux'
@@ -30,7 +31,12 @@ class Size extends Component {
   render() {
     return (
       <div>
-        <h5>Map Dimensions</h5>
+        <h5>
+          Map Dimensions
+          <Tooltip
+            body="Modify the map's height and width (in tiles)."
+            />
+        </h5>
         <div className="inline-block">
           <Ticker name="Width: " value={this.props.width}
             increment={this.incWidth}
