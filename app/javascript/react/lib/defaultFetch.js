@@ -49,8 +49,32 @@ const fetchPost = (uri, payload) => {
   })
 }
 
+const fetchPatch = (uri, payload) => {
+  let req = {
+    credentials: 'same-origin',
+    method: 'PATCH',
+    body: payload,
+    headers: {
+      'Content-Type': 'application/json',
+      'x-CSRF-Token': getCSRFToken()
+    }
+  }
+
+  return new Promise((resolve, reject) => {
+    fetch(uri, req)
+      .then(handleResponse)
+      .then(json => { resolve(json) })
+      .catch(e => {
+        e.message = `Error occurred while attempting to PATCH ${uri}:
+          ${e.message}`
+        reject(e)
+      })
+  })
+}
+
 export default fetchGet
 export {
   fetchGet,
-  fetchPost
+  fetchPost,
+  fetchPatch
 }
