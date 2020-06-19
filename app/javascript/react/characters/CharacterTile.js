@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { abbreviateStats } from '../lib/constants'
-import defaultFetch from '../lib/defaultFetch'
+import { fetchGet } from '../lib/defaultFetch'
 
 class CharacterTile extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class CharacterTile extends Component {
   }
 
   getDetails() {
-    defaultFetch(`/api/v1/characters/${this.state.char.id}`)
+    fetchGet(`/api/v1/characters/${this.state.char.id}`)
       .then((payload) => {
         this.setState({
           detailsState: 'loaded',
