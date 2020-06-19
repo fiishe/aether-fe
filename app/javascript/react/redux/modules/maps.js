@@ -1,5 +1,5 @@
-import React from 'react'
 import makeActionCreator from './makeActionCreator'
+import { fetchPost } from '../../lib/defaultFetch'
 
 import TileMap, { mapConfig } from '../../../../game/models/TileMap'
 
@@ -16,6 +16,7 @@ const initialState = {
   mapHeight: mapConfig.default.mapHeight,
   viewWidth: mapConfig.default.mapWidth * mapConfig.default.tileSize,
   viewHeight: mapConfig.default.mapHeight * mapConfig.default.tileSize,
+  name: null,
   image: null,
   grid: {
     alpha: mapConfig.default.gridAlpha,
@@ -87,6 +88,40 @@ const editSelectTileBrush = makeActionCreator(
   'tileBrush'
 )
 
+const EDIT_MAP_NAME = "EDIT_MAP_NAME"
+const editMapName = makeActionCreator(
+  EDIT_MAP_NAME,
+  'newName'
+)
+
+const UPLOAD_REQUEST = "FETCH_UPLOAD_MAP_REQUEST"
+const uploadRequest = makeActionCreator(UPLOAD_REQUEST)
+const UPLOAD_SUCCESS = "UPLOAD_SUCCESS"
+const uploadSuccess = makeActionCreator(
+  UPLOAD_SUCCESS,
+  'response'
+)
+const UPLOAD_ERROR = "UPLOAD_ERROR"
+const uploadError = makeActionCreator(
+  UPLOAD_ERROR,
+  'error'
+)
+
+const upload = (payload) => {
+  return dispatch => {
+    dispatch(uploadRequest())
+
+    fetchPost(`/api/v1/maps/new`)
+      .then(res => {
+        dispatch(uploadSuccess(res))
+      })
+      .catch(e => {
+        console.error(e)
+        dispatch(uploadError(e))
+      })
+  }
+}
+
 // REDUCERS
 const maps = (state = initialState, action) => {
   switch(action.type) {
@@ -147,6 +182,12 @@ const maps = (state = initialState, action) => {
           tileBrush: action.tileBrush
         }
       }
+
+    case EDIT_MAP_NAME:
+      return {...state,
+        name: action.newName
+      }
+
     default:
       return state
   }
@@ -163,5 +204,7 @@ export {
   gridSetTileSize,
   editSelectTool,
   editSelectTileBrush,
+  editMapName,
+  upload,
   maps
 }

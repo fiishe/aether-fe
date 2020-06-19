@@ -16,7 +16,7 @@ class Save extends React.Component {
   }
 
   handleChange(event) {
-    
+
   }
 
   render() {
@@ -25,7 +25,7 @@ class Save extends React.Component {
         <h5>
           Save
           <Tooltip
-            body="Modify the map's height and width (in tiles)."
+            body="Name the map and submit it to the server."
             />
         </h5>
         <label>
@@ -33,7 +33,7 @@ class Save extends React.Component {
           <p>max 32 characters</p>
           <input className="form-input-text"
             type="text"name="mapname"
-            placeholder="bruh"
+            placeholder=""
             maxLength="32"
             />
         </label>
