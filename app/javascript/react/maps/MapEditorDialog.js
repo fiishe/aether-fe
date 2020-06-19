@@ -3,6 +3,7 @@ import Upload from './editors/Upload'
 import Size from './editors/Size'
 import Grid from './editors/Grid'
 import Terrain from './editors/Terrain'
+import Save from './editors/Save'
 
 import { connect } from 'react-redux'
 import {
@@ -40,8 +41,12 @@ class MapEditorDialog extends Component {
         return <Terrain />
         break
 
+      case 'save':
+        return <Save />
+        break
+
       default:
-        console.log("Invalid currentTool, rendering Upload");
+        console.error("Invalid currentTool, rendering Upload");
         return <Upload handleFileInput={this.props.handleFileInput} />
     }
   }

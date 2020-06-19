@@ -35,6 +35,12 @@
 #map-stage {
   position: relative;
   margin: 8px;
+
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+#map-stage::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }
 
 canvas { position: absolute; }
@@ -47,7 +53,7 @@ canvas { position: absolute; }
   padding: 12px;
   padding-bottom: 24px;
   min-width: 25%;
-  max-height: 50%;
+  max-height: 33%;
   overflow-y: scroll;
 
   position: sticky;

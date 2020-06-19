@@ -140,7 +140,7 @@ class MapView extends Component {
 
   render() {
     return (
-      <div id="map-stage" className="scroll"
+      <div id="map-stage" className="scroll-x"
         style={ { width: this.props.viewWidth+'px', height: this.props.viewHeight+'px' } }
         onDragOver={this.props.onDragOver}
         onDrop={this.props.onDrop}

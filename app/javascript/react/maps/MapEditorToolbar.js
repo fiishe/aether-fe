@@ -29,6 +29,11 @@ const MapEditorToolbar = props => {
         <i className="fas fa-mountain" />
         terrain
       </p>
+      <p className={currentTool == 'save' ? 'selected' : ''}
+         onClick={ () => {selectTool('save')} }>
+        <i className="fas fa-save" />
+        save
+      </p>
     </div>
   )
 }

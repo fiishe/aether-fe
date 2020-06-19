@@ -37,17 +37,19 @@ class Size extends Component {
             body="Modify the map's height and width (in tiles)."
             />
         </h5>
-        <div className="inline-block">
-          <Ticker name="Width: " value={this.props.width}
-            increment={this.incWidth}
-            decrement={this.props.decrementWidth}
-            />
-        </div>
-        <div className="inline-block">
-          <Ticker name="Height: " value={this.props.height}
-            increment={this.incHeight}
-            decrement={this.props.decrementHeight}
-            />
+        <div className="row bar">
+          <div className="columns small-6">
+            <Ticker name="Width: " value={this.props.width}
+              increment={this.incWidth}
+              decrement={this.props.decrementWidth}
+              />
+          </div>
+          <div className="columns small-6">
+            <Ticker name="Height: " value={this.props.height}
+              increment={this.incHeight}
+              decrement={this.props.decrementHeight}
+              />
+          </div>
         </div>
       </div>
     )

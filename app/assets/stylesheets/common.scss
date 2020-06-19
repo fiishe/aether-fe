@@ -228,9 +228,9 @@ nav.top {
 
 .ticker {
   @extend .bar-spaced;
-  margin: 8px 16px;
+  margin: 8px;
   padding: 8px;
-  min-width: 150px;
+  max-width: 150px;
 }
 
 span.tooltip-container i {
