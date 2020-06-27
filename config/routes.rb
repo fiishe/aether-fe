@@ -19,6 +19,7 @@ Rails.application.routes.draw do
         resources 'campaigns', only: [:index]
         resources 'characters', only: [:index, :show]
       end
+      resources 'maps', only: [:create]
 
       get '*path', to: 'errors#not_found'
     end

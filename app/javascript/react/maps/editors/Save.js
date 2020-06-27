@@ -5,6 +5,8 @@ import Tooltip from '../../common/Tooltip'
 import { connect } from 'react-redux'
 import { editMapName, upload } from '../../redux/modules/maps'
 
+import { fetchPost } from '../../lib/defaultFetch'
+
 class Save extends React.Component {
   constructor(props) {
     super(props)
@@ -25,6 +27,8 @@ class Save extends React.Component {
 
   handleSubmit(event) {
     this.props.editMapName(this.state.name)
+
+    // do fetch request etc here
   }
 
   render() {
@@ -32,9 +36,7 @@ class Save extends React.Component {
       <div>
         <h5>
           Save
-          <Tooltip
-            body="Name the map and submit it to the server."
-            />
+          <Tooltip body="Name the map and submit it to the server." />
         </h5>
         <label>
           Map name
