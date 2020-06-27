@@ -6,8 +6,6 @@ import MapEditorDialog from './MapEditorDialog'
 import { connect } from 'react-redux'
 import { setImage } from '../redux/modules/maps'
 
-import MapRenderer from '../../../game/client/MapRenderer'
-
 class MapEditor extends Component {
   constructor(props) {
     super(props)
@@ -107,6 +105,7 @@ class MapEditor extends Component {
   // EDITING
 
   editTerrain(tX, tY) {
+    /*
     let newTile = this.props.currentTileBrush
     let tileChanged = this.props.map.setTile(tX, tY, newTile)
 
@@ -116,13 +115,11 @@ class MapEditor extends Component {
         this.layers.game, tX, tY, this.props.map.getTile(tX, tY)
       )
     }
+    */
   }
 
   handleMouseDown(event) {
     event.preventDefault()
-
-    // Do nothing if mapRenderer is not ready
-    if (!this.mapRenderer) { return }
 
     switch(this.props.currentTool) {
       case 'terrain':
@@ -140,6 +137,7 @@ class MapEditor extends Component {
   }
 
   handleMouseMove(event) {
+    /*
     event.preventDefault()
     let boundingRect = event.target.getBoundingClientRect()
 
@@ -150,6 +148,7 @@ class MapEditor extends Component {
         tY = this.mapRenderer.pixelsToTiles(pY)
 
     this.touchAction(tX, tY)
+    */
   }
 
   handleMouseUp(event) {
@@ -176,15 +175,12 @@ class MapEditor extends Component {
   // LIFECYCLE
 
   componentDidMount() {
-    this.mapView = this.mapViewRef.current
-    this.mapRenderer = this.mapView.mapRenderer
-    this.layers = this.mapView.layers
-
     // capture mouseup event from outside the component
     document.addEventListener('click', this.handleMouseUp)
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
+    /*
     if (this.props.currentTool != prevProps.currentTool) {
       if (this.props.currentTool == 'terrain') {
         this.mapRenderer.drawTerrainMarkers(this.layers.game, this.props.map)
@@ -193,6 +189,7 @@ class MapEditor extends Component {
         this.mapRenderer.clear(this.layers.game)
       }
     }
+    */
   }
 
   componentWillUnmount() {

@@ -1,7 +1,7 @@
 import makeActionCreator from './makeActionCreator'
 import { fetchPost } from '../../lib/defaultFetch'
 
-import TileMap, { mapConfig } from '../../../../game/models/TileMap'
+import TileMap, { mapConfig } from '../../../game/models/TileMap'
 
 const editorTools = {
   upload: 'upload',

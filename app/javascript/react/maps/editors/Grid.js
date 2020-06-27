@@ -9,7 +9,7 @@ import {
   gridUpdate
 } from '../../redux/modules/maps'
 
-import { mapConfig } from '../../../../game/models/TileMap'
+import { mapConfig } from '../../../game/models/TileMap'
 
 class Grid extends Component {
   constructor(props) {
@@ -39,7 +39,11 @@ class Grid extends Component {
     let newColor = event.target.value
     this.setState({ color: newColor })
 
+    console.log('hi');
+    console.log(newColor);
+
     if (newColor.match( /^#(?:[0-9a-fA-F]{3}){1,2}$/ )) {
+      console.log('color valid');
       this.props.gridSetColor(newColor)
     }
   }
@@ -65,30 +69,38 @@ class Grid extends Component {
             />
         </h5>
         <div className="columns small-6 medium-4">
-          <label htmlFor="grid-color">Color</label>
-          <input type="color"
-            id="grid-color" name="grid-color"
-            value={this.state.color}
-            onChange={this.setColor}
-            />
+          <label>
+            Color
+            <input type="color"
+              id="grid-color" name="grid-color"
+              onInput={this.setColor}
+              />
+          </label>
         </div>
         <div className="columns small-6 medium-4">
-          <label htmlFor="grid-alpha">Opacity (%)</label>
-          <input type="number"
-            id="grid-alpha" name="grid-alpha"
-            min="0" max="100"
-            value={this.state.alpha}
-            onChange={this.setAlpha}
-            />
+          <label>
+            Opacity (%)
+            <input type="number"
+              id="grid-alpha" name="grid-alpha"
+              min="0" max="100"
+              value={this.state.alpha}
+              onChange={this.setAlpha}
+              />
+          </label>
         </div>
         <div className="columns small-6 medium-4">
-          <label htmlFor="grid-size">Tile size (px)</label>
-          <input type="number"
-            id="grid-size" name="grid-size"
-            min={mapConfig.minimum.tileSize} max={mapConfig.maximum.tileSize}
-            value={this.state.tileSize}
-            onChange={this.setTileSize}
-            />
+          <label>
+            Tile size (px)
+            <p>
+              {mapConfig.minimum.tileSize}px - {mapConfig.maximum.tileSize}px
+            </p>
+            <input type="number"
+              id="grid-size" name="grid-size"
+              min={mapConfig.minimum.tileSize} max={mapConfig.maximum.tileSize}
+              value={this.state.tileSize}
+              onChange={this.setTileSize}
+              />
+          </label>
         </div>
       </div>
     )

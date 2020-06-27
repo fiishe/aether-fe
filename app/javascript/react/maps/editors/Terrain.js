@@ -6,7 +6,7 @@ import {
   editSelectTileBrush
 } from '../../redux/modules/maps'
 
-import tileData from '../../../../game/models/tileData'
+import tileData from '../../../game/models/tileData'
 import terrainIcons from 'images/terrain/terrainIcons.mjs'
 
 const TerrainSelector = props => {
