@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Tooltip from '../../common/Tooltip'
+import ColorPicker from '../../common/ColorPicker'
 
 import { connect } from 'react-redux'
 import {
@@ -35,15 +36,10 @@ class Grid extends Component {
     }
   }
 
-  setColor(event) {
-    let newColor = event.target.value
+  setColor(newColor, event) {
     this.setState({ color: newColor })
 
-    console.log('hi');
-    console.log(newColor);
-
     if (newColor.match( /^#(?:[0-9a-fA-F]{3}){1,2}$/ )) {
-      console.log('color valid');
       this.props.gridSetColor(newColor)
     }
   }
@@ -71,12 +67,8 @@ class Grid extends Component {
         <div className="columns small-6 medium-4">
           <label>
             Color
-            <input type="color"
-              id="grid-color" name="grid-color"
-              value={this.state.color}
-              onChange={this.setColor}
-              onInput={this.setColor}
-              />
+            <ColorPicker initialColor={this.state.color}
+              onChange={this.setColor} />
           </label>
         </div>
         <div className="columns small-6 medium-4">
