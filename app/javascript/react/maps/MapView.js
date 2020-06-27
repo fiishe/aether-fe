@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import BackgroundLayer from './layers/BackgroundLayer'
 import GridLayer from './layers/GridLayer'
+import TerrainLayer from './layers/TerrainLayer'
 
 import { connect } from 'react-redux'
 
@@ -47,8 +48,9 @@ class MapView extends Component {
         onTouchMove={this.props.onTouchMove}
         onTouchEnd={this.props.onTouchEnd}
       >
-        <GridLayer width={this.state.width} height={this.state.height} />
         <BackgroundLayer width={this.state.width} height={this.state.height} />
+        <GridLayer width={this.state.width} height={this.state.height} />
+        <TerrainLayer width={this.state.width} height={this.state.height} />
       </div>
     )
   }

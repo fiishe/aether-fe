@@ -48,7 +48,7 @@ const GridLayer = (props) => {
 
   return (
     <Layer
-      id="bg-layer"
+      id="grid-layer"
       width={props.width} height={props.height}
       draw={draw} redraw={redraw}
       />

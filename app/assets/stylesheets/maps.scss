@@ -43,9 +43,10 @@
   display: none;  /* Safari and Chrome */
 }
 
-canvas { position: absolute; }
-#ui-layer { z-index: 4; }
-#game-layer { z-index: 3; }
+#map-stage canvas { position: absolute; }
+#ui-layer { z-index: 5; }
+#game-layer { z-index: 4; }
+#terrain-layer { z-index: 3; }
 #grid-layer { z-index: 2; }
 #bg-layer { z-index: 1; }
 

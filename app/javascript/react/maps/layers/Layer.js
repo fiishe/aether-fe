@@ -17,7 +17,7 @@ class Layer extends Component {
     this.props.draw(this.ctx)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.redraw) {
       this.props.redraw(this.ctx)
     }
@@ -41,6 +41,7 @@ class Layer extends Component {
   render() {
     return(
       <canvas
+        className={this.props.invisible ? 'display-none' : ''}
         id={this.props.id}
         width={this.props.width} height={this.props.height}
         ref={this.ref}
