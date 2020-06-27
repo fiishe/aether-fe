@@ -18,12 +18,7 @@ class Layer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.redraw) {
-      this.props.redraw(this.ctx)
-    }
-    else {
-      this.props.draw(this.ctx)
-    }
+    this.props.draw(this.ctx)
   }
 
   fixScale(targetWidth, targetHeight) {

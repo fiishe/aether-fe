@@ -83,6 +83,7 @@ class TileMap {
 
     if (tile && (this.tiles[y][x].name != tile.name)) {
       this.tiles[y][x] = tile
+      console.log('tile changed');
       return true
     }
     else {

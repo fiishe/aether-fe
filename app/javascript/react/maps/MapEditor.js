@@ -4,7 +4,7 @@ import MapView from './MapView'
 import MapEditorDialog from './MapEditorDialog'
 
 import { connect } from 'react-redux'
-import { setImage } from '../redux/modules/maps'
+import { setImage, editPaint } from '../redux/modules/maps'
 
 class MapEditor extends Component {
   constructor(props) {
@@ -105,17 +105,14 @@ class MapEditor extends Component {
   // EDITING
 
   editTerrain(tX, tY) {
-    /*
     let newTile = this.props.currentTileBrush
     let tileChanged = this.props.map.setTile(tX, tY, newTile)
 
     if (tileChanged) {
-      this.mapRenderer.clearTile(this.layers.game, tX, tY)
-      this.mapRenderer.drawTerrainMarker(
-        this.layers.game, tX, tY, this.props.map.getTile(tX, tY)
-      )
+      // send signal to redraw tile
+      // by changing lastAction in redux store
+      this.props.editPaint(tX, tY)
     }
-    */
   }
 
   handleMouseDown(event) {
@@ -137,18 +134,16 @@ class MapEditor extends Component {
   }
 
   handleMouseMove(event) {
-    /*
     event.preventDefault()
     let boundingRect = event.target.getBoundingClientRect()
 
     let pX = event.clientX - boundingRect.x, // touch coords in pixels
         pY = event.clientY - boundingRect.y
 
-    let tX = this.mapRenderer.pixelsToTiles(pX),  // in tiles
-        tY = this.mapRenderer.pixelsToTiles(pY)
+    let tX = parseInt(pX / this.props.tileSize),
+        tY = parseInt(pY / this.props.tileSize)
 
     this.touchAction(tX, tY)
-    */
   }
 
   handleMouseUp(event) {
@@ -177,19 +172,6 @@ class MapEditor extends Component {
   componentDidMount() {
     // capture mouseup event from outside the component
     document.addEventListener('click', this.handleMouseUp)
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    /*
-    if (this.props.currentTool != prevProps.currentTool) {
-      if (this.props.currentTool == 'terrain') {
-        this.mapRenderer.drawTerrainMarkers(this.layers.game, this.props.map)
-      }
-      else {
-        this.mapRenderer.clear(this.layers.game)
-      }
-    }
-    */
   }
 
   componentWillUnmount() {
@@ -226,13 +208,15 @@ class MapEditor extends Component {
 const mapStateToProps = (state) => {
   return {
     map: state.maps.map,
+    tileSize: state.maps.grid.tileSize,
     currentTool: state.maps.editor.tool,
     currentTileBrush: state.maps.editor.tileBrush
   }
 }
 
 const mapDispatchToProps = {
-  setImage
+  setImage,
+  editPaint
 }
 
 export default connect(

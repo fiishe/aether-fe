@@ -8,9 +8,11 @@ const terrainIcons = {
   wall
 }
 
-export default terrainIcons
-export {
+const terrainIconsArr = [
   plain,
   forest,
   wall
-}
+]
+
+export default terrainIcons
+export { terrainIconsArr }

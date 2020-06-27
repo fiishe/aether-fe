@@ -25,7 +25,8 @@ const initialState = {
   },
   editor: {
     tool: 'upload',
-    tileBrush: 0
+    tileBrush: 0,
+    lastAction: null
   }
 }
 
@@ -92,6 +93,18 @@ const EDIT_MAP_NAME = "EDIT_MAP_NAME"
 const editMapName = makeActionCreator(
   EDIT_MAP_NAME,
   'newName'
+)
+
+const EDIT_PAINT = "EDIT_PAINT"
+const editPaint = makeActionCreator(
+  EDIT_PAINT,
+  'x',
+  'y'
+)
+
+const EDIT_RESOLVE_ACTION = "EDIT_RESOLVE_ACTION"
+const editResolveAction = makeActionCreator(
+  EDIT_RESOLVE_ACTION
 )
 
 const UPLOAD_REQUEST = "FETCH_UPLOAD_MAP_REQUEST"
@@ -188,6 +201,25 @@ const maps = (state = initialState, action) => {
         name: action.newName
       }
 
+    case EDIT_PAINT:
+      return {...state,
+        editor: {...state.editor,
+          lastAction: {
+            x: action.x,
+            y: action.y,
+            tool: state.editor.tool,
+            param: state.editor.tileBrush
+          }
+        }
+      }
+
+    case EDIT_RESOLVE_ACTION:
+      return {...state,
+        editor: {...state.editor,
+          lastAction: null
+        }
+      }
+
     default:
       return state
   }
@@ -205,6 +237,8 @@ export {
   editSelectTool,
   editSelectTileBrush,
   editMapName,
+  editPaint,
+  editResolveAction,
   upload,
   maps
 }
