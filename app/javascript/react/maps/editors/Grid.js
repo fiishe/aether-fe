@@ -73,6 +73,8 @@ class Grid extends Component {
             Color
             <input type="color"
               id="grid-color" name="grid-color"
+              value={this.state.color}
+              onChange={this.setColor}
               onInput={this.setColor}
               />
           </label>
