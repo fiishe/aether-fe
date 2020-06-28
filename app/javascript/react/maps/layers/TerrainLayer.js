@@ -4,7 +4,7 @@ import Layer from './Layer'
 import { connect } from 'react-redux'
 import { editResolveAction } from '../../redux/modules/maps'
 
-import terrainIcons, { terrainIconsArr } from 'images/terrain/terrainIcons.mjs'
+import { terrainIconsArr } from 'images/terrain/terrainIcons.mjs'
 
 class TerrainLayer extends Component {
   constructor(props) {
@@ -31,13 +31,12 @@ class TerrainLayer extends Component {
   }
 
   drawTerrain(ctx) {
-    let drawTile = (x, y, tile) => {
-      let terrainId = tile.symbol,
-          tileSize = this.props.tileSize,
+    let drawTile = (x, y, tileId) => {
+      let tileSize = this.props.tileSize,
           pX = x * tileSize,
           pY = y * tileSize
 
-      this.drawImage(ctx, terrainIcons[tile.name], pX, pY)
+      this.drawImage(ctx, terrainIconsArr[tileId], pX, pY)
     }
 
     this.props.map.forEachTile(drawTile)

@@ -11,7 +11,8 @@ const mapConfig = {
     mapHeight: 6,         // map height in tiles
     tileSize: 32,         // tile width/height in pixels
     gridColor: '#000000', // grid color
-    gridAlpha: 100        // grid alpha
+    gridAlpha: 100,       // grid alpha
+    tile: 0               // initial tile to populate empty maps with
   },
   minimum: {
     mapSize: 1,           // map width/height in tiles
@@ -29,7 +30,7 @@ class TileMap {
     // initialize 2d array filled with plains
     this.tiles = Array.from(
       Array(height),
-      () => new Array(width).fill(tileData.tiles[0])
+      () => new Array(width).fill(mapConfig.default.tile)
     )
 
     this.getWidth = this.getWidth.bind(this)
@@ -79,10 +80,8 @@ class TileMap {
 
   // set value of a single tile, returning true if it changed
   setTile(x, y, tileId) {
-    let tile = tileData.tiles[tileId]
-
-    if (tile && (this.tiles[y][x].name != tile.name)) {
-      this.tiles[y][x] = tile
+    if (tileId && (this.tiles[y][x] != tileId)) {
+      this.tiles[y][x] = tileId
       return true
     }
     else {
@@ -91,7 +90,7 @@ class TileMap {
   }
 
   pushRow(row) {
-    let newRow = row || Array(this.getWidth()).fill(tileData.tiles[0])
+    let newRow = row || Array(this.getWidth()).fill(mapConfig.default.tile)
     this.tiles.push(newRow)
   }
 
@@ -101,7 +100,7 @@ class TileMap {
       inserter = (row, index) => { row.push(col[index]) }
     }
     else {
-      inserter = (row) => { row.push(tileData.tiles[0]) }
+      inserter = (row) => { row.push(mapConfig.default.tile) }
     }
     this.tiles.forEach(inserter)
   }
