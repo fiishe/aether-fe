@@ -1,5 +1,6 @@
 class Map < ApplicationRecord
   has_many :chapters
+  has_one_attached :background
 
   validates :name, length: { minimum: 2, maximum: 32 }, uniqueness: true
   validates :image_url, length: { maximum: 2000 }

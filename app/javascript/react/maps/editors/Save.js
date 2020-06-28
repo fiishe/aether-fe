@@ -3,7 +3,7 @@ import FetchingComponent from '../../lib/FetchingComponent'
 import Tooltip from '../../common/Tooltip'
 
 import { connect } from 'react-redux'
-import { upload } from '../../redux/modules/maps'
+import { editMapName, upload } from '../../redux/modules/maps'
 
 import { fetchPost } from '../../lib/defaultFetch'
 
@@ -12,7 +12,7 @@ class Save extends React.Component {
     super(props)
 
     this.state = {
-      name: ""
+      name: this.props.name
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -21,6 +21,7 @@ class Save extends React.Component {
 
   handleChange(event) {
     this.setState({ name: event.target.value })
+    this.props.editMapName(event.target.value)
   }
 
   handleSubmit(event) {
@@ -29,11 +30,13 @@ class Save extends React.Component {
       imageSrc: this.props.imageSrc,
       width: this.props.width,
       height: this.props.height,
-      grid: this.props.grid
+      tile_size: this.props.grid.tileSize
     }
 
+    payload = JSON.stringify(payload)
     console.log(payload);
-    // do fetch request etc here
+
+    this.props.upload(payload)
   }
 
   render() {
@@ -71,6 +74,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
+  editMapName,
   upload
 }
 

@@ -16,6 +16,7 @@ const initialState = {
   mapHeight: mapConfig.default.mapHeight,
   viewWidth: mapConfig.default.mapWidth * mapConfig.default.tileSize,
   viewHeight: mapConfig.default.mapHeight * mapConfig.default.tileSize,
+  name: '',
   imageSrc: null,
   grid: {
     alpha: mapConfig.default.gridAlpha,
@@ -100,6 +101,12 @@ const editResolveAction = makeActionCreator(
   EDIT_RESOLVE_ACTION
 )
 
+const EDIT_MAP_NAME = "EDIT_MAP_NAME"
+const editMapName = makeActionCreator(
+  EDIT_MAP_NAME,
+  'name'
+)
+
 const UPLOAD_REQUEST = "FETCH_UPLOAD_MAP_REQUEST"
 const uploadRequest = makeActionCreator(UPLOAD_REQUEST)
 const UPLOAD_SUCCESS = "UPLOAD_SUCCESS"
@@ -114,10 +121,10 @@ const uploadError = makeActionCreator(
 )
 
 const upload = (payload) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(uploadRequest())
 
-    fetchPost(`/api/v1/maps/new`)
+    fetchPost(`/api/v1/maps`, payload)
       .then(res => {
         dispatch(uploadSuccess(res))
       })
@@ -201,6 +208,11 @@ const maps = (state = initialState, action) => {
         }
       }
 
+    case EDIT_MAP_NAME:
+      return {...state,
+        name: action.name
+      }
+
     case EDIT_RESOLVE_ACTION:
       return {...state,
         editor: {...state.editor,
@@ -226,6 +238,7 @@ export {
   editSelectTileBrush,
   editPaint,
   editResolveAction,
+  editMapName,
   upload,
   maps
 }

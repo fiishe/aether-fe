@@ -1,6 +1,7 @@
 class Api::V1::MapsController < ApiController
   def create
-    @map = Map.new()
+    binding.pry
+    # @map = Map.new()
   end
 
   private
