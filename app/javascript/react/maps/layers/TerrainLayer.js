@@ -31,7 +31,6 @@ class TerrainLayer extends Component {
   }
 
   drawTerrain(ctx) {
-    console.log('drawing');
     let drawTile = (x, y, tile) => {
       let terrainId = tile.symbol,
           tileSize = this.props.tileSize,

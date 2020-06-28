@@ -40,6 +40,10 @@ label p, .panel label p {
   color: gray;
 }
 
+label.medium {
+  max-width: 300px;
+}
+
 .input-file {
   cursor: pointer;
 }

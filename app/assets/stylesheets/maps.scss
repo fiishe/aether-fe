@@ -55,7 +55,10 @@
   padding-bottom: 24px;
   min-width: 25%;
   max-height: 33%;
+
   overflow-y: scroll;
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
 
   position: sticky;
   bottom: 0;

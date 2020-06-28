@@ -5,8 +5,12 @@ import { connect } from 'react-redux'
 
 const BackgroundLayer = (props) => {
   let draw = (ctx) => {
-    if (props.image) {
-      ctx.drawImage(props.image, 0, 0)
+    if (props.imageSrc) {
+      let img = new Image()
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0)
+      }
+      img.src = props.imageSrc
     }
     else {
       ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'
@@ -25,7 +29,7 @@ const BackgroundLayer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    image: state.maps.image
+    imageSrc: state.maps.imageSrc
   }
 }
 

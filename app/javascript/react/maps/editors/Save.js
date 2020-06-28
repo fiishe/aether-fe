@@ -3,7 +3,7 @@ import FetchingComponent from '../../lib/FetchingComponent'
 import Tooltip from '../../common/Tooltip'
 
 import { connect } from 'react-redux'
-import { editMapName, upload } from '../../redux/modules/maps'
+import { upload } from '../../redux/modules/maps'
 
 import { fetchPost } from '../../lib/defaultFetch'
 
@@ -12,9 +12,7 @@ class Save extends React.Component {
     super(props)
 
     this.state = {
-      // use interpolation to create a new copy of the string
-      // instead of a reference to it
-      name: `${this.props.name}`
+      name: ""
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -26,8 +24,15 @@ class Save extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.editMapName(this.state.name)
+    let payload = {
+      name: this.state.name,
+      imageSrc: this.props.imageSrc,
+      width: this.props.width,
+      height: this.props.height,
+      grid: this.props.grid
+    }
 
+    console.log(payload);
     // do fetch request etc here
   }
 
@@ -38,7 +43,7 @@ class Save extends React.Component {
           Save
           <Tooltip body="Name the map and submit it to the server." />
         </h5>
-        <label>
+        <label className="medium">
           Map name
           <p>max 32 characters</p>
           <input className="form-input-text"
@@ -58,7 +63,7 @@ class Save extends React.Component {
 const mapStateToProps = state => {
   return {
     name: state.maps.name,
-    image: state.maps.image,
+    imageSrc: state.maps.imageSrc,
     width: state.maps.mapWidth,
     height: state.maps.mapHeight,
     grid: state.maps.grid
@@ -66,7 +71,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  editMapName,
   upload
 }
 

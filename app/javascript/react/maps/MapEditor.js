@@ -4,7 +4,7 @@ import MapView from './MapView'
 import MapEditorDialog from './MapEditorDialog'
 
 import { connect } from 'react-redux'
-import { setImage, editPaint } from '../redux/modules/maps'
+import { setImageSrc, editPaint } from '../redux/modules/maps'
 
 class MapEditor extends Component {
   constructor(props) {
@@ -44,12 +44,10 @@ class MapEditor extends Component {
       		reject("The dropped file is not an image");
         }
 
-        let reader = new FileReader()
-        reader.onload = (event) => {
-          let imgData = event.target.result // base64-encoded image
-          resolve(imgData)
-        }
-        reader.readAsDataURL(file)
+        let topUrl = window.webkitURL || window.URL
+        let url = topUrl.createObjectURL(file) // generate blob url
+
+        resolve(url)
       }
       catch (e) {
         reject(e)
@@ -72,11 +70,11 @@ class MapEditor extends Component {
     })
   }
 
-  processImage(file) {
-    this.readImage(file)
-      .then(imgData => this.loadImage(imgData))
-      .then(image => {
-        this.props.setImage(image)
+  processImage(url) {
+    this.readImage(url)
+      .then(blob => {
+        this.loadImage(blob)
+        this.props.setImageSrc(blob)
       })
       .catch(e => {
         console.error(e)
@@ -90,15 +88,15 @@ class MapEditor extends Component {
   handleDrop(event) {
     event.preventDefault()
 
-    let imgFile = event.dataTransfer.files[0]
-    this.processImage(imgFile)
+    let url = event.dataTransfer.files[0]
+    this.processImage(url)
   }
 
   handleFileInput(event) {
     event.preventDefault()
 
-    let imgFile = event.target.files[0]
-    this.processImage(imgFile)
+    let url = event.target.files[0]
+    this.processImage(url)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -198,6 +196,8 @@ class MapEditor extends Component {
               onTouchEnd={this.handleTouchEnd}
               />
           </div>
+        </div>
+        <div className="row">
           <MapEditorDialog handleFileInput={this.handleFileInput} />
         </div>
       </div>
@@ -215,7 +215,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  setImage,
+  setImageSrc,
   editPaint
 }
 

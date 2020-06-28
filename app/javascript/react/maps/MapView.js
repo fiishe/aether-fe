@@ -58,9 +58,6 @@ class MapView extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    gridOptions: state.maps.grid,
-    image: state.maps.image,
-    map: state.maps.map,
     viewWidth: state.maps.viewWidth,
     viewHeight: state.maps.viewHeight
   }

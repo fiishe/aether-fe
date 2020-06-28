@@ -16,8 +16,7 @@ const initialState = {
   mapHeight: mapConfig.default.mapHeight,
   viewWidth: mapConfig.default.mapWidth * mapConfig.default.tileSize,
   viewHeight: mapConfig.default.mapHeight * mapConfig.default.tileSize,
-  name: "",
-  image: null,
+  imageSrc: null,
   grid: {
     alpha: mapConfig.default.gridAlpha,
     color: mapConfig.default.gridColor,
@@ -31,10 +30,10 @@ const initialState = {
 }
 
 // ACTION CREATORS
-const SET_IMAGE = "SET_IMAGE"
-const setImage = makeActionCreator(
-  SET_IMAGE,
-  'newImage'
+const SET_IMAGE_SRC = "SET_IMAGE_SRC"
+const setImageSrc = makeActionCreator(
+  SET_IMAGE_SRC,
+  'src'
 )
 
 const CHANGE_MAP_WIDTH = "CHANGE_MAP_WIDTH"
@@ -89,12 +88,6 @@ const editSelectTileBrush = makeActionCreator(
   'tileBrush'
 )
 
-const EDIT_MAP_NAME = "EDIT_MAP_NAME"
-const editMapName = makeActionCreator(
-  EDIT_MAP_NAME,
-  'newName'
-)
-
 const EDIT_PAINT = "EDIT_PAINT"
 const editPaint = makeActionCreator(
   EDIT_PAINT,
@@ -138,8 +131,8 @@ const upload = (payload) => {
 // REDUCERS
 const maps = (state = initialState, action) => {
   switch(action.type) {
-    case SET_IMAGE:
-      return {...state, image: action.newImage }
+    case SET_IMAGE_SRC:
+      return {...state, imageSrc: action.src }
 
     case CHANGE_MAP_WIDTH:
       return {...state,
@@ -196,11 +189,6 @@ const maps = (state = initialState, action) => {
         }
       }
 
-    case EDIT_MAP_NAME:
-      return {...state,
-        name: action.newName
-      }
-
     case EDIT_PAINT:
       return {...state,
         editor: {...state.editor,
@@ -226,7 +214,7 @@ const maps = (state = initialState, action) => {
 }
 
 export {
-  setImage,
+  setImageSrc,
   incrementWidth,
   decrementWidth,
   incrementHeight,
@@ -236,7 +224,6 @@ export {
   gridSetTileSize,
   editSelectTool,
   editSelectTileBrush,
-  editMapName,
   editPaint,
   editResolveAction,
   upload,
