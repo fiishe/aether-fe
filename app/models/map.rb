@@ -31,6 +31,6 @@ class Map < ApplicationRecord
   }
 
   def creator
-    User.find(self.creator_id)
+    user
   end
 end
