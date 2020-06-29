@@ -55,6 +55,10 @@ class Form extends Component {
     ]
   }
 
+  values() {
+    return this.state.values
+  }
+
   payload() {
     let payload = JSON.parse(JSON.stringify(this.state.values))
     for (var key in payload) {

@@ -17,7 +17,10 @@ const initialState = {
   viewWidth: mapConfig.default.mapWidth * mapConfig.default.tileSize,
   viewHeight: mapConfig.default.mapHeight * mapConfig.default.tileSize,
   name: '',
-  imageSrc: null,
+  image: {
+    src: null,
+    fileType: null
+  },
   grid: {
     alpha: mapConfig.default.gridAlpha,
     color: mapConfig.default.gridColor,
@@ -31,10 +34,11 @@ const initialState = {
 }
 
 // ACTION CREATORS
-const SET_IMAGE_SRC = "SET_IMAGE_SRC"
-const setImageSrc = makeActionCreator(
-  SET_IMAGE_SRC,
-  'src'
+const SET_IMAGE = "SET_IMAGE"
+const setImage = makeActionCreator(
+  SET_IMAGE,
+  'src',
+  'fileType'
 )
 
 const CHANGE_MAP_WIDTH = "CHANGE_MAP_WIDTH"
@@ -107,39 +111,16 @@ const editMapName = makeActionCreator(
   'name'
 )
 
-const UPLOAD_REQUEST = "FETCH_UPLOAD_MAP_REQUEST"
-const uploadRequest = makeActionCreator(UPLOAD_REQUEST)
-const UPLOAD_SUCCESS = "UPLOAD_SUCCESS"
-const uploadSuccess = makeActionCreator(
-  UPLOAD_SUCCESS,
-  'response'
-)
-const UPLOAD_ERROR = "UPLOAD_ERROR"
-const uploadError = makeActionCreator(
-  UPLOAD_ERROR,
-  'error'
-)
-
-const upload = (payload) => {
-  return (dispatch) => {
-    dispatch(uploadRequest())
-
-    fetchPost(`/api/v1/maps`, payload)
-      .then(res => {
-        dispatch(uploadSuccess(res))
-      })
-      .catch(e => {
-        console.error(e)
-        dispatch(uploadError(e))
-      })
-  }
-}
-
 // REDUCERS
 const maps = (state = initialState, action) => {
   switch(action.type) {
-    case SET_IMAGE_SRC:
-      return {...state, imageSrc: action.src }
+    case SET_IMAGE:
+      return {...state,
+        image: {
+          src: action.src,
+          fileType: action.fileType
+        }
+      }
 
     case CHANGE_MAP_WIDTH:
       return {...state,
@@ -226,7 +207,7 @@ const maps = (state = initialState, action) => {
 }
 
 export {
-  setImageSrc,
+  setImage,
   incrementWidth,
   decrementWidth,
   incrementHeight,
@@ -239,6 +220,5 @@ export {
   editPaint,
   editResolveAction,
   editMapName,
-  upload,
   maps
 }

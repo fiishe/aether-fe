@@ -29,7 +29,7 @@ const BackgroundLayer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    imageSrc: state.maps.imageSrc
+    imageSrc: state.maps.image.src
   }
 }
 

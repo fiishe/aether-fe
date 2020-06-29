@@ -4,7 +4,7 @@ import MapView from './MapView'
 import MapEditorDialog from './MapEditorDialog'
 
 import { connect } from 'react-redux'
-import { setImageSrc, editPaint } from '../redux/modules/maps'
+import { setImage, editPaint } from '../redux/modules/maps'
 
 class MapEditor extends Component {
   constructor(props) {
@@ -20,7 +20,6 @@ class MapEditor extends Component {
     }
 
     this.readImage = this.readImage.bind(this)
-    this.loadImage = this.loadImage.bind(this)
     this.processImage = this.processImage.bind(this)
     this.handleDragOver = this.handleDragOver.bind(this)
     this.handleDrop = this.handleDrop.bind(this)
@@ -43,6 +42,7 @@ class MapEditor extends Component {
         if (!file.type.match(/image.*/)) {
       		reject("The dropped file is not an image");
         }
+        this.props.setImageFile()
 
         let topUrl = window.webkitURL || window.URL
         let url = topUrl.createObjectURL(file) // generate blob url
@@ -55,30 +55,17 @@ class MapEditor extends Component {
     })
   }
 
-  loadImage(imgData) { // resolves with loaded image object (ready to draw)
-    return new Promise((resolve, reject) => {
-      try {
-        let img = new Image()
-        img.addEventListener('load', () => {
-          resolve(img)
-        })
-        img.src = imgData
-      }
-      catch (e) {
-        reject(e)
-      }
-    })
-  }
+  processImage(file) {
+    if (!file.type.match(/image.*/)) {
+      console.error("The dropped file is not an image")
+      return
+    }
 
-  processImage(url) {
-    this.readImage(url)
-      .then(blob => {
-        this.loadImage(blob)
-        this.props.setImageSrc(blob)
-      })
-      .catch(e => {
-        console.error(e)
-      })
+    let topUrl = window.webkitURL || window.URL
+    let url = topUrl.createObjectURL(file)
+
+    // store image src and filetype in redux store to upload later
+    this.props.setImage(url, file.type)
   }
 
   handleDragOver(event) {
@@ -88,15 +75,15 @@ class MapEditor extends Component {
   handleDrop(event) {
     event.preventDefault()
 
-    let url = event.dataTransfer.files[0]
-    this.processImage(url)
+    let file = event.dataTransfer.files[0]
+    this.processImage(file)
   }
 
   handleFileInput(event) {
     event.preventDefault()
 
-    let url = event.target.files[0]
-    this.processImage(url)
+    let file = event.target.files[0]
+    this.processImage(file)
   }
 
   //////////////////////////////////////////////////////////////////////////////
@@ -215,7 +202,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  setImageSrc,
+  setImage,
   editPaint
 }
 

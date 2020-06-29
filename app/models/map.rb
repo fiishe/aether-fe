@@ -1,9 +1,12 @@
 class Map < ApplicationRecord
-  has_many :chapters
-  has_one_attached :background
+  include Rails.application.routes.url_helpers
 
-  validates :name, length: { minimum: 2, maximum: 32 }, uniqueness: true
-  validates :image_url, length: { maximum: 2000 }
+  belongs_to :user, foreign_key: :creator_id
+  has_many :chapters
+  has_one_attached :background_image # image (see ActiveStorage docs)
+
+  validates :name, length: { minimum: 2, maximum: 32 }
+  validates :name, uniqueness: true
 
   validates :height, :width, numericality: {
     only_integer: true,
@@ -15,6 +18,16 @@ class Map < ApplicationRecord
     only_integer: true,
     greater_than_or_equal_to: 16,
     less_than_or_equal_to: 128
+  }
+
+  validates :grid_alpha, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 0,
+    less_than_or_equal_to: 100
+  }
+  validates :grid_color, format: {
+    with: /\A#(?:[0-9a-fA-F]{3}){1,2}\z/,
+    message: "must be a valid hex color code"
   }
 
   def creator

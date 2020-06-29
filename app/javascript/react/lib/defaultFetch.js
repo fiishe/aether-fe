@@ -26,16 +26,17 @@ const fetchGet = uri => {
   })
 }
 
-const fetchPost = (uri, payload) => {
+const fetchPost = (uri, payload, headers) => {
   let req = {
     credentials: 'same-origin',
     method: 'POST',
     body: payload,
-    headers: {
+    headers: headers || {
       'Content-Type': 'application/json',
-      'x-CSRF-Token': getCSRFToken()
     }
   }
+
+  req.headers['x-CSRF-Token'] = getCSRFToken()
 
   return new Promise((resolve, reject) => {
     fetch(uri, req)
@@ -43,21 +44,27 @@ const fetchPost = (uri, payload) => {
       .then(json => { resolve(json) })
       .catch(e => {
         e.message = `Error occurred while attempting to POST ${uri}:
-          ${e.message}`
+        ${e.message}`
         reject(e)
       })
   })
 }
 
-const fetchPatch = (uri, payload) => {
+const fetchPatch = (uri, payload, headers) => {
   let req = {
     credentials: 'same-origin',
     method: 'PATCH',
     body: payload,
-    headers: {
-      'Content-Type': 'application/json',
-      'x-CSRF-Token': getCSRFToken()
+    headers: headers || {
+      'Content-Type': 'application/json'
     }
+  }
+  console.log(req);
+
+  req.headers['x-CSRF-Token'] = getCSRFToken()
+
+  for (let key in headers) {
+    req.headers[key] = headers[key]
   }
 
   return new Promise((resolve, reject) => {
@@ -66,7 +73,7 @@ const fetchPatch = (uri, payload) => {
       .then(json => { resolve(json) })
       .catch(e => {
         e.message = `Error occurred while attempting to PATCH ${uri}:
-          ${e.message}`
+        ${e.message}`
         reject(e)
       })
   })

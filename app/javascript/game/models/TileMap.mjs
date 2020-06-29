@@ -67,7 +67,7 @@ class TileMap {
     let out = ""
     this.tiles.forEach((row, y) => {
       row.forEach((tile, x) => {
-        out += tile.symbol
+        out += tile
       })
       out += "\n"
     })
