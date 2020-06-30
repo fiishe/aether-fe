@@ -16,10 +16,6 @@ ul.form-errors {
   max-width: 500px;
 }
 
-.form-submit-container {
-  
-}
-
 .form-submit {
   background-color: $button-blue;
   color: white;
@@ -42,4 +38,16 @@ label p, .panel label p {
   float: right;
   text-align: right;
   color: gray;
+}
+
+label.medium {
+  max-width: 300px;
+}
+
+.input-file {
+  cursor: pointer;
+}
+
+input.error {
+  background-color: $red-2;
 }

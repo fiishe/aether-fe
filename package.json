@@ -11,12 +11,15 @@
     "@babel/preset-react": "^7.0.0",
     "@rails/webpacker": "4",
     "babel-plugin-module-resolver": "^4.0.0",
+    "express": "^4.17.1",
     "fetch-mock-jest": "^1.2.8",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
     "jsdom": "^13.2.0",
     "prop-types": "~15.6.0",
     "react": "^16.13.0",
+    "react-activestorage-provider": "^0.8.0",
+    "react-color": "^2.18.1",
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
@@ -37,12 +40,14 @@
     "jest-environment-enzyme": "^7.1.1",
     "jest-enzyme": "^7.1.1",
     "react-test-renderer": "16.13.1",
+    "redux-mock-store": "^1.5.4",
     "webpack": "^4.0.0",
     "webpack-dev-server": ">=3.1.11"
   },
   "scripts": {
     "start": "./bin/webpack-dev-server",
-    "test": "jest"
+    "test": "jest",
+    "game": "node ./app/game/server/app.mjs"
   },
   "version": "0.0.0"
 }

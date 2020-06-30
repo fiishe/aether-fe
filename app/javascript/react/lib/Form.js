@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { getMeta } from './utils';
+import React, { Component } from 'react'
+import { fetchPost, fetchPatch } from './defaultFetch'
 
 class Form extends Component {
   constructor(props) {
@@ -55,8 +55,8 @@ class Form extends Component {
     ]
   }
 
-  getCSRFToken() {
-    return getMeta('csrf-token')
+  values() {
+    return this.state.values
   }
 
   payload() {
@@ -189,24 +189,11 @@ class Form extends Component {
   }
 
   fetchSendPayload(endpoint, method) {
+    let fetchReq = fetchPost
+    if (method == 'PATCH') { fetchReq = fetchPatch }
+
     return new Promise((resolve, reject) => {
-      fetch(endpoint, {
-        credentials: 'same-origin',
-        method: method,
-        body: this.payload(),
-        headers: {
-          'Content-Type': 'application/json',
-          'x-CSRF-Token': this.getCSRFToken()
-        }
-      })
-      .then(res => {
-        if (res.ok) { return res }
-        else {
-          let error = new Error(`${res.status} ${res.statusText}`)
-          throw(error)
-        }
-      })
-      .then(res => res.json())
+      fetchReq(endpoint, this.payload())
       .then(json => { resolve(json) })
       .catch(error => {
         reject(error)

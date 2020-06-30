@@ -16,6 +16,21 @@ DISCORD_CLIENT_ID=
 DISCORD_CLIENT_SECRET=
 ```
 
+In production, it is advisable to use a cloud storage service to support uploading files. I used Amazon S3, but other services can be easily configured according to the [Active Storage guide](https://edgeguides.rubyonrails.org/active_storage_overview.html).
+After creating the bucket and IAM user via the AWS console, store the access key information as environment vars:
+```
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+```
+
+## Development
+Start a local rails development server (at `localhost:3000`), webpack-dev-server for live reloading javascript, and the game server respectively.
+```
+bundle exec rails server
+yarn run start
+yarn run game
+```
+
 ## Testing
 Back end (RSpec):
 ```

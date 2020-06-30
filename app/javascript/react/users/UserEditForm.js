@@ -1,9 +1,11 @@
 import React from 'react'
-import { connect } from 'react-redux'
-
 import Form from '../lib/Form'
 import UserProfile from './UserProfile'
+
+import { connect } from 'react-redux'
+
 import { stripString } from '../lib/utils'
+import { fetchPatch } from '../lib/defaultFetch'
 
 import { toggleProfileEdit, updateUserData } from '../redux/modules/users'
 
@@ -59,7 +61,9 @@ class UserEditForm extends Form {
   }
 
   submit() {
-    this.fetchSendPayload('/api/v1/users/me', 'PATCH')
+    let payload = { user: this.values() }
+    
+    fetchPatch('/api/v1/users/me', JSON.stringify(payload))
     .then(res => {
       if (res.status == "fail") {
         console.log(res.data.errors);

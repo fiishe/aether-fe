@@ -14,7 +14,7 @@ class AvContainer extends Component {
   }
 
   outsideClick(event) {
-    if (!this.refs.node.contains(event.target)) {
+    if (!this.refs.node.contains(event.target) && this.props.avMenuIsOpen) {
       this.props.avMenuClose()
     }
   }

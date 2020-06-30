@@ -20,20 +20,21 @@ FactoryBot.define do
   end
 
   factory :map do
-    name { "Plains" }
-    creator_id { 1 }
-    image_url { "http://placekitten.com/256/192" }
+    name { "Plain Plains" }
+    user { create(:user) }
     height { 6 }
     width { 8 }
     tile_size { 64 }
-    tile_data { "{ [
+    tile_data { "[
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0]
-      ] }" }
+      ]" }
+    grid_alpha { 100 }
+    grid_color { "#0000ff" }
   end
 
   factory :chapter do

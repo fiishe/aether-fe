@@ -1,5 +1,5 @@
 import makeActionCreator from './makeActionCreator'
-import defaultFetch from "../../lib/defaultFetch"
+import { fetchGet } from "../../lib/defaultFetch"
 
 // INITIAL STATE
 const initialState = {
@@ -35,7 +35,7 @@ const fetchUserShow = (userId) => {
     dispatch(fetchUserShowRequest())
 
     // return a fetch request
-    defaultFetch(`/api/v1/users/${userId}`)
+    fetchGet(`/api/v1/users/${userId}`)
       .then(userData => {
         // update state with the returned data
         dispatch(fetchUserShowSuccess(userData))

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import defaultFetch from './defaultFetch'
+import { fetchGet } from './defaultFetch'
 
 class FetchingComponent extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class FetchingComponent extends Component {
   componentDidMount() {
     if (!this.endpoint) { throw(new Error('target API endpoint was not set')) }
 
-    defaultFetch(this.endpoint)
+    fetchGet(this.endpoint)
       .then(payload => {
         this.renderState = "loaded"
         this.fetchCompleted(payload)

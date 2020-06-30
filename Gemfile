@@ -70,3 +70,6 @@ gem 'warden'
 gem 'webpacker', '~> 4.0'
 gem 'rb-readline'
 gem 'active_model_serializers'
+
+# Use Amazon S3 for cloud storage
+gem "aws-sdk-s3", require: false

@@ -7,6 +7,7 @@ import TopBar from './common/TopBar'
 import NavBar from './common/NavBar'
 import HomePage from './pages/HomePage'
 import UserRouter from './routers/UserRouter'
+import MapRouter from './routers/MapRouter'
 import NotFoundPage from './pages/NotFoundPage'
 
 const App = props => {
@@ -14,16 +15,15 @@ const App = props => {
     <Provider store={props.store}>
       <BrowserRouter>
         <div>
-          <div>
-            <TopBar />
-            <NavBar />
-          </div>
+          <TopBar />
+          <NavBar />
           <Switch>
             <Route exact path='/' component={HomePage} />
             <Route path='/home' component={HomePage} />
             <Route path='/login' component={Redirect('/login')} />
             <Route path='/logout' component={Redirect('/logout')} />
             <Route path='/users' component={UserRouter} />
+            <Route path='/maps' component={MapRouter} />
             <Route path='*' component={NotFoundPage} />
           </Switch>
         </div>

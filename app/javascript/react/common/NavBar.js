@@ -3,7 +3,7 @@ import LinkButton from './LinkButton';
 
 const NavBar = (props) => {
   return(
-    <div>
+    <div id="nav-container">
       <nav>
         <div className="nav-icons">
           <LinkButton to="/">

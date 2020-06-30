@@ -19,8 +19,12 @@
 
 $default-margin: 12px;
 
+.default-margin {
+  margin: $default-margin;
+}
+
 .top-space {
-  margin-top: $default-margin
+  margin-top: $default-margin;
 }
 
 .red-bg, .panel.red-bg {
@@ -42,4 +46,8 @@ $default-margin: 12px;
 
 .float-right {
   float: right;
+}
+
+.scroll-x {
+  overflow-x: scroll;
 }

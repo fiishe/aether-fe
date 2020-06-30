@@ -1,0 +1,86 @@
+@import '_colors';
+
+#map-toolbar {
+  padding: 4px;
+  margin: 4px 8px;
+  border-radius: 4px;
+  color: $gray-2;
+  background-color: $blue-3;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#map-toolbar p {
+  padding: 2px 8px;
+  margin: 4px;
+  border: 1px $blue-2 solid;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#map-toolbar p:hover {
+  background-color: $blue-4;
+}
+
+#map-toolbar p.selected {
+  border-color: $gray-2;
+}
+
+#map-toolbar p i {
+  margin: 8px;
+  margin-left: 4px;
+}
+
+#map-stage {
+  position: relative;
+  margin: 8px;
+
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+#map-stage::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+#map-stage canvas { position: absolute; }
+#ui-layer { z-index: 5; }
+#game-layer { z-index: 4; }
+#terrain-layer { z-index: 3; }
+#grid-layer { z-index: 2; }
+#bg-layer { z-index: 1; }
+
+#map-dialog {
+  padding: 12px;
+  padding-bottom: 24px;
+  min-width: 25%;
+  max-height: 33%;
+
+  overflow-y: scroll;
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+#map-dialog input[type="color"], #map-dialog input[type="number"] {
+  max-width: 100px;
+}
+
+#map-dialog .selector {
+  padding: 2px 8px;
+  margin: 4px;
+  border: 1px $red-1 solid;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#map-dialog .selector:hover, #map-dialog .selector.selected {
+  background-color: $red-1;
+}
+
+img.terrain-icon {
+  margin-right: 4px;
+}
