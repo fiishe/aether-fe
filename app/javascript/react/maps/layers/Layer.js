@@ -1,5 +1,16 @@
 import React, { Component } from 'react'
 
+/* PROPS
+ * str            id: HTML id of rendered canvas element
+ * int         width: width (px) of rendered canvas element
+ * int        height: height (px) of rendered canvas element
+
+ * func         draw: (canvas2dcontext) => { draw the layer }
+ * bool shouldRedraw: whether or not to call the draw function (ie when
+                      rerendering component on update). default true
+ * bool    invisible: whether to make layer invisible via CSS
+ */
+
 class Layer extends Component {
   constructor(props) {
     super(props)
@@ -18,7 +29,11 @@ class Layer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.props.draw(this.ctx)
+    // if shouldRedraw prop is true, null, or undefined,
+    // if (this.props.shouldRedraw !== false) {
+      // call the draw function again
+      this.props.draw(this.ctx)
+    // }
   }
 
   fixScale(targetWidth, targetHeight) {

@@ -31,6 +31,7 @@ class TerrainLayer extends Component {
   }
 
   drawTerrain(ctx) {
+    ctx.clearRect(0, 0, this.props.width, this.props.height)
     let drawTile = (x, y, tileId) => {
       let tileSize = this.props.tileSize,
           pX = x * tileSize,
@@ -56,13 +57,13 @@ class TerrainLayer extends Component {
     this.props.editResolveAction()
   }
 
-  componentDidMount() {
-    this.draw = this.redrawTile
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
   }
 
   render() {
     return(
-      <Layer
+      <Layer ref={this.layerRef}
         id="terrain-layer"
         width={this.props.width} height={this.props.height}
         draw={this.draw}
