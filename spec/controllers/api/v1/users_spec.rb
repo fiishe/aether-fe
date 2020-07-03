@@ -1,17 +1,16 @@
 require "rails_helper"
 
-RSpec.describe "Users API -", type: :request do
+RSpec.describe Api::V1::UsersController, type: :controller do
   before :each do
-    user = FactoryBot.create(:user)
-    @id = user.id
+    @user = FactoryBot.create(:user)
   end
 
-  describe "GET /api/v1/users/:id" do
+  describe "show" do
     it "returns user data given id param" do
-      res = get_json("/api/v1/users/#{@id}")
+      res = get_json "show", params: { id: @user.id }
       expect(res).to eq(
         {
-          "id" => @id,
+          "id" => @user.id,
           "username" => "userguy",
           "nick" => "The Guy",
           "discriminator" => "0001",
@@ -20,18 +19,21 @@ RSpec.describe "Users API -", type: :request do
         }
       )
     end
-  end
 
-  describe "GET /api/v1/users/me" do
-    it "returns data for a logged-in user" do
-      get "/dev/login/#{@id}"
-      res = get_json("/api/v1/users/me")
-      expect(res['id']).to eq(@id)
-    end
+    describe "with \"me\" param" do
+      it "returns data of currently logged in user" do
+        login(@user)
 
-    it "returns error message if user is not logged in" do
-      res = get_json("/api/v1/users/me")
-      expect(res['status']).to eq('fail')
+        res = get_json "show", params: { id: "me" }
+        expect(res['id']).to eq(@user.id)
+        expect(res['username']).to eq(@user.username)
+      end
+
+      it "returns error if user is not logged in" do
+        res = get_json "show", params: { id: "me" }
+        expect(res['status']).to eq('fail')
+      end
     end
   end
+  #
 end
