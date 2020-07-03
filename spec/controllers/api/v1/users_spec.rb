@@ -1,5 +1,4 @@
 require "rails_helper"
-require_relative "./api_helper"
 
 RSpec.describe "Users API -", type: :request do
   before :each do
