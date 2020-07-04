@@ -45,8 +45,14 @@ class UsersController < ApplicationController
   end
 
   def callback
-    if params[:state] != session[:auth_state]["value"]
-      raise "Login failed due to bad state variable"
+    if (params[:state].nil?) || (session[:auth_state].nil?) ||
+      (params[:state] != session[:auth_state][:value]) then
+      render json: {
+        status: "fail",
+        data: { message: "Missing or incorrect state parameter" },
+        code: 400
+      }
+      return
     end
     token_response = discord_exchange_code(params[:code])
     user_data = discord_get_user(token_response['access_token'])
@@ -108,7 +114,10 @@ class UsersController < ApplicationController
       )
       JSON.parse(res.body)
     }
-    return fetch.value
+    code = fetch.value
+
+    Thread.kill(fetch)
+    return code
   end
 
   def discord_get_user(access_token)
@@ -122,7 +131,10 @@ class UsersController < ApplicationController
       }
       JSON.parse(res.body)
     }
-    return fetch.value
+    token = fetch.value
+
+    Thread.kill(fetch)
+    return token
   end
 
   def set_avatar_url
