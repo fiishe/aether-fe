@@ -56,6 +56,7 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'pry-rails', group: [:development, :test]
+gem 'jquery-rails'
 gem 'dotenv-rails', group: [:development, :test]
 gem 'launchy', group: [:development, :test]
 gem 'devise', '~> 4.7'
