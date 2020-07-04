@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MapEditorToolbar from './MapEditorToolbar'
-import MapView from './MapView'
+import MapEditorView from './MapEditorView'
 import MapEditorDialog from './MapEditorDialog'
 
 import { connect } from 'react-redux'
@@ -171,7 +171,7 @@ class MapEditor extends Component {
         </div>
         <div className="row">
           <div className="scroll">
-            <MapView
+            <MapEditorView
               ref={this.mapViewRef}
               onDragOver={this.handleDragOver}
               onDrop={this.handleDrop}

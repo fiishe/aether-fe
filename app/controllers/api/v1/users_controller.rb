@@ -13,6 +13,14 @@ class Api::V1::UsersController < ApiController
     end
 
     @user = current_user
+    if @user.nil?
+      render json: {
+        status: "fail",
+        data: { message: "User is not logged in" }
+      }
+      return
+    end
+
     @user.update(user_params)
     if @user.save
       render json: {

@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import TileMap, { mapConfig } from '../../game/models/TileMap.mjs'
 import MapRenderer from '../../game/client/MapRenderer.mjs'
 
-class MapView extends Component {
+class MapEditorView extends Component {
   constructor(props) {
     super(props)
 
@@ -68,4 +68,4 @@ export default connect(
   null,
   null,
   { forwardRef: true }
-)(MapView)
+)(MapEditorView)

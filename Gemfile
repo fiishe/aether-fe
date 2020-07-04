@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.5'
+ruby '2.7.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 6.0.3'
 # Use Postgres as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
-gem 'sassc-rails', '~> 2.1.2'
+gem 'sassc'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -30,7 +30,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -56,20 +56,22 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'pry-rails', group: [:development, :test]
-gem 'jquery-rails'
 gem 'dotenv-rails', group: [:development, :test]
-gem 'rspec-rails', group: [:development, :test]
 gem 'launchy', group: [:development, :test]
-gem 'factory_bot', group: [:development, :test]
-gem 'database_cleaner', group: [:development, :test]
-gem 'valid_attribute', group: [:development, :test]
-gem 'shoulda-matchers', group: [:development, :test], require: false
 gem 'devise', '~> 4.7'
 gem 'foundation-rails', '~> 5.0'
 gem 'warden'
 gem 'webpacker', '~> 4.0'
 gem 'rb-readline'
 gem 'active_model_serializers'
+
+### testing
+gem 'shoulda-matchers', group: [:development, :test], require: false
+gem 'factory_bot', group: [:development, :test]
+gem 'database_cleaner', group: [:development, :test]
+gem 'valid_attribute', group: [:development, :test]
+gem 'rspec-rails', group: [:development, :test]
+gem 'webmock', group: [:development, :test]
 
 # Use Amazon S3 for cloud storage
 gem "aws-sdk-s3", require: false

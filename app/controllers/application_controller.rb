@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     return unless session[:user_id]
 
     if session[:expires_at] < DateTime.now
-      puts "authentication failed due to expired session"
+      server_log "authentication failed due to expired session"
       session[:user_id] = nil
       return
     end
