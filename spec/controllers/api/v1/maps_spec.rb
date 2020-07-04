@@ -8,7 +8,7 @@ RSpec.describe Api::V1::MapsController, type: :controller do
     end
 
     it "creates a new map with valid params" do
-      post "create",
+      post :create,
         params: {
           name: 'Mappy',
           width: 2, height: 2,
@@ -24,7 +24,7 @@ RSpec.describe Api::V1::MapsController, type: :controller do
     end
 
     it "returns error messages with invalid params" do
-      post "create",
+      post :create,
         params: {
           name: 'Mappy',
           width: 1000, height: -2,

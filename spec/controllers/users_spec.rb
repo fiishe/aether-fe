@@ -14,7 +14,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe "login" do
     it "redirects to discord oauth prompt" do
-      get "login"
+      get :login
       res_uri = URI.parse(response.location)
 
       expect(res_uri.host).to eq("discordapp.com")
@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it "redirects with the right params" do
-      get "login"
+      get :login
       res_uri = URI.parse(response.location)
 
       client_id = ENV['DISCORD_CLIENT_ID']
