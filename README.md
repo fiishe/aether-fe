@@ -3,7 +3,7 @@
 # aether-fe
 ## Setup
 Requirements:
-* Ruby 2.4.5
+* Ruby 2.7
 * PostgreSQL 11
 * Yarn
 
