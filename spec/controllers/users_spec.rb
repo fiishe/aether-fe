@@ -65,9 +65,9 @@ RSpec.describe UsersController, type: :controller do
       # set sample state in session (this would be done in the login action)
       @state = "asdf"
       controller.session[:auth_state] = {
-        value: @state,
-        expires_in: 1.minute,
-        secure: true
+        "value" => @state,
+        "expires_in" => 1.minute,
+        "secure" => true
       }
     end
 
