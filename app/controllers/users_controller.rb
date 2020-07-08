@@ -46,7 +46,7 @@ class UsersController < ApplicationController
 
   def callback
     if (params[:state].nil?) || (session[:auth_state].nil?) ||
-      (params[:state] != session[:auth_state][:value]) then
+      (params[:state] != session[:auth_state]["value"]) then
       render json: {
         status: "fail",
         data: { message: "Missing or incorrect state parameter" },
