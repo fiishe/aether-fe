@@ -8,5 +8,6 @@ RSpec.describe Campaign, type: :model do
   it { should validate_length_of(:name).is_at_most(32) }
   it { should validate_uniqueness_of(:name) }
 
+  it { should belong_to(:owner).class_name('User') }
   it { should have_many(:users).through(:campaign_memberships) }
 end

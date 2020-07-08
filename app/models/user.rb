@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :campaigns, inverse_of: 'owner'
   has_many :campaign_memberships
   has_many :campaigns, through: :campaign_memberships
   has_many :characters

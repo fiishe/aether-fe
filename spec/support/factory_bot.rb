@@ -17,6 +17,7 @@ FactoryBot.define do
 
   factory :campaign do
     name { "The Hobbit" }
+    owner { create(:user) }
   end
 
   factory :map do
