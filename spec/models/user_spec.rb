@@ -13,5 +13,6 @@ RSpec.describe User, type: :model do
   it { should validate_length_of(:nick).is_at_least(2).allow_nil }
   it { should validate_length_of(:nick).is_at_most(16).allow_nil }
 
+  it { should have_many(:campaigns) }
   it { should have_many(:campaigns).through(:campaign_memberships) }
 end

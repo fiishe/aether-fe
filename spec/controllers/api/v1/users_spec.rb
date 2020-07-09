@@ -7,7 +7,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
   describe "show" do
     it "returns user data given id param" do
-      res = get_json :show, params: { id: @user.id }
+      get :show, params: { id: @user.id }
+      res = res_json()
       expect(res).to eq(
         {
           "id" => @user.id,
@@ -24,13 +25,15 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       it "returns data of currently logged in user" do
         login(@user)
 
-        res = get_json :show, params: { id: "me" }
+        get :show, params: { id: "me" }
+        res = res_json()
         expect(res['id']).to eq(@user.id)
         expect(res['username']).to eq(@user.username)
       end
 
       it "fails if user is not logged in" do
-        res = get_json :show, params: { id: "me" }
+        get :show, params: { id: "me" }
+        res = res_json()
         expect(res['status']).to eq('fail')
       end
     end
