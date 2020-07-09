@@ -19,8 +19,16 @@ class Api::V1::CampaignsController < ApiController
 
   def create
     @campaign = Campaign.new(campaign_params)
-    @campaign.owner_id = current_user.id
+    @campaign.owner = current_user
+
     if @campaign.save
+      CampaignMembership.create(
+        user: current_user,
+        campaign: @campaign,
+        role: "owner"
+      )
+
+      server_log "Campaign #{@campaign.name} (id: #{@campaign.id}) created"
       render json: {
         status: "success",
         data: { campaign: @campaign.as_json(only: [:name]) }
@@ -39,6 +47,6 @@ class Api::V1::CampaignsController < ApiController
   private
 
   def campaign_params
-    params.require(:campaign).permit(:name)
+    params.permit(:name)
   end
 end
