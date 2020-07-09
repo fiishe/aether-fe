@@ -3,26 +3,32 @@ require "rails_helper"
 RSpec.describe Api::V1::CampaignsController, type: :controller do
   before :each do
     @campaign = FactoryBot.create(:campaign)
+    @user = @campaign.owner
     login(@campaign.owner)
   end
 
   describe "index" do
     it "lists campaigns a user is in" do
-      user = @campaign.owner
       CampaignMembership.create(
-        campaign: @campaign, user: user, role: 'owner'
+        campaign: @campaign, user: @user, role: 'owner'
       )
       campaign2 = FactoryBot.create(:campaign)
       CampaignMembership.create(
-        campaign: campaign2, user: user, role: 'member'
+        campaign: campaign2, user: @user, role: 'member'
       )
 
-      get :index, { params: { user_id: user.id } }
-      res = res_json()
+      get :index, { params: { user_id: @user.id } }
 
-      expect(res[0]['id']).to eq(@campaign.id)
-      expect(res[0]['name']).to eq(@campaign.name)
-      expect(res[1]['id']).to eq(campaign2.id)
+      expected_response = [
+        { 'id' => @campaign.id, 'name' => @campaign.name },
+        { 'id' => campaign2.id, 'name' => campaign2.name }
+      ]
+      expect(res_json).to eq(expected_response)
+    end
+
+    it "returns an empty array if user belongs to no campaigns" do
+      get :index, { params: { user_id: @user.id } }
+      expect(res_json).to eq([])
     end
 
     it "fails with invalid user param" do
@@ -33,6 +39,13 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
   end
 
   describe "create" do
+    it "requires login" do
+      controller.session[:user_id] = nil
+      post :create
+      expect(res_json['status']).to eq('fail')
+      expect(res_json['data']['message']).to include("User must be logged in")
+    end
+
     it "creates a new campaign with valid params" do
       post :create, {
         params: { name: 'Test McTestFace' }
@@ -44,7 +57,16 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
       expect(created_campaign).not_to be_nil()
     end
 
-    it "returns error messages with invalid params" do
+    it "adds a campaign membership with owner role" do
+      post :create, {
+        params: { name: 'asdfasdfasdf' }
+      }
+
+      expect(@user.campaigns[0]).to eq(Campaign.last)
+      expect(Campaign.last.users[0]).to eq(@user)
+    end
+
+    it "fails with invalid params" do
       post :create, {
         params: { name: "" }
       }
