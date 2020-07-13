@@ -1,3 +1,0 @@
-class CampaignShowSerializer < CampaignSerializer
-
-end

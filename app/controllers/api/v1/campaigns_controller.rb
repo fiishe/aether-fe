@@ -4,7 +4,10 @@ class Api::V1::CampaignsController < ApiController
   def index
     begin
       user = get_user(params['user_id'])
-      render json: user.campaigns, each_serializer: CampaignSerializer
+      render json: {
+        status: "success",
+        data: { campaigns: user.campaigns.as_json(only: [:id, :name]) }
+      }
     rescue ActiveRecord::RecordNotFound
       render json: {
         status: "fail",

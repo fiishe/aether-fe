@@ -23,14 +23,14 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
         { 'id' => @campaign.id, 'name' => @campaign.name },
         { 'id' => campaign2.id, 'name' => campaign2.name }
       ]
-      expect(res_json).to eq(expected_response)
+      expect(res_json['data']['campaigns']).to eq(expected_response)
     end
 
     it "returns an empty array if user belongs to no campaigns" do
       @user.campaign_memberships.first.delete
 
       get :index, { params: { user_id: @user.id } }
-      expect(res_json).to eq([])
+      expect(res_json['data']['campaigns']).to eq([])
     end
 
     it "fails with invalid user param" do
