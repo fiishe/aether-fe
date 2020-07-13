@@ -3,15 +3,15 @@ require "rails_helper"
 RSpec.describe Api::V1::CampaignsController, type: :controller do
   before :each do
     @campaign = FactoryBot.create(:campaign)
-    @user = @campaign.owner
-    login(@campaign.owner)
+    @user = FactoryBot.create(:user)
+    CampaignMembership.create(
+      { campaign: @campaign, user: @user, role: 'member' }
+    )
+    login(@user)
   end
 
   describe "index" do
     it "lists campaigns a user is in" do
-      CampaignMembership.create(
-        campaign: @campaign, user: @user, role: 'owner'
-      )
       campaign2 = FactoryBot.create(:campaign)
       CampaignMembership.create(
         campaign: campaign2, user: @user, role: 'member'
@@ -27,12 +27,14 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
     end
 
     it "returns an empty array if user belongs to no campaigns" do
+      @user.campaign_memberships.first.delete
+
       get :index, { params: { user_id: @user.id } }
       expect(res_json).to eq([])
     end
 
     it "fails with invalid user param" do
-      get :index, { params: { user_id: 'no' } }
+      get :index, { params: { user_id: 'i dont exist' } }
       res = res_json()
       expect(res['status']).to eq('fail')
     end
@@ -62,7 +64,7 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
         params: { name: 'asdfasdfasdf' }
       }
 
-      expect(@user.campaigns[0]).to eq(Campaign.last)
+      expect(@user.campaigns.last).to eq(Campaign.last)
       expect(Campaign.last.users[0]).to eq(@user)
     end
 

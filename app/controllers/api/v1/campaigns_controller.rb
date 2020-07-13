@@ -19,7 +19,6 @@ class Api::V1::CampaignsController < ApiController
 
   def create
     @campaign = Campaign.new(campaign_params)
-    @campaign.owner = current_user
 
     if @campaign.save
       CampaignMembership.create(

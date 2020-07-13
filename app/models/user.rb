@@ -1,9 +1,4 @@
 class User < ApplicationRecord
-  # campaigns I own
-  has_many :owned_campaigns, inverse_of: :owner,
-           class_name: 'Campaign', foreign_key: 'owner_id'
-
-  # campaigns I belong to
   has_many :campaign_memberships
   has_many :campaigns, through: :campaign_memberships
 
