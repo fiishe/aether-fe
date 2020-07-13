@@ -1,5 +1,6 @@
-import React from 'react';
-import Form from '../lib/Form';
+import React, { Component } from 'react';
+import Form from '../lib/Form'
+import { fetchPost } from '../lib/defaultFetch'
 
 class NewCampaignForm extends Form {
   getFields() {
@@ -14,25 +15,10 @@ class NewCampaignForm extends Form {
 
   handleSubmit(event) {
     event.preventDefault()
-    fetch(`/api/v1/campaigns`, {
-      credentials: 'same-origin',
-      method: 'POST',
-      body: JSON.stringify(this.payload()),
-      headers: {
-        'Content-Type': 'application/json',
-        'x-CSRF-Token': this.getCSRFToken()
-      }
-    })
+
+    fetchPost(`api/v1/campaigns`, JSON.stringify(this.payload()))
       .then(res => {
-        if (res.ok) { return res }
-        else {
-          let error = new Error(`${res.status} ${res.statusText}`)
-          throw(error)
-        }
-      })
-      .then(res => res.json())
-      .then(resJson => {
-        console.log(resJson);
+        console.log(res);
       })
       .catch(e => {
         console.error(`error in form submission: ${e.message}`)
@@ -41,8 +27,8 @@ class NewCampaignForm extends Form {
 
   render() {
     return(
-      <div>
-        <h2>New Campaign</h2>
+      <div className="panel">
+        <h4>New Campaign</h4>
         {this.renderForm()}
       </div>
     )

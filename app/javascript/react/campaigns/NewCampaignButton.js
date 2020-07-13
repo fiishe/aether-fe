@@ -17,7 +17,10 @@ class NewCampaignButton extends Component {
   yield() {
     if (!this.state.showForm) {
       return(
-        <div onClick={this.toggle}>button here</div>
+        <button onClick={this.toggle}>
+          <i className="fas fa-plus" />
+          <div className="inline-block default-margin">New Campaign</div>
+        </button>
       )
     }
     else {
@@ -27,7 +30,7 @@ class NewCampaignButton extends Component {
 
   render() {
     return(
-      <div>
+      <div className="v-bar">
         {this.yield()}
       </div>
     )
