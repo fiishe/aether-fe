@@ -1,4 +1,4 @@
-import makeActionCreator from './makeActionCreator'
+import makeActionCreator from '../utils/makeActionCreator'
 
 // INITIAL STATE
 const initialState = {

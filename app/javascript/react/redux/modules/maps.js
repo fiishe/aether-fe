@@ -1,4 +1,4 @@
-import makeActionCreator from './makeActionCreator'
+import makeActionCreator from '../utils/makeActionCreator'
 import { fetchPost } from '../../lib/defaultFetch'
 
 import TileMap, { mapConfig } from '../../../game/models/TileMap'

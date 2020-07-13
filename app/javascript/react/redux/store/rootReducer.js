@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux'
 
+import { campaigns } from '../modules/campaigns'
 import { common } from '../modules/common'
 import { users } from '../modules/users'
 import { maps } from '../modules/maps'
 
 const rootReducer = combineReducers({
-  common, // ES6 shorthand for 'common: common'
+  campaigns, // ES6 shorthand for 'campaigns: campaigns'
+  common,
   users,
   maps
 })
