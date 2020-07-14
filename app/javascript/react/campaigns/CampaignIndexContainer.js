@@ -3,6 +3,15 @@ import NewCampaignContainer from './NewCampaignContainer'
 import { fetchGet } from '../lib/defaultFetch'
 import { connect } from 'react-redux'
 
+const NoCampaignsMessage = props => {
+  return(
+    <p className="default-margin sneaky-text center-text">
+      Join a campaign with an invite link from a friend,
+      or click below to create one yourself!
+    </p>
+  )
+}
+
 class CampaignIndexContainer extends Component {
   constructor(props) {
     super(props)
@@ -31,28 +40,18 @@ class CampaignIndexContainer extends Component {
         )
 
       case 'loaded':
-        let campaigns
-        if (this.state.campaigns.length < 1) {
-          campaigns = (
-            <p className="default-margin sneaky-text center-text">
-              Join a campaign with an invite link from a friend,
-              or click below to create one yourself!
-            </p>
-          )
-        }
-        else {
-          campaigns = this.state.campaigns.map((campaginData, index) => {
-            return(
-              <div key={index}>
-                {campaignData}
-              </div>
-            )
-          })
-        }
+        let campaigns = this.state.campaigns.map((campaginData, index) => {
+          return( <div key={index}>{campaignData} </div> )
+        })
+
+        let displayNoCampaignsMsg = (
+          campaigns.length < 1 && !this.props.createFormIsOpen
+        )
 
         return(
           <div>
             {campaigns}
+            {displayNoCampaignsMsg ? <NoCampaignsMessage /> : null}
             <div className="v-bar">
               <NewCampaignContainer />
             </div>
