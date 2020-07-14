@@ -1,7 +1,33 @@
 import React, { Component } from 'react';
 import Form from '../lib/Form'
+import SuperForm from '../lib/SuperForm'
 import { fetchPost } from '../lib/defaultFetch'
 
+const NewCampaignForm = () => {
+  return(
+    <SuperForm handleSubmit={(payload) => {console.log(payload)}}>
+      <input
+        name="a"
+        className={`form-input-text`}
+        maxLength={32}
+        placeholder={'bruh'}
+        type={'text'}
+        value={''}
+      />
+      <input
+        name="b"
+        className={`form-input-text`}
+        maxLength={32}
+        placeholder={'bruh'}
+        type={'text'}
+        value={'asdf'}
+      />
+      <input className="form-submit" type="submit" value="Submit" uncontrolled={1} />
+    </SuperForm>
+  )
+}
+
+/*
 class NewCampaignForm extends Form {
   getFields() {
     return [
@@ -34,5 +60,5 @@ class NewCampaignForm extends Form {
     )
   }
 }
-
+*/
 export default NewCampaignForm
