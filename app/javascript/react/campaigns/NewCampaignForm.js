@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import Form from '../lib/Form'
 import SuperForm, { SuperInput } from '../lib/SuperForm'
+
 import { fetchPost } from '../lib/defaultFetch'
+import { stripString } from '../lib/utils'
 
 const NewCampaignForm = () => {
   return(
-    <div className="panel">
+    <div className="panel small">
       <SuperForm
         handleSubmit={(payload) => {console.log(payload)}}
         validations={[
           {
-            message: "Name must be less than 16 characters",
-            check: (pl) => { return pl.name.length < 16 }
+            message: "Name is too short (minimum 2 characters)",
+            check: (pl) => { return stripString(pl.name).length >= 2 }
           }
         ]}>
         <SuperInput
@@ -22,14 +24,14 @@ const NewCampaignForm = () => {
           />
         <div className="bar" uncontrolled={1}>
           <input
-            className="form-submit" type="submit"
+            className="button small" type="submit"
             value="Submit" uncontrolled={1}
             />
-          <button
-            className="secondary"
+          <div
+            className="button small secondary"
             onClick={() => {console.log('hi')}}>
             Cancel
-          </button>
+          </div>
         </div>
       </SuperForm>
     </div>

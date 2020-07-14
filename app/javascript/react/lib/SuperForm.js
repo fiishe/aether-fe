@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { stripString } from './utils'
 
 /*******************************************************************************
   This component acts like a HTML <form> element but uses the state variable to
@@ -84,14 +85,19 @@ class SuperForm extends Component {
   handleSubmit() {
     event.preventDefault()
 
+    const payload = {...this.state.values}
+    for (let key in payload) {
+      payload[key] = stripString(payload[key])
+    }
+
     if (this.validate()) {
-      this.props.handleSubmit(this.state.values)
+      this.props.handleSubmit(payload)
     }
   }
 
   renderErrorMessages() {
     if (this.state.errors.length == 0) { return null }
-    
+
     const errors = this.state.errors.map((errorMsg, index) => {
       return( <li key={index}>{errorMsg}</li> )
     })
