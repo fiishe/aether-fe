@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import NewCampaignButton from './NewCampaignButton'
+import NewCampaignContainer from './NewCampaignContainer'
 import { fetchGet } from '../lib/defaultFetch'
+import { connect } from 'react-redux'
 
 class CampaignIndexContainer extends Component {
   constructor(props) {
@@ -52,7 +53,9 @@ class CampaignIndexContainer extends Component {
         return(
           <div>
             {campaigns}
-            <NewCampaignButton />
+            <div className="v-bar">
+              <NewCampaignContainer />
+            </div>
           </div>
         )
 
@@ -66,4 +69,13 @@ class CampaignIndexContainer extends Component {
   }
 }
 
-export default CampaignIndexContainer
+const mapStateToProps = state => {
+  return {
+    createFormIsOpen: state.campaigns.createFormIsOpen
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  null
+)(CampaignIndexContainer)

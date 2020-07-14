@@ -10,7 +10,7 @@ import { stripString } from './utils'
     onSubmit={(formData) => {do something with formData}}
     validations=[
       {
-        message: "Username must be 16 characters or less",
+        message: "Message to render if validation fails",
         check: (payload) => { return true if the validation passes }
       }
     ]
@@ -30,11 +30,12 @@ import { stripString } from './utils'
 class SuperForm extends Component {
   constructor(props) {
     super(props)
-    console.log(props.children);
+
     this.state = {
       values: {},
       errors: []
     }
+
     this.updateField = this.updateField.bind(this)
     this.validate = this.validate.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)

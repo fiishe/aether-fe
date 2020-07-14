@@ -3,10 +3,12 @@ import { fetchGet } from "../../lib/defaultFetch"
 
 // INITIAL STATE
 const initialState = {
-
+  createFormIsOpen: false
 }
 
 // ACTION CREATORS
+const TOGGLE_CREATE_FORM = "TOGGLE_CREATE_FORM"
+const toggleCreateForm = makeActionCreator(TOGGLE_CREATE_FORM)
 /*
 const FETCH_INDEX_REQUEST = "FETCH_INDEX_REQUEST"
 const fetchIndexRequest = makeActionCreator(FETCH_INDEX_REQUEST)
@@ -38,6 +40,8 @@ const fetchMyCampaigns = () => {
 // REDUCER
 const campaigns = (state = initialState, action) => {
   switch(action.type) {
+    case TOGGLE_CREATE_FORM:
+      return {...state, createFormIsOpen: !state.createFormIsOpen}
 
     default:
       return state
@@ -45,5 +49,6 @@ const campaigns = (state = initialState, action) => {
 }
 
 export {
+  toggleCreateForm,
   campaigns
 }
