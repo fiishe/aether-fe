@@ -5,6 +5,11 @@ body {
   font-family: 'Quattrocento Sans', sans-serif;
 }
 
+.panel.small {
+  width: 50%;
+  min-width: 300px;
+}
+
 .bar {
   width: 100%;
   display: flex;
