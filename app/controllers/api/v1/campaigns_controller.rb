@@ -1,20 +1,10 @@
 class Api::V1::CampaignsController < ApiController
   before_action :require_login, only: [:create]
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
-    begin
-      user = get_user(params['user_id'])
-      render json: {
-        status: "success",
-        data: { campaigns: user.campaigns.as_json(only: [:id, :name]) }
-      }
-    rescue ActiveRecord::RecordNotFound
-      render json: {
-        status: "fail",
-        data: { message: "Could not find user with given ID" },
-        code: 404
-      }
-    end
+    user = get_user(params['user_id'])
+    render json: user.campaigns
   end
 
   def show
@@ -50,5 +40,9 @@ class Api::V1::CampaignsController < ApiController
 
   def campaign_params
     params.require(:campaign).permit(:name)
+  end
+
+  def not_found
+    render_error 404, "Could not find requested campaign(s)."
   end
 end

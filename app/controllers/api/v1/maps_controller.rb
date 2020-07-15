@@ -1,4 +1,6 @@
 class Api::V1::MapsController < ApiController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  
   def create
     @map = Map.new(map_params)
     @map.creator_id = current_user.id
@@ -27,5 +29,9 @@ class Api::V1::MapsController < ApiController
       :name, :width, :height, :tile_size, :tile_data, :grid_alpha, :grid_color,
       :background_image
     )
+  end
+
+  def not_found
+    render_error 404, "Could not find requested map(s)"
   end
 end
