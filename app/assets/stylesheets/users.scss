@@ -3,7 +3,7 @@
 
 $av-radius: 32px;
 $member-color: $button-blue;
-$admin-color: $success-green;
+$admin-color: green;
 $owner-color: $red-2;
 
 ul.user-cells {
@@ -23,6 +23,18 @@ ul.user-cells {
   list-style-type: none;
   border-radius: 18px;
   background-color: $member-color;
+}
+.user-cell.admin {
+  &:hover {
+    background-color: lighten($admin-color, $lightness-scale);
+  }
+  background-color: $admin-color;
+}
+.user-cell.owner {
+  &:hover {
+    background-color: lighten($owner-color, $lightness-scale);
+  }
+  background-color: $owner-color;
 }
 
 .user-cell__avatar {

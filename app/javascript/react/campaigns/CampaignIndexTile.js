@@ -1,12 +1,18 @@
 import React from 'react'
-import UserCellList from '../users/UserCellList'
+import UserCellList, { UserCell } from '../users/UserCellList'
 
 const CampaignIndexTile = props => {
   let campaign = props.data
 
   return(
     <div className="panel" {...props} >
-      <h5>{campaign.name}</h5>
+      <div className="bar">
+        <h5>{campaign.name}</h5>
+        <div className="campaign-index__owner">
+          <p>host</p>
+          <UserCell data={campaign.owner} role="owner" />
+        </div>
+      </div>
       <UserCellList data={campaign.users} />
     </div>
   )

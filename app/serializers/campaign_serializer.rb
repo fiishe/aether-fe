@@ -1,5 +1,9 @@
 class CampaignSerializer < ActiveModel::Serializer
-  attributes :id, :name, :users
+  attributes :id, :name, :owner, :users
+
+  def owner
+    UserSerializer.new(object.owner)
+  end
 
   def users
     object.campaign_memberships.includes(:user).map do |membership|
