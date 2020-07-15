@@ -26,7 +26,7 @@ class CampaignIndexContainer extends Component {
   componentDidMount() {
     fetchGet(`/api/v1/users/${this.props.userId}/campaigns`)
       .then(payload => {
-        this.props.setCampaignsList(payload.data.campaigns)
+        this.props.setCampaignsList(payload)
         this.setState({ render: 'loaded' })
       })
   }
