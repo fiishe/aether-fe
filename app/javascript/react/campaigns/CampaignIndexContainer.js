@@ -40,8 +40,8 @@ class CampaignIndexContainer extends Component {
         )
 
       case 'loaded':
-        let campaigns = this.state.campaigns.map((campaginData, index) => {
-          return( <div key={index}>{campaignData} </div> )
+        let campaigns = this.state.campaigns.map((campaignData, index) => {
+          return( <div key={index}>{JSON.stringify(campaignData)}</div> )
         })
 
         let displayNoCampaignsMsg = (

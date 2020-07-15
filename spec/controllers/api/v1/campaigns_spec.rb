@@ -50,7 +50,7 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
 
     it "creates a new campaign with valid params" do
       post :create, {
-        params: { name: 'Test McTestFace' }
+        params: { campaign: { name: 'Test McTestFace' } }
       }
       res = res_json()
       expect(res['status']).to eq('success')
@@ -61,7 +61,7 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
 
     it "adds a campaign membership with owner role" do
       post :create, {
-        params: { name: 'asdfasdfasdf' }
+        params: { campaign: { name: 'asdfasdfasdf' } }
       }
 
       expect(@user.campaigns.last).to eq(Campaign.last)
@@ -70,7 +70,7 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
 
     it "fails with invalid params" do
       post :create, {
-        params: { name: "" }
+        params: { campaign: { name: '' } }
       }
       res = res_json()
       expect(res['status']).to eq('fail')

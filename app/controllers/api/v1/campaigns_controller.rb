@@ -49,6 +49,6 @@ class Api::V1::CampaignsController < ApiController
   private
 
   def campaign_params
-    params.permit(:name)
+    params.require(:campaign).permit(:name)
   end
 end

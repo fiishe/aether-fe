@@ -6,15 +6,24 @@ import { fetchPost } from '../lib/defaultFetch'
 import { stripString } from '../lib/utils'
 
 const NewCampaignForm = (props) => {
+  const handleSubmit = async (payload) => {
+    let response = await fetchPost('/api/v1/campaigns', JSON.stringify(payload))
+    return response
+  }
+
+  const handleSuccess = (res) => {
+    console.log('gotem');
+  }
+
   return(
     <div className="panel small">
       <h4>New Campaign</h4>
-      <SuperForm handleSubmit={(payload) => {console.log(payload)}}>
+      <SuperForm handleSubmit={handleSubmit} handleSuccess={handleSuccess}>
         <SuperInput
           label="Name" name="name"
           tip="2 - 32 characters"
           type={'text'} className={`form-input-text`}
-          minLength={2} maxLength={32}
+          minLength={2} maxLength={64}
           required
           />
         <div className="bar" uncontrolled={1}>

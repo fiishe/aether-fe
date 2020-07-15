@@ -7,7 +7,8 @@ import { stripString } from './utils'
   Render as follows:
 
   <SuperForm
-    onSubmit={(formData) => {do something with formData}}
+    handleSubmit={(formData) => {make fetch request and return the response}}
+    handleSuccess={(response) => {do something with response}}
     validations=[
       {
         message: "Message to render if validation fails",
@@ -83,16 +84,27 @@ class SuperForm extends Component {
     return(errors.length == 0)
   }
 
-  handleSubmit() {
+  async handleSubmit() {
     event.preventDefault()
 
     const payload = {...this.state.values}
+    // strip leading/trailing spaces
     for (let key in payload) {
       payload[key] = stripString(payload[key])
     }
 
-    if (this.validate()) {
-      this.props.handleSubmit(payload)
+    // run validations
+    if (!this.validate()) { return }
+
+    // send http action and get response
+    const res = await this.props.handleSubmit(payload)
+
+    if (res.status == 'fail') {
+      // display errors from server (failed backend validations, etc)
+      this.setState({ errors: res.data.errors })
+    }
+    else {
+      this.props.handleSuccess(res)
     }
   }
 
