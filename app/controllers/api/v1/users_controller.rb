@@ -7,8 +7,12 @@ class Api::V1::UsersController < ApiController
   end
 
   def show
+    if params['id'] == 'me' && !current_user
+      render_error 401, "You are not logged on."
+      return
+    end
     user = get_user(params['id'])
-    render json: user
+    render json: user, serializer: UserShowSerializer
   end
 
   def update
