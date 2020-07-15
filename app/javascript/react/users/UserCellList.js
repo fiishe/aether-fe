@@ -5,7 +5,7 @@ const UserCell = props => {
   return(
     <li className="user-cell">
       <img src={user.avatar_url} className="user-cell__avatar" />
-      <p className="user-cell__name">{user.nick}</p>
+      <p className="user-cell__name">{user.nick || user.username}</p>
     </li>
   )
 }

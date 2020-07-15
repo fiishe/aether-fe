@@ -2,28 +2,27 @@
 @import 'common';
 
 $av-radius: 32px;
-$member-color: $red-1;
-$admin-color: $notice-blue;
-$owner-color: $success-green;
+$member-color: $button-blue;
+$admin-color: $success-green;
+$owner-color: $red-2;
 
-.user-cells ul {
+ul.user-cells {
   @extend .bar;
+  margin: 0;
 }
 
 .user-cell {
-  // @extend .bar;
+  &:hover {
+    cursor: pointer;
+    background-color: lighten($member-color, $lightness-scale);
+  };
   display: inline-block;
+  margin: 2px 2px;
   padding: 2px;
   padding-right: 14px;
   list-style-type: none;
   border-radius: 18px;
   background-color: $member-color;
-}
-.user_cell.admin {
-  background-color: $admin-color;
-}
-.user_cell.owner {
-  background-color: $owner-color;
 }
 
 .user-cell__avatar {
