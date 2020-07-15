@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import CampaignIndexTile from './CampaignIndexTile'
 import NewCampaignContainer from './NewCampaignContainer'
 import { fetchGet } from '../lib/defaultFetch'
 import { connect } from 'react-redux'
@@ -41,7 +42,7 @@ class CampaignIndexContainer extends Component {
 
       case 'loaded':
         let campaigns = this.state.campaigns.map((campaignData, index) => {
-          return( <div key={index}>{JSON.stringify(campaignData)}</div> )
+          return( <CampaignIndexTile data={campaignData} key={index} /> )
         })
 
         let displayNoCampaignsMsg = (
