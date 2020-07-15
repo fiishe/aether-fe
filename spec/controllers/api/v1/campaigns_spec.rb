@@ -23,10 +23,11 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
       expect(res_json[1]['name']).to eq(campaign2.name)
     end
 
-    it "lists members of the campaigns" do
+    it "lists members of the campaigns with their roles" do
       get :index, { params: { user_id: @user.id } }
 
       expect(res_json[0]['users'][0]['nick']).to eq(@user.nick)
+      expect(res_json[0]['users'][0]['role']).to eq('member')
     end
 
     it "returns an empty array if user belongs to no campaigns" do
