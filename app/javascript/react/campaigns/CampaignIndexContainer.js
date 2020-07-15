@@ -3,6 +3,7 @@ import CampaignIndexTile from './CampaignIndexTile'
 import NewCampaignContainer from './NewCampaignContainer'
 import { fetchGet } from '../lib/defaultFetch'
 import { connect } from 'react-redux'
+import { setCampaignsList } from '../redux/modules/campaigns'
 
 const NoCampaignsMessage = props => {
   return(
@@ -20,16 +21,13 @@ class CampaignIndexContainer extends Component {
       render: 'loading',
       campaigns: []
     }
-    this.endpoint = `/api/v1/users/${props.userId}/campaigns`
   }
 
   componentDidMount() {
-    fetchGet(this.endpoint)
+    fetchGet(`/api/v1/users/${this.props.userId}/campaigns`)
       .then(payload => {
-        this.setState({
-          render: 'loaded',
-          campaigns: payload.data.campaigns
-        })
+        this.props.setCampaignsList(payload.data.campaigns)
+        this.setState({ render: 'loaded' })
       })
   }
 
@@ -41,7 +39,7 @@ class CampaignIndexContainer extends Component {
         )
 
       case 'loaded':
-        let campaigns = this.state.campaigns.map((campaignData, index) => {
+        let campaigns = this.props.campaigns.map((campaignData, index) => {
           return( <CampaignIndexTile data={campaignData} key={index} /> )
         })
 
@@ -71,11 +69,16 @@ class CampaignIndexContainer extends Component {
 
 const mapStateToProps = state => {
   return {
+    campaigns: state.campaigns.index,
     createFormIsOpen: state.campaigns.createFormIsOpen
   }
 }
 
+const mapDispatchToProps = {
+  setCampaignsList
+}
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(CampaignIndexContainer)

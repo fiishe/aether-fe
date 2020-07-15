@@ -1,45 +1,39 @@
+import produce from 'immer'
 import makeActionCreator from '../utils/makeActionCreator'
 import { fetchGet } from "../../lib/defaultFetch"
 
 // INITIAL STATE
 const initialState = {
+  index: [],
   createFormIsOpen: false
 }
 
 // ACTION CREATORS
+const SET_INDEX = "CAMPAIGNS/SET_INDEX"
+const setCampaignsList = makeActionCreator(SET_INDEX, 'campaigns')
+
+const ADD_CAMPAIGN = "CAMPAIGNS/ADD_CAMPAIGN_TO_INDEX"
+const addCampaign = makeActionCreator(ADD_CAMPAIGN, 'campaign')
+
 const TOGGLE_CREATE_FORM = "TOGGLE_CREATE_FORM"
 const toggleCreateForm = makeActionCreator(TOGGLE_CREATE_FORM)
-/*
-const FETCH_INDEX_REQUEST = "FETCH_INDEX_REQUEST"
-const fetchIndexRequest = makeActionCreator(FETCH_INDEX_REQUEST)
-const FETCH_INDEX_SUCCESS = "FETCH_INDEX_SUCCESS"
-const fetchIndexSuccess = makeActionCreator( FETCH_INDEX_SUCCESS, 'response' )
-const FETCH_INDEX_ERROR = "FETCH_INDEX_ERROR"
-const fetchIndexError = makeActionCreator( FETCH_INDEX_ERROR, 'error' )
-
-const fetchMyCampaigns = () => {
-  return (dispatch) => {
-    // dispatch an action to update state + say that we are waiting for response
-    dispatch(fetchIndexRequest())
-
-    // return a fetch request
-    fetchGet(`/api/v1/campaigns/me`)
-      .then(userData => {
-        // update state with the returned data
-        dispatch(fetchIndexSuccess(userData))
-      })
-      .catch(error => {
-        // update state to render an error message
-        console.error(error)
-        dispatch(fetchIndexError(error))
-      })
-  }
-}
-*/
 
 // REDUCER
 const campaigns = (state = initialState, action) => {
   switch(action.type) {
+    case SET_INDEX:
+      return { ...state,
+        index: action.campaigns
+      }
+
+    case ADD_CAMPAIGN:
+      return produce(state, (draftState) => {
+        draftState.index.push(action.campaign)
+        // produce allows us to mutate draftState,
+        // then immutably assigns draftState to state
+        // https://immerjs.github.io/immer/docs/produce
+      })
+
     case TOGGLE_CREATE_FORM:
       return {...state, createFormIsOpen: !state.createFormIsOpen}
 
@@ -49,6 +43,8 @@ const campaigns = (state = initialState, action) => {
 }
 
 export {
+  setCampaignsList,
+  addCampaign,
   toggleCreateForm,
   campaigns
 }

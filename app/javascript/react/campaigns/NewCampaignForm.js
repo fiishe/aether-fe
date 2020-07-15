@@ -5,6 +5,9 @@ import SuperForm, { SuperInput } from '../lib/SuperForm'
 import { fetchPost } from '../lib/defaultFetch'
 import { stripString } from '../lib/utils'
 
+import { connect } from 'react-redux'
+import { addCampaign } from '../redux/modules/campaigns'
+
 const NewCampaignForm = (props) => {
   const handleSubmit = async (payload) => {
     let response = await fetchPost('/api/v1/campaigns', JSON.stringify(payload))
@@ -12,7 +15,7 @@ const NewCampaignForm = (props) => {
   }
 
   const handleSuccess = (res) => {
-    console.log('gotem');
+    props.addCampaign(res.data.campaign)
   }
 
   return(
@@ -42,4 +45,11 @@ const NewCampaignForm = (props) => {
   )
 }
 
-export default NewCampaignForm
+const mapDispatchToProps = {
+  addCampaign
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewCampaignForm)
