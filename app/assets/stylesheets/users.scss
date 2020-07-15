@@ -19,7 +19,6 @@ ul.user-cells {
   display: inline-block;
   margin: 2px 2px;
   padding: 2px;
-  padding-right: 14px;
   list-style-type: none;
   border-radius: 18px;
   background-color: $member-color;
@@ -42,13 +41,14 @@ ul.user-cells {
   max-height: $av-radius;
   overflow: hidden;
   padding: 0px;
-  margin-right: 6px;
   border-radius: 50%;
 }
 
 p.user-cell__name {
   display: inline-block;
   margin: 0;
+  margin-left: 6px;
+  margin-right: 14px;
   color: white;
   font-size: 0.9em;
 }

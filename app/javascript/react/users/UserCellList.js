@@ -6,14 +6,22 @@ const UserCell = props => {
   return(
     <li className={"user-cell " + (props.role || "")}>
       <img src={user.avatar_url} className="user-cell__avatar" />
-      <p className="user-cell__name">{user.nick || user.username}</p>
+      {props.minimize ? null :
+        <p className="user-cell__name">{user.nick || user.username}</p>
+      }
     </li>
   )
 }
 
 const UserCellList = props => {
   let users = props.data.map((user, index) => {
-    return <UserCell data={user} role={user.role} key={index} />
+    return (
+      <UserCell data={user}
+        role={user.role}
+        minimize={props.minimize}
+        key={index}
+        />
+    )
   })
 
   return(
