@@ -3,9 +3,9 @@ require "rails_helper"
 RSpec.describe Api::V1::CampaignsController, type: :controller do
   before :each do
     @campaign = FactoryBot.create(:campaign)
-    @user = FactoryBot.create(:user)
+    @user = @campaign.owner
     CampaignMembership.create(
-      { campaign: @campaign, user: @user, role: 'member' }
+      { campaign: @campaign, user: @user, role: 'owner' }
     )
     login(@user)
   end
@@ -27,7 +27,7 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
       get :index, { params: { user_id: @user.id } }
 
       expect(res_json[0]['users'][0]['nick']).to eq(@user.nick)
-      expect(res_json[0]['users'][0]['role']).to eq('member')
+      expect(res_json[0]['users'][0]['role']).to eq('owner')
     end
 
     it "returns an empty array if user belongs to no campaigns" do
@@ -63,13 +63,16 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
       expect(created_campaign).not_to be_nil()
     end
 
-    it "adds a campaign membership with owner role" do
+    it "sets the owner id and adds a campaign membership" do
       post :create, {
         params: { campaign: { name: 'asdfasdfasdf' } }
       }
+      created_campaign = Campaign.last
 
+      expect(created_campaign.owner).to eq(@user)
+      expect(created_campaign.users[0]).to eq(@user)
       expect(@user.campaigns.last).to eq(Campaign.last)
-      expect(Campaign.last.users[0]).to eq(@user)
+      expect(@user.campaign_memberships.last.role).to eq('owner')
     end
 
     it "fails with invalid params" do
