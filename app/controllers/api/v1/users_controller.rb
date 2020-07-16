@@ -1,10 +1,18 @@
 class Api::V1::UsersController < ApiController
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
+  def index
+    users = Campaign.find(params['campaign_id']).users
+    render json: users
+  end
+
   def show
-    if params['id'] == 'me'
-      show_me()
-    else
-      render json: User.find(params['id']), serializer: UserShowSerializer
+    if params['id'] == 'me' && !current_user
+      render_error 401, "You are not logged on."
+      return
     end
+    user = get_user(params['id'])
+    render json: user, serializer: UserShowSerializer
   end
 
   def update
@@ -36,12 +44,12 @@ class Api::V1::UsersController < ApiController
   end
 
   private
-  def show_me
-    return unless logged_in
-    render json: current_user, serializer: UserShowSerializer
-  end
 
   def user_params
     params.require(:user).permit(:nick, :bio)
+  end
+
+  def not_found
+    render_error 404, "Could not find requested user(s)."
   end
 end

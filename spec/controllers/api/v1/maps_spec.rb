@@ -16,8 +16,8 @@ RSpec.describe Api::V1::MapsController, type: :controller do
           tile_size: 32, tile_data: "[0, 0, 1, 0]"
         }
 
-      res_json = JSON.parse(response.body)
-      expect(res_json['status']).to eq('success')
+      res = res_json()
+      expect(res['status']).to eq('success')
 
       created_map = Map.find_by name: 'Mappy'
       expect(created_map).not_to be_nil()
@@ -31,10 +31,10 @@ RSpec.describe Api::V1::MapsController, type: :controller do
           tile_size: 32
         }
 
-        res_json = JSON.parse(response.body)
-        expect(res_json['status']).to eq('fail')
+        res = res_json()
+        expect(res['status']).to eq('fail')
 
-        expect(res_json['data']['message']).to eq("Validation failed")
+        expect(res['data']['message']).to eq("Validation failed")
 
         expected_errors = [
           "Height must be greater than or equal to 1",
@@ -42,7 +42,7 @@ RSpec.describe Api::V1::MapsController, type: :controller do
           "Grid alpha is not a number",
           "Grid color must be a valid hex color code"
         ]
-        expect(res_json['data']['errors']).to eq(expected_errors)
+        expect(res['data']['errors']).to eq(expected_errors)
     end
   end
 end

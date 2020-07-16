@@ -1,14 +1,12 @@
 import React from 'react'
 import Page from './Page'
-import UserProfileContainer from '../users/UserProfileContainer'
-import UserCharactersContainer from '../users/UserCharactersContainer'
+import CampaignIndexContainer from '../campaigns/CampaignIndexContainer'
 
 class HomePage extends Page {
   yield() {
     return(
       <div>
-        <UserProfileContainer userId="me" />
-        <UserCharactersContainer userId="me" />
+        <CampaignIndexContainer userId="me" />
       </div>
     )
   }

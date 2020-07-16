@@ -1,0 +1,11 @@
+@import '_colors';
+@import 'common';
+
+.campaign-index__owner {
+  display: block;
+  margin-left: auto;
+}
+.campaign-index__owner p {
+  margin: 0 0 -4px 16px;
+  font-size: 0.8em;
+}

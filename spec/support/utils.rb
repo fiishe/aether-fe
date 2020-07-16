@@ -1,5 +1,4 @@
-def get_json(url, options = nil)
-  get url, **options
+def res_json
   return JSON.parse(response.body)
 end
 

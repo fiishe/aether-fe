@@ -1,52 +1,55 @@
-import React from 'react';
-import Form from '../lib/Form';
+import React, { Component } from 'react';
+import Form from '../lib/Form'
+import SuperForm, { SuperInput } from '../lib/SuperForm'
 
-class NewCampaignForm extends Form {
-  getFields() {
-    return [
-      {
-        name: "name",
-        label: "Name",
-        type: "text"
-      }
-    ]
+import { fetchPost } from '../lib/defaultFetch'
+import { stripString } from '../lib/utils'
+
+import { connect } from 'react-redux'
+import { addCampaign } from '../redux/modules/campaigns'
+
+const NewCampaignForm = (props) => {
+  const handleSubmit = async (payload) => {
+    let response = await fetchPost('/api/v1/campaigns', JSON.stringify(payload))
+    return response
   }
 
-  handleSubmit(event) {
-    event.preventDefault()
-    fetch(`/api/v1/campaigns`, {
-      credentials: 'same-origin',
-      method: 'POST',
-      body: JSON.stringify(this.payload()),
-      headers: {
-        'Content-Type': 'application/json',
-        'x-CSRF-Token': this.getCSRFToken()
-      }
-    })
-      .then(res => {
-        if (res.ok) { return res }
-        else {
-          let error = new Error(`${res.status} ${res.statusText}`)
-          throw(error)
-        }
-      })
-      .then(res => res.json())
-      .then(resJson => {
-        console.log(resJson);
-      })
-      .catch(e => {
-        console.error(`error in form submission: ${e.message}`)
-      })
+  const handleSuccess = (res) => {
+    props.addCampaign(res.data.campaign)
   }
 
-  render() {
-    return(
-      <div>
-        <h2>New Campaign</h2>
-        {this.renderForm()}
-      </div>
-    )
-  }
+  return(
+    <div className="panel small">
+      <h4>New Campaign</h4>
+      <SuperForm handleSubmit={handleSubmit} handleSuccess={handleSuccess}>
+        <SuperInput
+          label="Name" name="name"
+          tip="2 - 32 characters"
+          type={'text'} className={`form-input-text`}
+          minLength={2} maxLength={64}
+          required
+          />
+        <div className="bar" uncontrolled={1}>
+          <input
+            className="button small" type="submit"
+            value="Submit" uncontrolled={1}
+            />
+          <div
+            className="button small secondary"
+            onClick={props.toggle}>
+            Cancel
+          </div>
+        </div>
+      </SuperForm>
+    </div>
+  )
 }
 
-export default NewCampaignForm
+const mapDispatchToProps = {
+  addCampaign
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(NewCampaignForm)

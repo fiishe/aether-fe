@@ -27,6 +27,11 @@ $default-margin: 12px;
   margin-top: $default-margin;
 }
 
+.gray-bg {
+  background-color: $gray-1;
+  color: $gray-2;
+}
+
 .red-bg, .panel.red-bg {
   color: $gray-2;
   background-color: $red-1;
@@ -50,4 +55,8 @@ $default-margin: 12px;
 
 .scroll-x {
   overflow-x: scroll;
+}
+
+.center-text {
+  text-align: center;
 }

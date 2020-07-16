@@ -16,7 +16,8 @@ FactoryBot.define do
   end
 
   factory :campaign do
-    name { "The Hobbit" }
+    sequence(:name) { |n| "Shrek #{n}" }
+    owner { create(:user) }
   end
 
   factory :map do

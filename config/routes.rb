@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     namespace 'v1' do
       resources 'characters', only: [:show]
       resources 'campaigns', only: [:show, :create] do
+        resources 'users', only: [:index]
         resources 'characters', only: [:index, :show]
       end
       resources 'users', only: [:show, :update] do

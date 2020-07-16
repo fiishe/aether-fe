@@ -8,14 +8,18 @@ class ApiController < ApplicationController
 
   def logged_in
     if current_user.nil?
-      render json: {
-        status: "fail",
-        data: { "message": "User must be logged in to perform this action." },
-        code: 401
-      }
+      render_error 401, "User must be logged in to perform this action."
       return false
     else
       return true
     end
+  end
+
+  def render_error(code, message)
+    render json: {
+      status: "fail",
+      data: { "message": message },
+      code: code
+    }, status: code
   end
 end

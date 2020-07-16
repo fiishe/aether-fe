@@ -1,4 +1,4 @@
-import makeActionCreator from './makeActionCreator'
+import makeActionCreator from '../utils/makeActionCreator'
 import { fetchGet } from "../../lib/defaultFetch"
 
 // INITIAL STATE

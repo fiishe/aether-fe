@@ -85,7 +85,7 @@ class UsersController < ApplicationController
       # user access token for dAPI also expires after 7days
     server_log "New session with id #{user.id}"
 
-    flash[:success] = "Successfully logged in as #{user.nick || user.username}"
+    flash[:success] = "Logged in as #{user.nick || user.username}"
     redirect_to "/home"
   end
 
