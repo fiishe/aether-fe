@@ -13,6 +13,7 @@ const CampaignIndexTile = props => {
           <UserCell data={campaign.owner} role="owner" />
         </div>
       </div>
+      <hr />
       <UserCellList data={campaign.users} />
     </div>
   )
