@@ -16,33 +16,35 @@
   </head>
 
   <body>
-    <%- if Rails.env.development? -%>
-      <div class="dev-links">
-        <%= link_to "pry", "/dev/pry" %>
-        <%= link_to "user 1", "/dev/login/1" %>
-        <%= link_to "user 2", "/dev/login/2" %>
-        <%= link_to "user 3", "/dev/login/3" %>
-        <%= link_to "logout", "/dev/logout" %>
-      </div>
-    <%- end -%>
-
-    <div id="flash-init">
-      <%- flash.each do |key, value| -%>
-        <div class="flash-doc flash-<%= key %> display-none">
-          <%= value %>
+    <main id="main">
+      <%- if Rails.env.development? -%>
+        <div class="dev-links">
+          <%= link_to "pry", "/dev/pry" %>
+          <%= link_to "user 1", "/dev/login/1" %>
+          <%= link_to "user 2", "/dev/login/2" %>
+          <%= link_to "user 3", "/dev/login/3" %>
+          <%= link_to "logout", "/dev/logout" %>
         </div>
       <%- end -%>
-    </div>
 
-    <%= yield %>
+      <div id="flash-init">
+        <%- flash.each do |key, value| -%>
+          <div class="flash-doc flash-<%= key %> display-none">
+            <%= value %>
+          </div>
+        <%- end -%>
+      </div>
 
-    <%= javascript_include_tag 'application' %>
-    <%= javascript_pack_tag 'application' %>
+      <%= yield %>
 
-    <%- if Rails.env.development? || Rails.env.test? -%>
-      <%= javascript_tag do %>
-        window.railsEnv = '<%= Rails.env %>'
+      <%= javascript_include_tag 'application' %>
+      <%= javascript_pack_tag 'application' %>
+
+      <%- if Rails.env.development? || Rails.env.test? -%>
+        <%= javascript_tag do %>
+          window.railsEnv = '<%= Rails.env %>'
+        <%- end -%>
       <%- end -%>
-    <%- end -%>
+    </main>
   </body>
 </html>
