@@ -5,6 +5,8 @@ class Map < ApplicationRecord
   has_many :chapters
   has_one_attached :background_image # image (see ActiveStorage docs)
 
+  validates :crystal, presence: true
+  
   validates :name, length: { minimum: 2, maximum: 32 }
   validates :name, uniqueness: true
 
