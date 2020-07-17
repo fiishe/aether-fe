@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 2020_07_16_092022) do
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
-    t.bigint "crystal", default: 0, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -34,7 +33,6 @@ ActiveRecord::Schema.define(version: 2020_07_16_092022) do
     t.bigint "byte_size", null: false
     t.string "checksum", null: false
     t.datetime "created_at", null: false
-    t.bigint "crystal", default: 0, null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -44,7 +42,6 @@ ActiveRecord::Schema.define(version: 2020_07_16_092022) do
     t.string "role", default: "member"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "crystal", default: 0, null: false
   end
 
   create_table "campaigns", force: :cascade do |t|
@@ -61,7 +58,6 @@ ActiveRecord::Schema.define(version: 2020_07_16_092022) do
     t.integer "map_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "crystal", default: 0, null: false
   end
 
   create_table "characters", force: :cascade do |t|
@@ -110,7 +106,6 @@ ActiveRecord::Schema.define(version: 2020_07_16_092022) do
     t.string "refresh_token"
     t.string "avatar_url"
     t.string "bio"
-    t.bigint "crystal", default: 0, null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
