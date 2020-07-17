@@ -18,9 +18,28 @@ def current_time_ms # in ms
 end
 
 RSpec.describe CrystalHelper, type: :helper do
+  describe "crystal_from_time" do
+    it "generates a crystal with the given time component (within 1s)" do
+      start_time = Time.now
+      id = helper.crystal_from_time start_time
+      id_time = helper.extract_time id
+
+      dt = start_time.to_f - id_time.to_f
+      expect(dt.abs).to be < 1
+    end
+
+    it "generates different crystals when called twice with the same time" do
+      time = Time.now
+      id_1 = helper.crystal_from_time time
+      id_2 = helper.crystal_from_time time
+
+      expect(id_1).not_to eq(id_2)
+    end
+  end
+
   describe "generate_crystal" do
     it "generates a crystal with an accurate time component (within 1s)" do
-      id = helper.generate_crystal 0
+      id = helper.generate_crystal
       id_time_ms = id >> 12 # time since epoch in ms
 
       dt = (id_time_ms - current_time_ms).to_i
@@ -31,19 +50,8 @@ RSpec.describe CrystalHelper, type: :helper do
   describe "extract_time" do
     it "returns the time at which the crystal was generated (within 1s)" do
       start_time = Time.now
-      id = helper.generate_crystal 0
+      id = helper.generate_crystal
       id_time = helper.extract_time id  # Time at which crystal was created
-
-      dt = start_time.to_f - id_time.to_f
-      expect(dt.abs).to be < 1
-    end
-  end
-
-  describe "crystal_from_time" do
-    it "generates a crystal with the given time component (within 1s)" do
-      start_time = Time.now
-      id = helper.crystal_from_time start_time, 0
-      id_time = helper.extract_time id
 
       dt = start_time.to_f - id_time.to_f
       expect(dt.abs).to be < 1

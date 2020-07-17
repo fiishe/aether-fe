@@ -13,11 +13,13 @@ FactoryBot.define do
   factory :character do
     name { "Tim" }
     user { create(:user) }
+    sequence(:crystal) { |n| n }
   end
 
   factory :campaign do
     sequence(:name) { |n| "Shrek #{n}" }
     owner { create(:user) }
+    sequence(:crystal) { |n| 100 + n }
   end
 
   factory :map do
@@ -36,6 +38,7 @@ FactoryBot.define do
       ]" }
     grid_alpha { 100 }
     grid_color { "#0000ff" }
+    sequence(:crystal) { |n| 1000 + n }
   end
 
   factory :chapter do

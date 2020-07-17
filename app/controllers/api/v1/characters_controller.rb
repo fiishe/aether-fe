@@ -1,4 +1,6 @@
 class Api::V1::CharactersController < ApiController
+  include CrystalHelper
+
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   def index
     chars = get_user(params['user_id']).characters ||

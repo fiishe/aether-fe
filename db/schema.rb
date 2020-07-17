@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_16_092022) do
+ActiveRecord::Schema.define(version: 2020_07_17_141051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 2020_07_16_092022) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "owner_id"
-    t.bigint "crystal", default: 0, null: false
+    t.bigint "crystal", null: false
     t.index ["owner_id"], name: "index_campaigns_on_owner_id"
   end
 
@@ -77,7 +77,10 @@ ActiveRecord::Schema.define(version: 2020_07_16_092022) do
     t.integer "luck", default: 0, null: false
     t.integer "defense", default: 0, null: false
     t.integer "resistance", default: 0, null: false
-    t.bigint "crystal", default: 0, null: false
+    t.bigint "crystal", null: false
+  end
+
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
   create_table "maps", force: :cascade do |t|
@@ -91,7 +94,7 @@ ActiveRecord::Schema.define(version: 2020_07_16_092022) do
     t.datetime "updated_at", null: false
     t.integer "grid_alpha"
     t.string "grid_color"
-    t.bigint "crystal", default: 0, null: false
+    t.bigint "crystal", null: false
   end
 
   create_table "users", force: :cascade do |t|

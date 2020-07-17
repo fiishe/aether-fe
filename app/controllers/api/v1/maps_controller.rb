@@ -1,9 +1,15 @@
 class Api::V1::MapsController < ApiController
+  include CrystalHelper
+  @@crystal_counter = 0
+
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-  
+
   def create
     @map = Map.new(map_params)
     @map.creator_id = current_user.id
+
+    @map.crystal = generate_crystal()
+    @@crystal_counter += 1
 
     if @map.save
       render json: {
