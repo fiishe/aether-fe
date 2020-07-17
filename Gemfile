@@ -76,3 +76,5 @@ gem 'webmock', group: [:development, :test]
 
 # Use Amazon S3 for cloud storage
 gem "aws-sdk-s3", require: false
+
+# Enable running data migration tasks (change data itself after a db migration)
