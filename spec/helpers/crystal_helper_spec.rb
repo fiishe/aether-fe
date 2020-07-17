@@ -38,4 +38,15 @@ RSpec.describe CrystalHelper, type: :helper do
       expect(dt.abs).to be < 1
     end
   end
+
+  describe "crystal_from_time" do
+    it "generates a crystal with the given time component (within 1s)" do
+      start_time = Time.now
+      id = helper.crystal_from_time start_time, 0
+      id_time = helper.extract_time id
+
+      dt = start_time.to_f - id_time.to_f
+      expect(dt.abs).to be < 1
+    end
+  end
 end
