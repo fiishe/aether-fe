@@ -23,6 +23,9 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
         'id' => @campaign.crystal,
         'name' => @campaign.name
       )
+      expect(res[0]).not_to include(
+        'id' => @campaign.id
+      )
 
       expect(res[0]).to have_key('owner')
       expect(res[0]['owner']).to include(

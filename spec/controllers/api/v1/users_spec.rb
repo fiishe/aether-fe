@@ -17,6 +17,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
         "avatar_url" => "http://example.com/img.jpg",
         "bio" => nil
       })
+      expect(res).not_to include('id' => @user.id)
     end
 
     describe "with \"me\" param" do

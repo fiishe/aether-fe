@@ -21,6 +21,7 @@ RSpec.describe Api::V1::CharactersController, type: :controller do
         'name' => @character.name,
       )
       expect(res[0]).to include('level', 'class_name', 'promoted')
+      expect(res[0]).not_to include('id' => @character.id)
 
       expect(res[1]).not_to be_nil()
     end
