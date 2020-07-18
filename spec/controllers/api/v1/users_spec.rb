@@ -9,16 +9,14 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     it "returns user data given id param" do
       get :show, params: { id: @user.id }
       res = res_json()
-      expect(res).to eq(
-        {
-          "id" => @user.id,
-          "username" => "userguy",
-          "nick" => "The Guy",
-          "discriminator" => "0001",
-          "avatar_url" => "http://example.com/img.jpg",
-          "bio" => nil
-        }
-      )
+      expect(res).to eq({
+        "id" => @user.snowflake,
+        "username" => "userguy",
+        "nick" => "The Guy",
+        "discriminator" => "0001",
+        "avatar_url" => "http://example.com/img.jpg",
+        "bio" => nil
+      })
     end
 
     describe "with \"me\" param" do
@@ -27,7 +25,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
         get :show, params: { id: "me" }
         res = res_json()
-        expect(res['id']).to eq(@user.id)
+        expect(res['id']).to eq(@user.snowflake)
         expect(res['username']).to eq(@user.username)
       end
 

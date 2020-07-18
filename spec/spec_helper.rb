@@ -46,7 +46,7 @@ RSpec.configure do |config|
 
   # (added by me)
   # Redirect stderr/stdout to text files so it doesn't appear in test results
-  redirect_stdout = true
+  redirect_stdout = false
   if redirect_stdout
     original_stderr = $stderr
     original_stdout = $stdout
