@@ -64,6 +64,39 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
     end
   end
 
+  describe "show" do
+    it "fails if user is not logged in" do
+      logout()
+      get :show, params: { id: 'asdf' }
+      res = res_json()
+
+      expect(res['status']).to eq('fail')
+      expect(res['data']['message']).to include("must be logged in")
+    end
+
+    it "fails if current user is not a member of the campaign" do
+      c = FactoryBot.create(:campaign)
+      get :show, params: { id: c.crystal }
+      res = res_json()
+
+      expect(res['status']).to eq('fail')
+      expect(res['data']['message']).to include("permission")
+    end
+
+    it "returns detailed information about a campaign" do
+      get :show, params: { id: @campaign.crystal }
+      res = res_json()
+
+      expect(res).to include(
+        'id' => @campaign.crystal,
+        'name' => @campaign.name
+      )
+      expect(res).to have_key('owner')
+      expect(res['owner']['id']).to eq(@user.snowflake)
+      expect(res).to have_key('users')
+    end
+  end
+
   describe "create" do
     it "requires login" do
       logout()
