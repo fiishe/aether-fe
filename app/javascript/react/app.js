@@ -6,9 +6,27 @@ import Redirect from './pages/Redirect'
 import TopBar from './common/TopBar'
 import NavBar from './common/NavBar'
 import HomePage from './pages/HomePage'
-import UserRouter from './routers/UserRouter'
-import MapRouter from './routers/MapRouter'
 import NotFoundPage from './pages/NotFoundPage'
+
+import UserShowPage from './pages/UserShowPage'
+import MapEditPage from './pages/MapEditPage'
+
+const UserRouter = props => {
+  return(
+    <Switch>
+      <Route path='/users/:id' component={UserShowPage} />
+    </Switch>
+  )
+}
+
+const MapRouter = props => {
+  return(
+    <Switch>
+      <Route path='/maps/new' component={MapEditPage} />
+      <Route path='/maps/edit/:id' component={MapEditPage} />
+    </Switch>
+  )
+}
 
 const App = props => {
   return(
