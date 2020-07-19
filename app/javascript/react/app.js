@@ -5,28 +5,12 @@ import { Provider } from 'react-redux'
 import Redirect from './pages/Redirect'
 import TopBar from './common/TopBar'
 import NavBar from './common/NavBar'
-import HomePage from './pages/HomePage'
 import NotFoundPage from './pages/NotFoundPage'
 
-import UserShowPage from './pages/UserShowPage'
+import { CampaignRouter, MapRouter, UserRouter } from './routers'
+import CampaignIndexPage from './pages/CampaignIndexPage'
 import MapEditPage from './pages/MapEditPage'
-
-const UserRouter = props => {
-  return(
-    <Switch>
-      <Route path='/users/:id' component={UserShowPage} />
-    </Switch>
-  )
-}
-
-const MapRouter = props => {
-  return(
-    <Switch>
-      <Route path='/maps/new' component={MapEditPage} />
-      <Route path='/maps/edit/:id' component={MapEditPage} />
-    </Switch>
-  )
-}
+import UserShowPage from './pages/UserShowPage'
 
 const App = props => {
   return(
@@ -36,12 +20,15 @@ const App = props => {
           <TopBar />
           <NavBar />
           <Switch>
-            <Route exact path='/' component={HomePage} />
-            <Route path='/home' component={HomePage} />
+            <Route exact path='/' component={CampaignIndexPage} />
+            <Route path='/home' component={CampaignIndexPage} />
             <Route path='/login' component={Redirect('/login')} />
             <Route path='/logout' component={Redirect('/logout')} />
-            <Route path='/users' component={UserRouter} />
+
+            <Route path='/campaigns' component={CampaignRouter} />
             <Route path='/maps' component={MapRouter} />
+            <Route path='/users' component={UserRouter} />
+
             <Route path='*' component={NotFoundPage} />
           </Switch>
         </div>

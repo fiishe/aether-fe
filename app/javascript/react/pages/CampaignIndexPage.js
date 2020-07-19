@@ -2,7 +2,7 @@ import React from 'react'
 import Page from './Page'
 import CampaignIndexContainer from '../campaigns/CampaignIndexContainer'
 
-class HomePage extends Page {
+class CampaignIndexPage extends Page {
   yield() {
     return(
       <div>
@@ -12,4 +12,4 @@ class HomePage extends Page {
   }
 }
 
-export default HomePage
+export default CampaignIndexPage
