@@ -1,4 +1,6 @@
 class Api::V1::CampaignsController < ApiController
+  include CrystalHelper
+
   before_action :require_login, only: [:create]
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -13,6 +15,8 @@ class Api::V1::CampaignsController < ApiController
   def create
     @campaign = Campaign.new(campaign_params)
     @campaign.owner = current_user
+
+    @campaign.crystal = generate_crystal()
 
     if @campaign.save
       CampaignMembership.create(

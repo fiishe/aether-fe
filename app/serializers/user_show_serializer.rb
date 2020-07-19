@@ -1,3 +1,4 @@
 class UserShowSerializer < ActiveModel::Serializer
-  attributes :id, :username, :discriminator, :nick, :avatar_url, :bio
+  attribute :snowflake, key: :id
+  attributes :username, :discriminator, :nick, :avatar_url, :bio
 end

@@ -1,5 +1,8 @@
 class Api::V1::CharactersController < ApiController
+  include CrystalHelper
+
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+
   def index
     chars = get_user(params['user_id']).characters ||
       Campaign.find(params['campaign_id'])
@@ -7,8 +10,10 @@ class Api::V1::CharactersController < ApiController
   end
 
   def show
-    render json: Character.find(params['character_id'] || params['id']),
-      serializer: CharacterShowSerializer
+    char = Character.find_by(
+      crystal: params['character_id'] || params['id']
+    )
+    render json: char, serializer: CharacterShowSerializer
   end
 
   private

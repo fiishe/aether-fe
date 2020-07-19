@@ -1,5 +1,6 @@
 class CampaignSerializer < ActiveModel::Serializer
-  attributes :id, :name, :owner, :users
+  attribute :crystal, key: :id
+  attributes :name, :owner, :users
 
   def owner
     UserSerializer.new(object.owner)

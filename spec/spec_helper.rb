@@ -46,15 +46,18 @@ RSpec.configure do |config|
 
   # (added by me)
   # Redirect stderr/stdout to text files so it doesn't appear in test results
-  original_stderr = $stderr
-  original_stdout = $stdout
-  config.before :all do
-    $stderr = File.new(File.join(__dir__, '..', 'log', 'test_stderr.log'), 'w')
-    $stdout = File.new(File.join(__dir__, '..', 'log', 'test_stdout.log'), 'w')
-  end
-  config.after :all do
-    $stderr = original_stderr
-    $stdout = original_stdout
+  redirect_stdout = true
+  if redirect_stdout
+    original_stderr = $stderr
+    original_stdout = $stdout
+    config.before :all do
+      $stderr = File.new(File.join(__dir__, '..', 'log', 'test_stderr.log'), 'w')
+      $stdout = File.new(File.join(__dir__, '..', 'log', 'test_stdout.log'), 'w')
+    end
+    config.after :all do
+      $stderr = original_stderr
+      $stdout = original_stdout
+    end
   end
 
 # The settings below are suggested to provide a good initial experience

@@ -13,17 +13,23 @@ class Flash extends Component {
       // of .flash-fading in /assets/stylesheets/blocks.scss
 
     this.kill = this.kill.bind(this)
+    this.timeouts = []
   }
 
   componentDidMount() {
-    setTimeout(this.kill, this.lifespan)
+    this.timeouts.push(setTimeout(this.kill, this.lifespan))
   }
 
   kill() {
     this.setState({
       cls: this.state.cls + " flash-fading"
     })
-    setTimeout(this.props.remove, this.killtime)
+    this.timeouts.push(setTimeout(this.props.remove, this.killtime))
+  }
+
+  componentWillUnmount() {
+    // clear timeouts to prevent memory leak
+    this.timeouts.forEach(timeout => { clearTimeout(timeout) })
   }
 
   render() {

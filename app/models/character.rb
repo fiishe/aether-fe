@@ -2,6 +2,8 @@ class Character < ApplicationRecord
   belongs_to :user
   belongs_to :campaign, optional: true
 
+  validates :crystal, presence: true
+
   validates :name, length: { minimum: 2, maximum: 16 }
   validates :name, uniqueness: { scope: :user_id }
   validates :level, numericality: {
