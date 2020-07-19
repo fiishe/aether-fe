@@ -6,8 +6,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe "show" do
-    it "returns user data given id param" do
-      get :show, params: { id: @user.id }
+    it "returns user data given snowflake param" do
+      get :show, params: { id: @user.snowflake }
       res = res_json()
       expect(res).to eq({
         "id" => @user.snowflake,

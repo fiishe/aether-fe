@@ -11,11 +11,15 @@ class ApplicationController < ActionController::Base
     puts ">> LOG: #{msg}"
   end
 
-  def get_user(id)
-    if id == "me"
+  def get_user(snowflake)
+    if snowflake == "me"
       return current_user
     else
-      return User.find(id)
+      user = User.find_by(snowflake: snowflake)
+      if user.nil?
+        raise ActiveRecord::RecordNotFound
+      end
+      return user
     end
   end
 
