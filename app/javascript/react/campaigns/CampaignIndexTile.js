@@ -1,5 +1,6 @@
 import React from 'react'
 import UserCellList, { UserCell } from '../users/UserCellList'
+import { Link } from 'react-router-dom'
 
 const CampaignIndexTile = props => {
   let campaign = props.data
@@ -7,7 +8,9 @@ const CampaignIndexTile = props => {
   return(
     <div className="panel" {...props} >
       <div className="bar">
-        <h5>{campaign.name}</h5>
+        <Link to={`/campaigns/${campaign.id}`}>
+          <h5>{campaign.name}</h5>
+        </Link>
         <div className="campaign-index__owner">
           <p>host</p>
           <UserCell data={campaign.owner} role="owner" />
