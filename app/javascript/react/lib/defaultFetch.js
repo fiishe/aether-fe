@@ -32,10 +32,9 @@ const fetchPost = (uri, payload, headers) => {
     method: 'POST',
     body: payload,
     headers: headers || {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     }
   }
-
   req.headers['x-CSRF-Token'] = getCSRFToken()
 
   return new Promise((resolve, reject) => {
@@ -59,8 +58,6 @@ const fetchPatch = (uri, payload, headers) => {
       'Content-Type': 'application/json'
     }
   }
-  console.log(req);
-
   req.headers['x-CSRF-Token'] = getCSRFToken()
 
   for (let key in headers) {

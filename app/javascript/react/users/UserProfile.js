@@ -19,21 +19,18 @@ const UserProfile = props => {
     elems = {
       avatar: <img src={user.avatar_url} />,
       username: <h3 className="bold">{user.nick || user.username}</h3>,
-      discord: <h4 className="discord-tag">
-        {user.username}#{user.discriminator}
+      discord:
+        <h4 className="discord-tag">
+          {user.username}#{user.discriminator}
         </h4>,
       bio: <p>{user.bio}</p>,
-      editButton: null
+      editButton:
+        <button
+          className="link-button default"
+          onClick={props.toggleEdit}>
+          Edit
+        </button>
     }
-  }
-
-  if (props.userId == "me") {
-    elems.editButton =
-      <button
-        className="link-button default"
-        onClick={props.toggleEdit}>
-        Edit
-      </button>;
   }
 
   return(
@@ -47,7 +44,7 @@ const UserProfile = props => {
           {elems.discord}
         </div>
         <div className="bar-section right">
-          {elems.editButton}
+          {props.userId == "me" ? elems.editButton : null}
         </div>
       </div>
       <hr />
