@@ -6,7 +6,7 @@ const CampaignIndexTile = props => {
   let campaign = props.data
 
   return(
-    <div className="panel" {...props} >
+    <div className="row panel" {...props} >
       <div className="bar">
         <Link to={`/campaigns/${campaign.id}`}>
           <h5>{campaign.name}</h5>
