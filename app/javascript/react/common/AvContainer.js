@@ -31,7 +31,7 @@ class AvContainer extends Component {
     return(
       <img
         className="top-av"
-        src={getMeta("avatar_url") || "https://i.imgur.com/yC321Eb.png"}
+        src={getMeta("avatar_url") || "https://via.placeholder.com/128"}
         />
     )
   }
