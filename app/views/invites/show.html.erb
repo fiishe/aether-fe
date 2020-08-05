@@ -6,24 +6,21 @@
         <%= @campaign.name %>
       </h3>
       <h6 class="invite__subtitle">
-        by <%= @campaign.owner.nick %>
+        by <%= @campaign.owner.nick || @campaign.owner.username %>
       </h6>
       <p class="invite__description">
 
       </p>
       <% if @logged_in %>
-        <div class="invite__join-button">
-          <a href=<%= "/join/#{@campaign.crystal}" %>>
-            Join
-          </a>
-        </div>
+        <a class="invite__join-button" href=<%= "/join/#{@invite.token}" %>>
+          Join
+        </a>
       <% else %>
-        <div class="login-button">
-          <a href="/login">
-            Login with
-            <img src="https://discordapp.com/assets/e7a3b51fdac2aa5ec71975d257d5c405.png" />
-            to join
-          </a>
+        <a class="login-button" href="/login">
+          Login with
+          <img src="https://discordapp.com/assets/e7a3b51fdac2aa5ec71975d257d5c405.png" />
+          to join
+        </a>
         </div>
       <% end %>
     <% else %>

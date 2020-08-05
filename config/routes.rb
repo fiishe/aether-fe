@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :invites, only: [:show]
   get 'invite/:id', to: 'invites#show'
-  get 'join/:id', to: 'campaigns#join'
+  get 'join/:id', to: 'invites#join'
 
   resources :users, only: [:index]
   get 'login', to: 'users#login'

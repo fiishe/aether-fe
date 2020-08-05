@@ -13,6 +13,7 @@
 
 .login-button {
   background-color: $button-blue;
+  color: white;
   border-radius: 6px;
   max-width: 200px;
   min-width: 100px;
@@ -22,9 +23,6 @@
 
 .login-button:hover {
   background-color: scale-color($button-blue, $lightness: -14%);
-  cursor: pointer;
-}
-
-.login-button a {
   color: white;
+  cursor: pointer;
 }
