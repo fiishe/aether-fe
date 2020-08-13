@@ -18,8 +18,9 @@ Rails.application.routes.draw do
       resources :campaigns, only: [:show, :create] do
         resources :users, only: [:index]
         resources :characters, only: [:index, :show]
+        resources :invites, only: [:index]
       end
-      resources :characters, only: [:show]
+      resources :characters, only: [:index, :show]
       resources :maps, only: [:create]
       resources :users, only: [:show, :update] do
         resources :campaigns, only: [:index]

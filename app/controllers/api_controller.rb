@@ -22,4 +22,8 @@ class ApiController < ApplicationController
       code: code
     }, status: code
   end
+
+  def not_found
+    render_error 404, "Could not find requested resource(s)"
+  end
 end

@@ -12,8 +12,6 @@ class Api::V1::CampaignsController < ApiController
   end
 
   def show
-    @campaign = Campaign.find_by!(crystal: params['id'])
-
     render json: @campaign
   end
 
@@ -53,8 +51,8 @@ class Api::V1::CampaignsController < ApiController
   end
 
   def user_is_member
-    campaign = Campaign.find_by(crystal: params['id'])
-    if CampaignMembership.find_by(user: current_user, campaign: campaign).nil?
+    @campaign = Campaign.find_by!(crystal: params['id'])
+    if CampaignMembership.find_by(user: current_user, campaign: @campaign).nil?
       render_error 403, "You do not have permission to access this resource."
       return false
     else
@@ -64,9 +62,5 @@ class Api::V1::CampaignsController < ApiController
 
   def campaign_params
     params.require(:campaign).permit(:name)
-  end
-
-  def not_found
-    render_error 404, "Could not find requested resource(s)."
   end
 end
