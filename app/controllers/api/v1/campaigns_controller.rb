@@ -1,7 +1,9 @@
 class Api::V1::CampaignsController < ApiController
   include CrystalHelper
 
-  before_action :require_login, only: [:show, :create]
+  before_action :require_login
+  before_action :require_membership, only: [:show]
+
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
@@ -12,11 +14,7 @@ class Api::V1::CampaignsController < ApiController
   def show
     @campaign = Campaign.find_by!(crystal: params['id'])
 
-    if CampaignMembership.find_by(user: current_user, campaign: @campaign).nil?
-      render_error 403, "You do not have permission to access this resource."
-    else
-      render json: @campaign
-    end
+    render json: @campaign
   end
 
   def create
@@ -50,11 +48,25 @@ class Api::V1::CampaignsController < ApiController
 
   private
 
+  def require_membership
+    return unless user_is_member
+  end
+
+  def user_is_member
+    campaign = Campaign.find_by(crystal: params['id'])
+    if CampaignMembership.find_by(user: current_user, campaign: campaign).nil?
+      render_error 403, "You do not have permission to access this resource."
+      return false
+    else
+      return true
+    end
+  end
+
   def campaign_params
     params.require(:campaign).permit(:name)
   end
 
   def not_found
-    render_error 404, "Could not find requested campaign(s)."
+    render_error 404, "Could not find requested resource(s)."
   end
 end

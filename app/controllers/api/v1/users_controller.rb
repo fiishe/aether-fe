@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApiController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
   def index
-    users = Campaign.find(params['campaign_id']).users
+    users = Campaign.find_by(crystal: params['campaign_id']).users
     render json: users
   end
 
@@ -50,6 +50,6 @@ class Api::V1::UsersController < ApiController
   end
 
   def not_found
-    render_error 404, "Could not find requested user(s)."
+    render_error 404, "Could not find requested resource(s)."
   end
 end
