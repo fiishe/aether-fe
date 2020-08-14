@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import fetchGet from '../lib/defaultFetch'
 import UserCellList, { UserCell } from '../users/UserCellList'
+import InviteContainer from './invites/InviteContainer'
 
 class CampaignShowContainer extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class CampaignShowContainer extends Component {
     switch(this.state.render) {
       case 'loading':
         return(
-          <div className="panel">
+          <div className="row panel">
             Loading
           </div>
         )
@@ -45,7 +46,7 @@ class CampaignShowContainer extends Component {
               return user.role == 'member'
             })
         return(
-          <div className="panel campaign-show">
+          <div className="row panel campaign-show">
             <h3>{campaign.name}</h3>
             <div className="campaign-show__users-list">
               <p>host:</p>
@@ -57,11 +58,12 @@ class CampaignShowContainer extends Component {
               {members.length > 0 ? <p>members:</p> : null}
               <UserCellList data={members} />
             </div>
+            <InviteContainer campaignId={campaign.id} />
           </div>
         )
       default:
         return(
-          <div className="panel">
+          <div className="row panel">
             Something went wrong.
           </div>
         )

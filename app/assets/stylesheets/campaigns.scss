@@ -20,3 +20,21 @@
 .campaign-show__users-list {
 
 }
+
+.invite-index {
+  background-color: $red-1;
+  color: $gray-3;
+  list-style: none;
+  margin: 8px 0;
+  padding: 8px;
+}
+
+.invite-index__link {
+  padding: 4px;
+  color: $gray-3;
+  border: 1px $gray-3 solid;
+  cursor: copy;
+}
+.invite-index__link:hover {
+  background-color: scale-color($red-1, $lightness: -14%);
+}
