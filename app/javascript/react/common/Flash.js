@@ -9,8 +9,8 @@ class Flash extends Component {
       cls: this.props.className
     }
 
-    this.lifespan = props.lifespan || 3000  // how long it lasts before fading
-    this.killtime = props.killtime || 800   // how long it takes to fade
+    this.lifespan = props.lifespan || 3000  // (ms) how long before fading
+    this.killtime = props.killtime || 800   // (ms) how long it takes to fade
       // if you change killtime, also change the animation-duration
       // of .flash-fading in /assets/stylesheets/common.scss
 
@@ -62,6 +62,9 @@ class FlashListComponent extends Component {
         type: elem.dataset.flashType,
         message: elem.innerText
       })
+
+      // remove from HTML to prevent rerendering
+      elem.parentNode.removeChild(elem)
     })
   }
 
