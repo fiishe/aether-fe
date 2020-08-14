@@ -29,7 +29,7 @@
 
       <div id="flash-init">
         <%- flash.each do |key, value| -%>
-          <div class="flash-doc flash-<%= key %> display-none">
+          <div class="display-none" data-flash-type=<%= key%>>
             <%= value %>
           </div>
         <%- end -%>
