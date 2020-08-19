@@ -52,7 +52,6 @@ class Flash extends Component {
 class FlashList extends Component {
   constructor(props) {
     super(props)
-    this.timers = []
   }
 
   componentDidMount() {
@@ -73,16 +72,6 @@ class FlashList extends Component {
       // remove from HTML
       elem.parentNode.removeChild(elem)
     })
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.flashes.length > prevProps.flashes.length) {
-      // a flash was added
-
-    }
-    else if (this.props.flashes.length < prevProps.flashes.length) {
-      // a flash was removed
-    }
   }
 
   componentWillUnmount() {
