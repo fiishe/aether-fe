@@ -8,7 +8,7 @@ class ApiController < ApplicationController
 
   def logged_in
     if current_user.nil?
-      render_error 401, "User must be logged in to perform this action."
+      render_error 401, "You must be logged in to perform this action."
       return false
     else
       return true

@@ -18,7 +18,7 @@ def current_time_ms # in ms
 end
 
 RSpec.describe CrystalHelper, type: :helper do
-  describe "crystal_from_time" do
+  describe :crystal_from_time do
     it "generates a crystal with the given time component (within 1s)" do
       start_time = Time.now
       id = helper.crystal_from_time start_time
@@ -37,8 +37,10 @@ RSpec.describe CrystalHelper, type: :helper do
     end
   end
 
-  describe "generate_crystal" do
+  describe :generate_crystal do
     it "generates a crystal with an accurate time component (within 1s)" do
+      # This is important so that crystal ids are sortable (by creation time)
+
       id = helper.generate_crystal
       id_time_ms = id >> 12 # time since epoch in ms
 
@@ -47,7 +49,7 @@ RSpec.describe CrystalHelper, type: :helper do
     end
   end
 
-  describe "extract_time" do
+  describe :extract_time do
     it "returns the time at which the crystal was generated (within 1s)" do
       start_time = Time.now
       id = helper.generate_crystal
