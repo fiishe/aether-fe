@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import fetchGet from '../../lib/defaultFetch'
+import { connect } from 'react-redux'
+import { createFlash } from '../../redux/modules/common'
 
-const InviteTile = props => {
+const InviteTileComponent = props => {
   let link = window.location.hostname + '/invites/' + props.token
   let copyLink = () => {
     navigator.clipboard.writeText(link)
       .then(() => {
-        console.log("Successfully copied");
-      })
-      .catch(() => {
-        console.log("Failed to copy");
+        props.createFlash({
+          type: "success",
+          message: "Copied invite link to clipboard"
+        })
       })
   }
 
@@ -19,6 +21,11 @@ const InviteTile = props => {
     </li>
   )
 }
+
+const InviteTile = connect(
+  null,
+  { createFlash }
+)(InviteTileComponent)
 
 class InviteContainer extends Component {
   constructor(props) {

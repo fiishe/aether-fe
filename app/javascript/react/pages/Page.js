@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TopBar from '../common/TopBar';
 import NavBar from '../common/NavBar';
-import Flash, { FlashList } from '../common/Flash';
+import FlashList from '../common/Flash';
 
 class Page extends Component {
   // This class serves as an equivalent to a "layout" erb template.

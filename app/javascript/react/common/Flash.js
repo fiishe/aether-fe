@@ -1,54 +1,58 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { CSSTransition } from 'react-transition-group'
 import { connect } from 'react-redux'
-import { addFlash, removeFlash } from '../redux/modules/common'
+import {
+  FLASH_LIFESPAN, createFlash, removeFlash
+} from '../redux/modules/common'
+
+const FLASH_START_FADE = 2000     // (ms) how long before a flash starts to fade
+const FLASH_FADE_TIME = 800       // (ms) how long a flash takes to fade
+// if you change FLASH_START_FADE and FLASH_FADE_TIME, make according changes
+// in /assets/stylesheets/common.scss
 
 class Flash extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      cls: this.props.className
+      cls: `flash flash-${props.type}`,
+      fading: false
     }
-
-    this.lifespan = props.lifespan || 3000  // (ms) how long before fading
-    this.killtime = props.killtime || 800   // (ms) how long it takes to fade
-      // if you change killtime, also change the animation-duration
-      // of .flash-fading in /assets/stylesheets/common.scss
-
-    this.kill = this.kill.bind(this)
-    this.timeouts = []
+    this.fadeTimer = null
+    this.startFade = this.startFade.bind(this)
   }
 
   componentDidMount() {
-    this.timeouts.push(setTimeout(this.kill, this.lifespan))
+    this.fadeTimer = setTimeout(this.startFade, FLASH_START_FADE)
   }
 
-  kill() {
-    // start fading-out animation
-    this.setState({
-      cls: this.state.cls + " flash-fading"
-    })
-    // remove component once animation completes
-    this.timeouts.push(setTimeout(this.props.remove, this.killtime))
+  startFade() {
+    this.setState({ fading: true })
   }
 
   componentWillUnmount() {
-    // clear timeouts to prevent memory leak
-    this.timeouts.forEach(timeout => { clearTimeout(timeout) })
+    clearTimeout(this.fadeTimer)
   }
 
   render() {
     return(
-      <div className={this.state.cls} onClick={this.kill}>
-        <p>{this.props.children}</p>
-        <i className="fas fa-times"></i>
-      </div>
+      <CSSTransition
+        in={!this.props.fading}
+        classNames="flash"
+        timeout={FLASH_FADE_TIME}
+        >
+        <div className={this.state.cls}>
+          {this.props.children}
+          <i className="fas fa-times"></i>
+        </div>
+      </CSSTransition>
     )
   }
 }
 
-class FlashListComponent extends Component {
+class FlashList extends Component {
   constructor(props) {
     super(props)
+    this.timers = []
   }
 
   componentDidMount() {
@@ -58,23 +62,40 @@ class FlashListComponent extends Component {
 
     // add the flash data to redux store
     flashArr.forEach(elem => {
-      this.props.addFlash({
-        type: elem.dataset.flashType,
-        message: elem.innerText
-      })
+      this.props.createFlash(
+        {
+          type: elem.dataset.flashType,
+          message: elem.innerText
+        },
+        FLASH_LIFESPAN
+      )
 
-      // remove from HTML to prevent rerendering
+      // remove from HTML
       elem.parentNode.removeChild(elem)
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.flashes.length > prevProps.flashes.length) {
+      // a flash was added
+
+    }
+    else if (this.props.flashes.length < prevProps.flashes.length) {
+      // a flash was removed
+    }
+  }
+
+  componentWillUnmount() {
+    this.timers.forEach(timer => {
+      clearTimeout(timer)
     })
   }
 
   render() {
     let flashes = this.props.flashes.map((flash, index) => {
       return(
-        <Flash className={`flash flash-${flash.type}`}
-          key={index} remove={this.props.removeFlash}
-          >
-          {flash.message}
+        <Flash type={flash.type} key={index} index={index} show={true}>
+          <p>{flash.message}</p>
         </Flash>
       )
     })
@@ -96,16 +117,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-  addFlash,
+  createFlash,
   removeFlash
 }
 
-const FlashList = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(FlashListComponent)
-
-export default Flash
-export {
-  FlashList
-}
+)(FlashList)

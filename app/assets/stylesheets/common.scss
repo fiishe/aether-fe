@@ -189,6 +189,7 @@ nav.top {
   padding: 8px 10px;
   margin: 10px;
   min-width: 200px;
+  min-height: 3em;
 
   display: flex;
   flex-direction: row;
@@ -197,36 +198,35 @@ nav.top {
 }
 
 .flash.flash-success { background-color: $success-green }
-
 .flash.flash-error { background-color: $error-red }
+.flash.flash-invisible { visibility: hidden }
 
 .flash:hover {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.flash p, .flash i {
+.flash p {
   margin: 0px;
+}
+.flash i {
+  margin: 0px;
+  margin-left: 12px;
 }
 
 .flash i:hover {
   cursor: pointer;
 }
 
-.flash-fading {
-  animation-name: thanos;
-  animation-duration: 0.8s;
-    // if you change animation-duration,
-    // also change the setTimeout in app/javascript/react/components/Flash.js
-  animation-fill-mode: forwards;
+// flash leaving animation ()
+.flash-leave {
+  opacity: 1;
 }
-
-@keyframes thanos {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
+.flash-leave.flash-leave-active {
+  opacity: 0.01;
+  transform: scale(0.9);
+  transition: opacity 800ms ease-in;
+    // if you change the transition-duration,
+    // also change FLASH_KILLTIME in app/javascript/react/components/Flash.js
 }
 
 .ticker {
