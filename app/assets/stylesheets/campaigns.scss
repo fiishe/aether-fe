@@ -36,5 +36,16 @@
   cursor: copy;
 }
 .invite-index__link:hover {
-  background-color: scale-color($red-1, $lightness: -14%);
+  background-color: scale-color($red-1, $lightness: 14%);
+}
+
+.invite-index__create-button {
+  margin: 8px auto;
+  background-color: $red-1;
+  color: $gray-3;
+  font-size: 0.9em;
+}
+
+.invite-index__create-button:hover {
+  background-color: scale-color($red-1, $lightness: 14%)
 }

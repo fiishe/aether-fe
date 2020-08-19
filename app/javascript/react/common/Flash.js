@@ -74,12 +74,6 @@ class FlashList extends Component {
     })
   }
 
-  componentWillUnmount() {
-    this.timers.forEach(timer => {
-      clearTimeout(timer)
-    })
-  }
-
   render() {
     let flashes = this.props.flashes.map((flash, index) => {
       return(

@@ -1,31 +1,20 @@
 import React, { Component } from 'react'
-import fetchGet from '../../lib/defaultFetch'
-import { connect } from 'react-redux'
-import { createFlash } from '../../redux/modules/common'
+import { fetchGet, fetchPost } from '../../lib/defaultFetch'
+import InviteTile from './InviteTile'
+import produce from 'immer'
 
-const InviteTileComponent = props => {
-  let link = window.location.hostname + '/invites/' + props.token
-  let copyLink = () => {
-    navigator.clipboard.writeText(link)
-      .then(() => {
-        props.createFlash({
-          type: "success",
-          message: "Copied invite link to clipboard"
-        })
-      })
+class NewInviteButton extends Component {
+  render() {
+    return(
+      <button className="invite-index__create-button"
+        onClick={this.props.onClick}
+        >
+        <i className="fas fa-plus" />
+        <div className="inline-block default-margin">New invite link</div>
+      </button>
+    )
   }
-
-  return(
-    <li className="invite-index__link" onClick={copyLink}>
-      {link}
-    </li>
-  )
 }
-
-const InviteTile = connect(
-  null,
-  { createFlash }
-)(InviteTileComponent)
 
 class InviteContainer extends Component {
   constructor(props) {
@@ -34,6 +23,7 @@ class InviteContainer extends Component {
       invites: []
     }
 
+    this.handleCreateInvite = this.handleCreateInvite.bind(this)
     this.addInvite = this.addInvite.bind(this)
   }
 
@@ -44,9 +34,20 @@ class InviteContainer extends Component {
     this.setState({ invites: res })
   }
 
-  addInvite(url) {
-    newInviteList = this.state.invites.slice()
-    newInviteList.push(url)
+  async handleCreateInvite() {
+    let res = await fetchPost(
+      `/api/v1/campaigns/${this.props.campaignId}/invites`
+    )
+    if (res.status == "success") {
+      this.addInvite(res.data.invite)
+    }
+  }
+
+  addInvite(invite) {
+    newInviteList = produce(this.state.invites, draft => {
+      draft.push(invite)
+    })
+
     this.setState({ invites: newInviteList })
   }
 
@@ -58,6 +59,7 @@ class InviteContainer extends Component {
     return(
       <ul className="invite-index">
         {invites}
+        <NewInviteButton onClick={this.handleCreateInvite} />
       </ul>
     )
   }
