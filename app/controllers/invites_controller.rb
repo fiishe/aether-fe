@@ -3,22 +3,12 @@ class InvitesController < ApplicationController
 
   def show
     token = invite_params['id']
-    @invite = Invite.find_by(token: token)
+    @invite = Invite.find_by!(token: token)
     @logged_in = !current_user.nil?
 
-    is_expired = false
-    begin
-      if DateTime.now > @invite.expires_at
-        is_expired = true
-      end
-    rescue NoMethodError, ArgumentError
-      # @invite is nil, or @invite.is_expired is nil
-      is_expired = false
-    end
+    return unless invite_is_valid
 
-    if @invite && !is_expired
-      @campaign = @invite.campaign
-    end
+    @campaign = @invite.campaign
   end
 
   def join
@@ -28,14 +18,23 @@ class InvitesController < ApplicationController
       return
     end
 
-    invite = Invite.find_by!(token: token)
-    campaign = invite.campaign
+    @invite = Invite.find_by!(token: token)
+    @campaign = @invite.campaign
+
+    return unless invite_is_valid
 
     membership = CampaignMembership.find_or_create_by(
       user: current_user,
-      campaign: campaign
-    )
-    redirect_to "/campaigns/#{campaign.crystal}"
+      campaign: @campaign
+    ) do
+      # if CampaignMembership was created
+      if @invite.uses
+        @invite.uses -= 1
+        @invite.save
+      end
+    end
+
+    redirect_to "/campaigns/#{@campaign.crystal}"
   end
 
   private
@@ -45,6 +44,27 @@ class InvitesController < ApplicationController
   end
 
   def not_found
-    render "/not_found"
+    @campaign = nil
+    render "/invites/show"
+  end
+
+  def invite_is_valid
+    if @invite.expires_at
+      if DateTime.now > @invite.expires_at
+        @campaign = nil
+        render "/invites/show"
+        return false
+      end
+    end
+
+    if @invite.uses
+      if @invite.uses <= 0
+        @campaign = nil
+        render "/invites/show"
+        return false
+      end
+    end
+
+    return true
   end
 end

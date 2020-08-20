@@ -14,7 +14,8 @@ RSpec.describe Api::V1::InvitesController, type: :controller do
       get :index, params: { campaign_id: @campaign.crystal }
 
       expect(res_json[0]).to eq(
-        { 'token' => @invite.token, 'expires_at' => @invite.expires_at }
+        { 'token' => @invite.token, 'expires_at' => @invite.expires_at,
+          'uses' => @invite.uses }
       )
     end
 

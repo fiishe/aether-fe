@@ -36,7 +36,8 @@ class InviteContainer extends Component {
 
   async handleCreateInvite() {
     let res = await fetchPost(
-      `/api/v1/campaigns/${this.props.campaignId}/invites`
+      `/api/v1/campaigns/${this.props.campaignId}/invites`,
+      {}
     )
     if (res.status == "success") {
       this.addInvite(res.data.invite)

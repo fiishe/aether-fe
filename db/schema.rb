@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_02_053758) do
+ActiveRecord::Schema.define(version: 2020_08_20_164059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,9 +86,10 @@ ActiveRecord::Schema.define(version: 2020_08_02_053758) do
   create_table "invites", force: :cascade do |t|
     t.string "token", limit: 8
     t.bigint "campaign_id"
-    t.time "expires_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "uses"
+    t.datetime "expires_at", precision: 6
   end
 
   create_table "maps", force: :cascade do |t|

@@ -103,7 +103,7 @@ RSpec.describe Api::V1::CampaignsController, type: :controller do
       post :create
       res = res_json()
       expect(res).to include( 'status' => 'fail' )
-      expect(res['data']['message']).to include("User must be logged in")
+      expect(res['data']['message']).to include("must be logged in")
     end
 
     it "creates a new campaign with valid params" do
