@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createFlash } from '../../redux/modules/common'
+import TooltipWrapper from '../../common/TooltipWrapper'
 
 const InviteTile = props => {
   let link = window.location.hostname + '/invites/' + props.data.token
@@ -19,9 +20,11 @@ const InviteTile = props => {
     <li className="invite-index__tile">
       <div className="bar">
         <div className="bar-section">
-          <div className="invite-index__tile__link" onClick={copyLink}>
-            {link}
-          </div>
+          <TooltipWrapper body="Copy link">
+            <div className="invite-index__tile__link" onClick={copyLink}>
+              {link}
+            </div>
+          </TooltipWrapper>
           Remaining uses: {props.data.uses || '∞'}
         </div>
         <div className="bar-section-right">

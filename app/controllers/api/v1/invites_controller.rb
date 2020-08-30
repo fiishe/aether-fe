@@ -3,7 +3,7 @@ class Api::V1::InvitesController < ApiController
 
   before_action :require_login
   before_action :require_campaign_membership, only: [:index]
-  before_action :require_campaign_admin, only: [:create]
+  before_action :require_campaign_admin, only: [:create, :delete]
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -29,5 +29,9 @@ class Api::V1::InvitesController < ApiController
         code: 500
       }
     end
+  end
+
+  def delete
+    Invite.find_by(token: params['token']).destroy
   end
 end

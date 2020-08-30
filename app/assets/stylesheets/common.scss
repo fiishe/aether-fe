@@ -236,21 +236,20 @@ nav.top {
   max-width: 150px;
 }
 
-span.tooltip-container i {
+.tooltip-circle {
+  margin: 8px;
   color: $button-blue;
-  margin-left: 8px;
-  margin-right: 8px;
 }
 
-span.tooltip-container div {
-  background-color: $button-blue;
+.tooltip-show {
+  background-color: $gray-1;
   color: $white;
   font-size: 0.8em;
   padding: 8px;
   margin: 2px;
 
   position: absolute;
-  z-index: 50;
+  z-index: 100;
 }
 
 .color-swatch {
