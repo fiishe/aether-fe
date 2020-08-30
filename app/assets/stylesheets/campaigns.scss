@@ -35,10 +35,14 @@
   background-color: $gray-2;
   color: $gray-3;
   border: 1px $gray-3 solid;
+}
+
+.invite-index__tile__link {
+  font-weight: bold;
   cursor: copy;
 }
-.invite-index__link:hover {
-  background-color: scale-color($red-1, $lightness: 14%);
+.invite-index__tile__link:hover {
+  color: $red-2;
 }
 
 .invite-index__create-button {

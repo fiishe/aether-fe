@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { fetchGet, fetchPost } from '../../lib/defaultFetch'
+import { fetchGet, fetchPost, fetchDelete } from '../../lib/defaultFetch'
 import InviteTile from './InviteTile'
 import produce from 'immer'
 
@@ -42,13 +42,14 @@ class InviteContainer extends Component {
       `/api/v1/campaigns/${this.props.campaignId}/invites`,
       ""
     )
+
     if (res.status == "success") {
       this.addInvite(res.data.invite)
     }
     else {
       this.props.createFlash({
         type: "error",
-        message: res.data.message
+        message: "Failed to create invite link; try again"
       })
     }
   }
@@ -61,9 +62,21 @@ class InviteContainer extends Component {
     this.setState({ invites: newInviteList })
   }
 
+  async handleDeleteInvite() {
+    let res = await fetchDelete(this.state.invites)
+  }
+
+  removeInvite(token) {
+    let newInviteList = produce(this.state.invites, draft => {
+      draft.filter((invite) => invite.token == token)
+    })
+    this.setState({ invites: newInviteList })
+  }
+
   render() {
     let invites = this.state.invites.map((inv, index) => {
-      return <InviteTile token={inv.token} key={index} />
+      return <InviteTile data={inv} key={index}
+               handleDelete={ () => {this.handleDeleteInvite(inv.token)} } />
     })
 
     return(

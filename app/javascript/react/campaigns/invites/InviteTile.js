@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createFlash } from '../../redux/modules/common'
-import { fetchDelete } from '../../lib/defaultFetch'
 
 const InviteTile = props => {
-  let link = window.location.hostname + '/invites/' + props.token
+  let link = window.location.hostname + '/invites/' + props.data.token
+
   let copyLink = () => {
     navigator.clipboard.writeText(link)
       .then(() => {
@@ -16,8 +16,22 @@ const InviteTile = props => {
   }
 
   return(
-    <li className="invite-index__tile" onClick={copyLink}>
-      {link}
+    <li className="invite-index__tile">
+      <div className="bar">
+        <div className="bar-section">
+          <div className="invite-index__tile__link" onClick={copyLink}>
+            {link}
+          </div>
+          Remaining uses: {props.data.uses || '∞'}
+        </div>
+        <div className="bar-section-right">
+          <button className="alert right"
+            onClick={props.handleDelete}
+            >
+            <i className="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
     </li>
   )
 }
