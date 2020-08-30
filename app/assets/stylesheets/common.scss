@@ -218,13 +218,12 @@ nav.top {
 }
 
 // flash leaving animation ()
-.flash-leave {
+.flash-exit {
   opacity: 1;
 }
-.flash-leave.flash-leave-active {
-  opacity: 0.01;
-  transform: scale(0.9);
-  transition: opacity 800ms ease-in;
+.flash-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
     // if you change the transition-duration,
     // also change FLASH_KILLTIME in app/javascript/react/components/Flash.js
 }
@@ -250,6 +249,21 @@ nav.top {
 
   position: absolute;
   z-index: 100;
+}
+
+.tooltip-show-enter {
+  opacity: 0;
+}
+.tooltip-show-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.tooltip-show-exit {
+  opacity: 1;
+}
+.tooltip-show-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
 }
 
 .color-swatch {

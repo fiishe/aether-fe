@@ -1,7 +1,7 @@
 import produce from 'immer'
 import makeActionCreator from '../utils/makeActionCreator'
 
-const FLASH_LIFESPAN = 2800 // (ms) how long a flash is displayed
+const FLASH_LIFESPAN = 2200 // (ms) how long a flash is displayed
 
 // INITIAL STATE
 const initialState = {

@@ -6,7 +6,7 @@ import {
 } from '../redux/modules/common'
 
 const FLASH_START_FADE = 2000     // (ms) how long before a flash starts to fade
-const FLASH_FADE_TIME = 800       // (ms) how long a flash takes to fade
+const FLASH_FADE_TIME = 200       // (ms) how long a flash takes to fade
 // if you change FLASH_START_FADE and FLASH_FADE_TIME, make according changes
 // in /assets/stylesheets/common.scss
 
@@ -15,7 +15,7 @@ class Flash extends Component {
     super(props)
     this.state = {
       cls: `flash flash-${props.type}`,
-      fading: false
+      display: true
     }
     this.fadeTimer = null
     this.startFade = this.startFade.bind(this)
@@ -26,7 +26,7 @@ class Flash extends Component {
   }
 
   startFade() {
-    this.setState({ fading: true })
+    this.setState({ display: false })
   }
 
   componentWillUnmount() {
@@ -36,11 +36,12 @@ class Flash extends Component {
   render() {
     return(
       <CSSTransition
-        in={!this.props.fading}
+        in={this.state.display}
         classNames="flash"
         timeout={FLASH_FADE_TIME}
+        unmountOnExit
         >
-        <div className={this.state.cls}>
+        <div className={this.state.cls} onClick={this.startFade}>
           {this.props.children}
           <i className="fas fa-times"></i>
         </div>
@@ -77,7 +78,7 @@ class FlashList extends Component {
   render() {
     let flashes = this.props.flashes.map((flash, index) => {
       return(
-        <Flash type={flash.type} key={index} index={index} show={true}>
+        <Flash type={flash.type} key={index} index={index}>
           <p>{flash.message}</p>
         </Flash>
       )

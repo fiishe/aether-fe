@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { CSSTransition } from 'react-transition-group'
 
 class TooltipWrapper extends Component {
   constructor(props) {
@@ -24,8 +25,6 @@ class TooltipWrapper extends Component {
   }
 
   render() {
-    let tooltipClass = this.state.isOpen ? 'tooltip-show' : 'display-none'
-
     return(
       <span
         role="tooltip"
@@ -37,9 +36,14 @@ class TooltipWrapper extends Component {
         className={this.props.className}
         >
         {this.props.children}
-        <div className={tooltipClass}>
-          {this.props.body}
-        </div>
+        <CSSTransition in={this.state.isOpen} timeout={200}
+          classNames="tooltip-show"
+          unmountOnExit
+          >
+          <div className="tooltip-show">
+            {this.props.body}
+          </div>
+        </CSSTransition>
       </span>
     )
   }
