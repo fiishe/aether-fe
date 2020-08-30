@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createFlash } from '../../redux/modules/common'
+import { setFlash } from '../../redux/modules/common'
 import TooltipWrapper from '../../common/TooltipWrapper'
 
 const InviteTile = props => {
@@ -9,9 +9,9 @@ const InviteTile = props => {
   let copyLink = () => {
     navigator.clipboard.writeText(link)
       .then(() => {
-        props.createFlash({
+        props.setFlash({
           type: "success",
-          message: "Copied invite link to clipboard"
+          message: props.data.token //"Copied invite link to clipboard"
         })
       })
   }
@@ -41,5 +41,5 @@ const InviteTile = props => {
 
 export default connect(
   null,
-  { createFlash }
+  { setFlash }
 )(InviteTile)

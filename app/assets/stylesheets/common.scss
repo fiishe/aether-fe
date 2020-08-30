@@ -175,7 +175,7 @@ nav.top {
   width: 25%;
 }
 
-.flash-container {
+.flash-anchor {
   position: absolute;
   left: 16px;
   z-index: 50;
@@ -223,7 +223,7 @@ nav.top {
 }
 .flash-exit-active {
   opacity: 0;
-  transition: opacity 200ms ease-in;
+  transition: opacity 200ms;
     // if you change the transition-duration,
     // also change FLASH_KILLTIME in app/javascript/react/components/Flash.js
 }

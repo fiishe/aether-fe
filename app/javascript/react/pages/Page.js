@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TopBar from '../common/TopBar';
 import NavBar from '../common/NavBar';
-import FlashList from '../common/Flash';
+import Flash from '../common/Flash';
 
 class Page extends Component {
   // This class serves as an equivalent to a "layout" erb template.
@@ -21,7 +21,7 @@ class Page extends Component {
   render() {
     return(
       <div>
-        <FlashList />
+        <Flash />
         {this.yield()}
       </div>
     )

@@ -1,13 +1,10 @@
 import produce from 'immer'
 import makeActionCreator from '../utils/makeActionCreator'
 
-const FLASH_LIFESPAN = 2200 // (ms) how long a flash is displayed
-
 // INITIAL STATE
 const initialState = {
   avMenuIsOpen: false,
-  flashes: [],
-  flashTimers: []
+  flash: null
 }
 
 // ACTION CREATORS
@@ -17,19 +14,11 @@ const avMenuOpen = makeActionCreator(AV_MENU_OPEN)
 const AV_MENU_CLOSE = "COMMON/AV_MENU_CLOSE"
 const avMenuClose = makeActionCreator(AV_MENU_CLOSE)
 
-const ADD_FLASH = "COMMON/ADD_FLASH"
-const addFlash = makeActionCreator(ADD_FLASH, 'flash', 'callback', 'timeout')
+const SET_FLASH = "COMMON/SET_FLASH"
+const setFlash = makeActionCreator(SET_FLASH, 'flash')
 
-const REMOVE_FLASH = "COMMON/REMOVE_FLASH"
-const removeFlash = makeActionCreator(REMOVE_FLASH, 'index')
-
-const createFlash = (flash, timeout = FLASH_LIFESPAN) => {
-  return (dispatch) => {
-    let callback = () => { dispatch(removeFlash()) }
-
-    dispatch(addFlash(flash, callback, timeout))
-  }
-}
+const CLEAR_FLASH = "COMMON/CLEAR_FLASH"
+const clearFlash = makeActionCreator(CLEAR_FLASH)
 
 // REDUCER
 const common = (state = initialState, action) => {
@@ -40,19 +29,11 @@ const common = (state = initialState, action) => {
     case AV_MENU_CLOSE:
       return {...state, avMenuIsOpen: false}
 
-    case ADD_FLASH:
-      return produce(state, draftState => {
-        draftState.flashes.unshift(action.flash)
-        draftState.flashTimers.unshift(
-          setTimeout(action.callback, action.timeout)
-        )
-      })
+    case SET_FLASH:
+      return {...state, flash: action.flash}
 
-    case REMOVE_FLASH:
-      return produce(state, draftState => {
-        draftState.flashes.pop()
-        draftState.flashTimers.pop()
-      })
+    case CLEAR_FLASH:
+      return {...state, flash: null}
 
     default:
       return state
@@ -60,10 +41,9 @@ const common = (state = initialState, action) => {
 }
 
 export {
-  FLASH_LIFESPAN,
   avMenuOpen,
   avMenuClose,
-  createFlash,
-  removeFlash,
+  setFlash,
+  clearFlash,
   common
 }

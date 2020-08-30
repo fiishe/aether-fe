@@ -4,7 +4,7 @@ import InviteTile from './InviteTile'
 import produce from 'immer'
 
 import { connect } from 'react-redux'
-import { createFlash } from '../../redux/modules/common'
+import { setFlash } from '../../redux/modules/common'
 
 class NewInviteButton extends Component {
   render() {
@@ -47,10 +47,7 @@ class InviteContainer extends Component {
       this.addInvite(res.data.invite)
     }
     else {
-      this.props.createFlash({
-        type: "error",
-        message: "Failed to create invite link; try again"
-      })
+      this.props.setFlash("error", "Failed to create invite link; try again")
     }
   }
 
@@ -90,5 +87,5 @@ class InviteContainer extends Component {
 
 export default connect(
   null,
-  { createFlash }
+  { setFlash }
 )(InviteContainer)
