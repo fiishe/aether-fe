@@ -3,6 +3,9 @@ import { fetchGet, fetchPost } from '../../lib/defaultFetch'
 import InviteTile from './InviteTile'
 import produce from 'immer'
 
+import { connect } from 'react-redux'
+import { createFlash } from '../../redux/modules/common'
+
 class NewInviteButton extends Component {
   render() {
     return(
@@ -37,15 +40,21 @@ class InviteContainer extends Component {
   async handleCreateInvite() {
     let res = await fetchPost(
       `/api/v1/campaigns/${this.props.campaignId}/invites`,
-      {}
+      ""
     )
     if (res.status == "success") {
       this.addInvite(res.data.invite)
     }
+    else {
+      this.props.createFlash({
+        type: "error",
+        message: res.data.message
+      })
+    }
   }
 
   addInvite(invite) {
-    newInviteList = produce(this.state.invites, draft => {
+    let newInviteList = produce(this.state.invites, draft => {
       draft.push(invite)
     })
 
@@ -66,4 +75,7 @@ class InviteContainer extends Component {
   }
 }
 
-export default InviteContainer
+export default connect(
+  null,
+  { createFlash }
+)(InviteContainer)

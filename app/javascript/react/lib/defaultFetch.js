@@ -52,15 +52,15 @@ const fetchSecure = (method, uri, payload, headers) => {
 }
 
 const fetchPost = (uri, payload, headers) => {
-  fetchSecure('POST', uri, payload, headers)
+  return fetchSecure('POST', uri, payload, headers)
 }
 
 const fetchPatch = (uri, payload, headers) => {
-  fetchSecure('PATCH', uri, payload, headers)
+  return fetchSecure('PATCH', uri, payload, headers)
 }
 
 const fetchDelete = (uri, payload, headers) => {
-  fetchSecure('DELETE', uri, payload, headers)
+  return fetchSecure('DELETE', uri, payload, headers)
 }
 
 export default fetchGet

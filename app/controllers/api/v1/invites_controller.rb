@@ -14,6 +14,9 @@ class Api::V1::InvitesController < ApiController
   def create
     @invite = Invite.new(campaign: @campaign)
 
+    @invite.token = SecureRandom.alphanumeric 8
+    @invite.save
+
     if @invite.save
       render json: {
         status: "success",

@@ -29,8 +29,10 @@
   padding: 8px;
 }
 
-.invite-index__link {
+.invite-index__tile {
   padding: 4px;
+  margin: 8px;
+  background-color: $gray-2;
   color: $gray-3;
   border: 1px $gray-3 solid;
   cursor: copy;
@@ -40,6 +42,7 @@
 }
 
 .invite-index__create-button {
+  padding: 4px 16px;
   margin: 8px auto;
   background-color: $red-1;
   color: $gray-3;
