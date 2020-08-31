@@ -29,13 +29,16 @@ class CampaignIndexContainer extends Component {
         this.props.setCampaignsList(payload)
         this.setState({ render: 'loaded' })
       })
+      .catch(e => {
+        this.setState({ render: 'error' })
+      })
   }
 
   render() {
     switch(this.state.render) {
       case 'loading':
         return(
-          <div className="loading-text">Loading...</div>
+          <div className="row panel loading-text">Loading...</div>
         )
 
       case 'loaded':

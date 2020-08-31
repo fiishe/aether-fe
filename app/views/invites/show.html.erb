@@ -1,0 +1,38 @@
+<div class="v-bar landing">
+  <h1 class="landing__title">AetherFE</h1>
+  <div class="invite v-bar">
+    <% if @campaign %>
+      <h3 class="invite__title">
+        <%= @campaign.name %>
+      </h3>
+      <h6 class="invite__subtitle">
+        by <%= @campaign.owner.nick || @campaign.owner.username %>
+      </h6>
+      <h6 class="invite__subtitle">
+        <%= @campaign.users.count %> members
+      </h6>
+      <p class="invite__description">
+
+      </p>
+      <% if @logged_in %>
+        <a class="invite__join-button" href=<%= "/join/#{@invite.token}" %>>
+          Join
+        </a>
+      <% else %>
+        <a class="login-button" href="/login">
+          Login with
+          <img src="https://discordapp.com/assets/e7a3b51fdac2aa5ec71975d257d5c405.png" />
+          to join
+        </a>
+        </div>
+      <% end %>
+    <% else %>
+      <h3 class="invite__title">
+        - invalid invite -
+      </h3>
+      <p class="invite__description">
+        This invite may be expired. Contact your GM for a new one.
+      </p>
+    <% end %>
+  </div>
+</div>

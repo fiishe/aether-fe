@@ -8,7 +8,7 @@ class ApiController < ApplicationController
 
   def logged_in
     if current_user.nil?
-      render_error 401, "User must be logged in to perform this action."
+      render_error 401, "You must be logged in to perform this action."
       return false
     else
       return true
@@ -21,5 +21,13 @@ class ApiController < ApplicationController
       data: { "message": message },
       code: code
     }, status: code
+  end
+
+  def deny_permission
+    render_error 403, "You do not have permission to access this resource."
+  end
+
+  def not_found
+    render_error 404, "Could not find requested resource(s)"
   end
 end

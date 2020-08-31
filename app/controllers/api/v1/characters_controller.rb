@@ -15,10 +15,4 @@ class Api::V1::CharactersController < ApiController
     )
     render json: char, serializer: CharacterShowSerializer
   end
-
-  private
-
-  def not_found
-    render_error 404, "Could not find requested character(s)"
-  end
 end

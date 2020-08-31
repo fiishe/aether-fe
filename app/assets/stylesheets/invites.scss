@@ -1,0 +1,31 @@
+@import '_colors';
+@import 'view_landing';
+
+.invite {
+  margin: 16px auto;
+  padding: 16px 32px;
+  background-color: $gray-2;
+  color: $blue-1;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.invite__title {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+
+.invite__subtitle {
+  color: $blue-2;
+  margin: 0;
+}
+
+.invite__description {
+  color: black;
+  text-align: center;
+}
+
+.invite__join-button {
+  @extend .login-button;
+}

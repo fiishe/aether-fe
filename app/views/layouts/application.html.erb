@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quattrocento+Sans&display=swap">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "vendor/modernizr" %>
     <%= favicon_link_tag 'favicon.ico' %>
   </head>
@@ -29,7 +29,7 @@
 
       <div id="flash-init">
         <%- flash.each do |key, value| -%>
-          <div class="flash-doc flash-<%= key %> display-none">
+          <div class="display-none" data-flash-type=<%= key%>>
             <%= value %>
           </div>
         <%- end -%>

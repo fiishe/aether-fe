@@ -1,32 +1,28 @@
 @import '_colors';
 
-.landing h1 {
+.landing__title {
   color: $blue-3;
   text-align: center;
   margin-top: 24px;
 }
 
-.landing p {
+.landing__description {
   color: $gray-2;
   text-align: center;
 }
 
-$blurple: #7289DA;
-
 .login-button {
-  background-color: $blurple;
+  background-color: $button-blue;
+  color: white;
   border-radius: 6px;
   max-width: 200px;
   min-width: 100px;
-  padding: 10px;
-  padding-bottom: 0px;
+  padding: 12px;
+  text-align: center;
 }
 
 .login-button:hover {
-  background-color: scale-color($blurple, $lightness: -14%);
-  cursor: pointer;
-}
-
-.login-button p {
+  background-color: scale-color($button-blue, $lightness: -14%);
   color: white;
+  cursor: pointer;
 }
