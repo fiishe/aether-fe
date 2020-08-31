@@ -11,8 +11,7 @@ class Api::V1::InvitesController < ApiController
     set_campaign @invite.campaign
   end
 
-  before_action :require_campaign_membership, only: [:index]
-  before_action :require_campaign_admin, only: [:create, :destroy]
+  before_action :require_campaign_admin, only: [:index, :create, :destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 

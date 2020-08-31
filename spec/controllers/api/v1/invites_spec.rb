@@ -34,6 +34,17 @@ RSpec.describe Api::V1::InvitesController, type: :controller do
       expect(res_json['code']).to eq(403)
     end
 
+    it "fails if user is not an admin" do
+      other_user = FactoryBot.create(:user)
+      CampaignMembership.create(
+        user: other_user, campaign: @campaign, role: "member"
+      )
+      login other_user
+      get :index, params: { campaign_id: @campaign.crystal }
+
+      expect(res_json['code']).to eq(403)
+    end
+
     it "fails if no such campaign exists" do
       login @user
       get :index, params: { campaign_id: "asdfasdfasdf" }
