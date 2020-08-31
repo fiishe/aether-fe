@@ -11,7 +11,7 @@ const InviteTile = props => {
       .then(() => {
         props.setFlash({
           type: "success",
-          message: props.data.token //"Copied invite link to clipboard"
+          message: "Copied invite link to clipboard"
         })
       })
   }

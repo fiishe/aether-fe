@@ -38,17 +38,16 @@ class InviteContainer extends Component {
   }
 
   async handleCreateInvite() {
-    let res = await fetchPost(
-      `/api/v1/campaigns/${this.props.campaignId}/invites`,
-      ""
-    )
-
-    if (res.status == "success") {
-      this.addInvite(res.data.invite)
-    }
-    else {
+    fetchPost(`/api/v1/campaigns/${this.props.campaignId}/invites`, "")
+    .then((res) => {
+      if (res.status == "success") {
+        this.addInvite(res.data.invite)
+      }
+      else { throw new Error(res.data.message) }
+    })
+    .catch((e) => {
       this.props.setFlash("error", "Failed to create invite link; try again")
-    }
+    })
   }
 
   addInvite(invite) {
@@ -59,14 +58,22 @@ class InviteContainer extends Component {
     this.setState({ invites: newInviteList })
   }
 
-  async handleDeleteInvite() {
-    let res = await fetchDelete(this.state.invites)
+  handleDeleteInvite(token) {
+    fetchDelete(`/api/v1/invites/${token}`)
+    .then((res) => {
+      if (res.status == "success") {
+        this.removeInvite(token)
+      }
+      else { throw new Error(res.data.message) }
+    })
+    .catch((e) => {
+      this.props.setFlash("error", "Failed to delete invite; try again")
+    })
   }
 
   removeInvite(token) {
-    let newInviteList = produce(this.state.invites, draft => {
-      draft.filter((invite) => invite.token == token)
-    })
+    let newInviteList = this.state.invites.filter((inv) => inv.token != token)
+
     this.setState({ invites: newInviteList })
   }
 

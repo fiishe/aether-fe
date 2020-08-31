@@ -23,6 +23,10 @@ class ApiController < ApplicationController
     }, status: code
   end
 
+  def deny_permission
+    render_error 403, "You do not have permission to access this resource."
+  end
+
   def not_found
     render_error 404, "Could not find requested resource(s)"
   end

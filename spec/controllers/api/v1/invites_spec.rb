@@ -26,7 +26,7 @@ RSpec.describe Api::V1::InvitesController, type: :controller do
       expect(res_json['code']).to eq(401)
     end
 
-    it "fails if user is not an admin or owner" do
+    it "fails if user is not a member" do
       other_user = FactoryBot.create(:user)
       login other_user
       get :index, params: { campaign_id: @campaign.crystal }

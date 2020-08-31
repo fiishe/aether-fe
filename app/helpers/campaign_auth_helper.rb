@@ -2,37 +2,46 @@
 # in the related campaign.
 
 module CampaignAuthHelper
+  def user_is_member(campaign)
+    !get_membership(campaign).nil?
+  end
+
+  def user_is_admin(campaign)
+    return false if get_membership(campaign).nil?
+    @campaign_membership.role == "admin" || @campaign_membership.role == "owner"
+  end
+
+  def user_is_owner(campaign)
+    return false if get_membership(campaign).nil?
+    @campaign_membership.role == "owner"
+  end
+
+  def set_campaign(campaign)
+    # Determine which campaign the below methods refer to
+    @campaign = campaign
+  end
+
   def require_campaign_membership
-    if campaign_membership.nil?
+    if !user_is_member(@campaign)
       deny_permission()
-      return false
     end
   end
 
   def require_campaign_admin
-    require_campaign_membership()
-
-    if @campaign_membership.role != "admin" &&
-       @campaign_membership.role != "owner"
+    if !user_is_admin(@campaign)
       deny_permission()
-      return false
     end
   end
 
   def require_campaign_owner
-    require_campaign_membership()
-
-    if @campaign_membership.role != "owner"
+    if !user_is_owner(@campaign)
       deny_permission()
-      return false
     end
   end
 
   private
 
-  def campaign_membership
-    @campaign = Campaign.find_by!(crystal: params['campaign_id'])
-
+  def get_membership(campaign)
     @campaign_membership = CampaignMembership.find_by(
       user: current_user, campaign: @campaign
     )

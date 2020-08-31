@@ -2,8 +2,17 @@ class Api::V1::InvitesController < ApiController
   include CampaignAuthHelper
 
   before_action :require_login
+
+  before_action only: [:index, :create] do
+    set_campaign Campaign.find_by!(crystal: params['campaign_id'])
+  end
+  before_action only: [:destroy] do
+    @invite = Invite.find_by!(token: params['id'])
+    set_campaign @invite.campaign
+  end
+
   before_action :require_campaign_membership, only: [:index]
-  before_action :require_campaign_admin, only: [:create, :delete]
+  before_action :require_campaign_admin, only: [:create, :destroy]
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
@@ -31,7 +40,11 @@ class Api::V1::InvitesController < ApiController
     end
   end
 
-  def delete
-    Invite.find_by(token: params['token']).destroy
+  def destroy
+    @invite.destroy
+
+    render json: {
+      status: "success"
+    }
   end
 end
