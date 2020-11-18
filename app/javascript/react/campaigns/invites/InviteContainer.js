@@ -13,7 +13,7 @@ class NewInviteButton extends Component {
         onClick={this.props.onClick}
         >
         <i className="fas fa-plus" />
-        <div className="inline-block default-margin">New invite link</div>
+        <div className="inline-block default-margin">Create new invite</div>
       </button>
     )
   }

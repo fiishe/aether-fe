@@ -45,9 +45,15 @@ class CampaignShowContainer extends Component {
             members = campaign.users.filter(user => {
               return user.role == 'member'
             })
+
         return(
           <div className="row panel campaign-show">
-            <h3>{campaign.name}</h3>
+            <h3>
+              {campaign.name}
+              <button className="right">
+                <i className="fas fa-cog" />
+              </button>
+            </h3>
             <div className="campaign-show__users-list">
               <p>host:</p>
               <UserCell data={campaign.owner} role="owner" />
@@ -61,6 +67,7 @@ class CampaignShowContainer extends Component {
             <InviteContainer campaignId={campaign.id} />
           </div>
         )
+        
       default:
         return(
           <div className="row panel">
